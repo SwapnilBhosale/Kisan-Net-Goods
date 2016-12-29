@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="in.metrogarageadmin.shoping_cart.Main.Fragment.Fragment_Grid">
+
+    <GridView
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:numColumns="3"
+        android:gravity="center"
+        android:horizontalSpacing="2dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp"
+        android:visibility="visible"/>
+
+</LinearLayout>

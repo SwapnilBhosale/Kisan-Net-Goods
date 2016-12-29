@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Shoping_Cart</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="enter_mobile_no">Mobile No</string>
+    <string name="change_language">भाषा बदला</string>
+    <string name="register_user">Sign Up</string>
+    <string name="enter_first_name">First Name</string>
+    <string name="enter_last_name">Last Name</string>
+    <string name="enter_address">Address</string>
+    <string name="enter_city">City</string>
+    <string name="enter_state">State</string>
+    <string name="enter_postal_code">Pincode</string>
+    <string name="home">Home</string>
+    <string name="go_to_cart">Go to Cart</string>
+    <string name="log_in">Log In</string>
+    <string name="log_out">Log Out</string>
+    <string name="user_profile">Profile</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="feedback">Feedback</string>
+    <string name="order_history">Order History</string>
+    <string name="option_yes">Yes</string>
+    <string name="option_no">No</string>
+    <string name="add_to_cart_success">Added to cart successfully</string>
+    <string name="loading">Loading ...</string>
+
+    <string name="update_cart_success">Cart updated successfully</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="update_cart">Update cart</string>
+    <string name="err_mobile_already_exist">Mobile no already registered.</string>
+    <string name="amount_payable">Amount Payable : </string>
+    <string name="check_out">Checkout</string>
+    <string name="feedback_hint">Good or bad. Whatever it is. Please give your feedback.</string>
+    <string name="categories_hint">Categories</string>
+    <string name="select_quantity_hint">SELECT QUANTITY</string>
+    <string name="manufacturer_company_hint">Manufacturer : </string>
+    <string name="select_lang">निवडा</string>
+    <string name="verify_mobile_hint">Please wait, We are verifying your mobile number ! \n Mobile number : </string>
+    <string name="enter_otp_hint">Enter OTP </string>
+    <string name="enter_otp"> Enter OTP</string>
+    <string name="go_ahead">Continue</string>
+    <string name="search_here">Search here</string>
+    <string name="error_no_item_in_cart">There are No Item in cart. Please buy something.</string>
+
+    <string name="error_mobile_no">Please check the mobile no</string>
+    <string name="error_fname">Please check the first name</string>
+    <string name="error_lname">Please check the last name</string>
+    <string name="error_address">Please check the address.</string>
+    <string name="error_city">Please check the city.</string>
+    <string name="error_state">Please check the state.</string>
+    <string name="error_pin_code">Please check the pin code.</string>
+</resources>

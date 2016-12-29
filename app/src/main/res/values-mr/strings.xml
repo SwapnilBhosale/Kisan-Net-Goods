@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Shoping_Cart</string>
+
+    <string name="navigation_drawer_open">नेव्हिगेशन ड्रॉवर उघडा</string>
+    <string name="navigation_drawer_close">नेव्हिगेशन ड्रॉवर बंद करा</string>
+
+    <string name="action_settings">सेटिंग्ज</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="enter_mobile_no">मोबाइल नंबर</string>
+    <string name="change_language">Change Language</string>
+    <string name="register_user">साइन अप करा</string>
+    <string name="enter_first_name">नाव</string>
+    <string name="enter_last_name">आडनाव</string>
+    <string name="enter_address">पत्ता</string>
+    <string name="enter_city">शहर</string>
+    <string name="enter_state">राज्य</string>
+    <string name="enter_postal_code">पिनकोड</string>
+    <string name="home">मुख्यपृष्ठ</string>
+    <string name="go_to_cart">खरेदी यादी उघडा</string>
+    <string name="log_in">लॉग इन</string>
+    <string name="log_out">लॉग आउट</string>
+    <string name="user_profile">वापरकर्ता प्रोफाइल</string>
+    <string name="contact_us">आमच्याशी संपर्क साधा</string>
+    <string name="feedback">प्रतिक्रिया</string>
+    <string name="order_history">मागील ऑर्डर</string>
+
+    <string name="option_yes">होय</string>
+    <string name="option_no">नाही</string>
+    <string name="add_to_cart_success">खरेदी यादीत समाविष्ट केले</string>
+    <string name="loading">लोड होत आहे ...</string>
+    <string name="update_cart_success">खरेदी यादीत बदल यशस्वी</string>
+    <string name="add_to_cart">खरेदी यादीत टाका</string>
+    <string name="update_cart">खरेदी यादीत बदल</string>
+    <string name="err_mobile_already_exist">मोबाइल फोन आधीच नोंदणीकृत आहे</string>
+    <string name="amount_payable">देय रक्कम : </string>
+    <string name="check_out">पुढे जा</string>
+    <string name="feedback_hint">चांगले किंवा वाईट. जे काही आहे. कृपया आपल्या प्रतिक्रिया द्या</string>
+    <string name="categories_hint">श्रेणी</string>
+    <string name="select_quantity_hint">खरेदी संख्या निवडा</string>
+    <string name="manufacturer_company_hint">उत्पादन निर्माता कंपनी : </string>
+    <string name="select_lang">Select</string>
+    <string name="verify_mobile_hint">कृपया थांबा, आम्हाला आपल्या मोबाइल नंबर सत्यापित आहेत! \n मोबाईल क्रमांक:</string>
+    <string name="enter_otp_hint"> स्वत: OTP टाका</string>
+    <string name="enter_otp"> OTP टाका</string>
+    <string name="go_ahead">पुढे जा</string>
+    <string name="search_here">येथे शोधा</string>
+    <string name="error_no_item_in_cart">खरेदी यादीमध्ये कोणतेही आयटम नाहीत. कृपया काहीतरी खरेदी करा.</string>
+
+    <string name="error_mobile_no">कृपया मोबाईल नंबर तपासा</string>
+    <string name="error_fname">कृपया नाव तपासा</string>
+    <string name="error_lname">कृपया आडनाव तपासा</string>
+    <string name="error_address">कृपया पत्ता तपासा.</string>
+    <string name="error_city">कृपया शहर तपासा.</string>
+    <string name="error_state">कृपया राज्य तपासा.</string>
+    <string name="error_pin_code">कृपया पिन कोड तपासा.</string>
+
+</resources>
