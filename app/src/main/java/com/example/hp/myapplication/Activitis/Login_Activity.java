@@ -37,8 +37,14 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
@@ -433,13 +439,13 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                                 //check what is the error
                                 JSONObject obj = response.getJSONObject("error");
                                 String errorCode = obj.getString("errorCode");
-                                if(errorCode.equals("1")){
+                                if(errorCode.equals("10")){
                                     Log.d(TAG, "User is not registered");
                                     Intent intent = new Intent(getApplicationContext(),Register_Activity.class);
                                     intent.putExtra("MOBILE_NO",mobileNo);
                                     startActivity(intent);
 
-                                }else if(errorCode.equals("10")){
+                                }else if(errorCode.equals("20")){
                                     Log.d(TAG, "Send OTP error");
                                     Toast.makeText(getApplicationContext(),obj.getString("errorMessage"), Toast.LENGTH_LONG).show();
                                 }else{
@@ -453,12 +459,26 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                     }
                 },new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(TAG, "Error: " + error.getMessage());
-                        Toast.makeText(getApplicationContext(),
-                                error.getMessage(), Toast.LENGTH_LONG).show();
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.d(TAG, "Error: " + volleyError.getMessage());
+
                         // hide the progress dialog
                         pd.dismiss();
+                        String message = null;
+                        if (volleyError instanceof NetworkError) {
+                            message = "Cannot connect to Internet...Please check your connection!";
+                        } else if (volleyError instanceof ServerError) {
+                            message = "The server could not be found. Please try again after some time!!";
+                        } else if (volleyError instanceof AuthFailureError) {
+                            message = "Cannot connect to Internet...Please check your connection!";
+                        } else if (volleyError instanceof ParseError) {
+                            message = "Parsing error! Please try again after some time!!";
+                        } else if (volleyError instanceof NoConnectionError) {
+                            message = "Cannot connect to Internet...Please check your connection!";
+                        } else if (volleyError instanceof TimeoutError) {
+                            message = "Connection TimeOut! Please check your internet connection.";
+                        }
+                        Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG).show();
 
                     }
                 });

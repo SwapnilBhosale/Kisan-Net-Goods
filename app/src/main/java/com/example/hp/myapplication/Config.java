@@ -54,7 +54,7 @@ public class Config extends Application {
     public static final String SEARCH_URL = BASE_URL+"/product/search?";
 
     public static String LOGO_URL = BASE_URL+"/images/logos/logo.jpg";
-    public static String BACKGROND_URL = BASE_URL+"/images/logos/background.jpg";
+    public static String BACKGROUND_URL = BASE_URL+"/images/logos/background.jpg";
 
     public static final String TAG = Config.class.getSimpleName();
 
@@ -121,6 +121,7 @@ public class Config extends Application {
                     Log.d(TAG, "onResponse: "+response.toString());
                     try{
                         final boolean isSuccess = response.getBoolean("status");
+                        languageList = new ArrayList<Languages>();
                         if(isSuccess){
 
                             // /open verifyOTP screen
@@ -174,6 +175,9 @@ public class Config extends Application {
         config.locale = myLocale;
         getApplicationContext().getResources().updateConfiguration(config,getApplicationContext().getResources().getDisplayMetrics());
     }
+
+
+
 
 
 

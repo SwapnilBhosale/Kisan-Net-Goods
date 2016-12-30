@@ -31,19 +31,30 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.hp.myapplication.CartItem;
+import com.example.hp.myapplication.CircleTransform;
 import com.example.hp.myapplication.Config;
 import com.example.hp.myapplication.Fragment.Fragment_Add_To_Cart;
 import com.example.hp.myapplication.Fragment.Fragment_Contact_us;
@@ -114,14 +125,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-      /*
-        View hView =  navigationView.getHeaderView(0);
-        NetworkImageView nav_image = (NetworkImageView) hView.findViewById(R.id.header_image);
-        LinearLayout background = (LinearLayout) hView.findViewById(R.id.linear_background);
-        TextView name = (TextView) hView.findViewById(R.id.name);
-        TextView website = (TextView) hView.findViewById(R.id.website);
 
-        nav_image.setImageUrl(Config.LOGO_URL, imageLoader);*/
+        View hView =  navigationView.getHeaderView(0);
+        ImageView nav_image = (ImageView) hView.findViewById(R.id.header_image);
+        ImageView background = (ImageView) hView.findViewById(R.id.img_header_bg);
+
+
+        //TextView name = (TextView) hView.findViewById(R.id.name);
+        //TextView website = (TextView) hView.findViewById(R.id.website);
+
+        Glide.with(this).load(Config.BACKGROUND_URL)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(background);
+        Glide.with(this).load(Config.LOGO_URL)
+                .crossFade()
+                .thumbnail(0.5f)
+                .bitmapTransform(new CircleTransform(this))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(nav_image);
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
 
@@ -231,7 +254,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void loadCartData() {
 
-        String url = Config.CART_URL+""+new PrefManager(Config.getContext()).getCustomerId();
+        PrefManager pref = new PrefManager(Config.getContext());
+        String url = Config.CART_URL+"lang="+pref.getAppLangId()+"&customer_id="+pref.getCustomerId();
         try {
             final JsonObjectRequest category_request = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>() {
@@ -271,9 +295,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }, new Response.ErrorListener() {
                 @Override
-                public void onErrorResponse(VolleyError error) {
+                public void onErrorResponse(VolleyError volleyError) {
                     //pd.dismiss();
-                    Log.e(TAG, "LoadCartData: ", error);
+                    //Log.e(TAG, "LoadCartData: ", error);
+                    Log.d(TAG, "Error: " + volleyError.getMessage());
+
+                    // hide the progress dialog
+                    //pd.dismiss();
+                    String message = null;
+                    if (volleyError instanceof NetworkError) {
+                        message = "Cannot connect to Internet...Please check your connection!";
+                    } else if (volleyError instanceof ServerError) {
+                        message = "The server could not be found. Please try again after some time!!";
+                    } else if (volleyError instanceof AuthFailureError) {
+                        message = "Cannot connect to Internet...Please check your connection!";
+                    } else if (volleyError instanceof ParseError) {
+                        message = "Parsing error! Please try again after some time!!";
+                    } else if (volleyError instanceof NoConnectionError) {
+                        message = "Cannot connect to Internet...Please check your connection!";
+                    } else if (volleyError instanceof TimeoutError) {
+                        message = "Connection TimeOut! Please check your internet connection.";
+                    }
+                    Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG).show();
                 }
             });
 

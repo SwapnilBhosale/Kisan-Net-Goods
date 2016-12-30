@@ -21,8 +21,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -70,7 +76,6 @@ public class Open_Item extends Fragment {
         pd = getProgressBar();
         CartItem item = new CartItem();
         if (getArguments() != null) {
-
             product_id = getArguments().getString("product_id");
             isUpdateCart = getArguments().getBoolean("isUpdate");
             if(isUpdateCart) {
@@ -146,18 +151,22 @@ public class Open_Item extends Fragment {
                                     new Response.Listener<JSONObject>() {
                                         @Override
                                         public void onResponse(JSONObject response) {
+                                            Log.d(TAG, "onResponse: "+response.toString());
                                             pd.dismiss();
                                             try{
                                                 final boolean isSuccess = response.getBoolean("status");
                                                 if(isSuccess){
                                                     if(isUpdateCart)
                                                         Toast.makeText(getContext(),R.string.update_cart_success,Toast.LENGTH_LONG).show();
-                                                    else
-                                                        Toast.makeText(getContext(),R.string.add_to_cart_success,Toast.LENGTH_LONG).show();
+                                                    else {
+                                                        Toast.makeText(getContext(), R.string.add_to_cart_success, Toast.LENGTH_LONG).show();
+                                                        loadCartData();
+                                                    }
+
                                                 }
 
                                             }catch (Exception e){
-                                                e.getMessage();
+                                                Log.e(TAG, "onResponse: ",e );
                                             }
                                         }
                                     }, new Response.ErrorListener() {
@@ -234,9 +243,27 @@ public class Open_Item extends Fragment {
                             },
                             new Response.ErrorListener() {
                                 @Override
-                                public void onErrorResponse(VolleyError error) {
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    Log.d(TAG, "Error: " + volleyError.getMessage());
+
+                                    // hide the progress dialog
                                     pd.dismiss();
-                                    Log.e(TAG, "onErrorResponse: ", error);
+                                    String message = null;
+                                    if (volleyError instanceof NetworkError) {
+                                        message = "Cannot connect to Internet...Please check your connection!";
+                                    } else if (volleyError instanceof ServerError) {
+                                        message = "The server could not be found. Please try again after some time!!";
+                                    } else if (volleyError instanceof AuthFailureError) {
+                                        message = "Cannot connect to Internet...Please check your connection!";
+                                    } else if (volleyError instanceof ParseError) {
+                                        message = "Parsing error! Please try again after some time!!";
+                                    } else if (volleyError instanceof NoConnectionError) {
+                                        message = "Cannot connect to Internet...Please check your connection!";
+                                    } else if (volleyError instanceof TimeoutError) {
+                                        message = "Connection TimeOut! Please check your internet connection.";
+                                    }
+                                    Toast.makeText(Config.getContext(),message, Toast.LENGTH_LONG).show();
+
                                 }
                             });
 
@@ -258,6 +285,95 @@ public class Open_Item extends Fragment {
             e.getMessage();
         }
         return view;
+    }
+
+    public void reloadFragment() {
+        Bundle bundle =  new Bundle();
+        bundle.putString("product_id",product_id);
+        Open_Item fo = new Open_Item();
+        fo.setArguments(bundle);
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.main_activity_fl, fo);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+    }
+
+    private void loadCartData() {
+
+        PrefManager pref = new PrefManager(Config.getContext());
+        String url = Config.CART_URL+"lang="+pref.getAppLangId()+"&customer_id="+pref.getCustomerId();
+        try {
+            final JsonObjectRequest category_request = new JsonObjectRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                final boolean isSuccess = response.getBoolean("status");
+                                Fragment_Add_To_Cart.cartList = new ArrayList<CartItem>();
+                                if (isSuccess) {
+                                    JSONObject obj = response.getJSONObject("data");
+                                    JSONArray arr = obj.getJSONArray("productData");
+                                    for (int i = 0; i < arr.length(); i++) {
+
+                                        JSONObject jsonObject = arr.getJSONObject(i);
+                                        CartItem categoris = new CartItem();
+                                        categoris.setBasketId(jsonObject.getString("customers_basket_id"));
+                                        categoris.setQuantity(jsonObject.getString("quantity"));
+                                        categoris.setName(jsonObject.getString("options_value"));
+                                        categoris.setImage(jsonObject.getString("product_image"));
+                                        categoris.setPrice(jsonObject.getLong("product_price"));
+                                        categoris.setWeight(jsonObject.getString("product_weight"));
+                                        categoris.setTotal(jsonObject.getLong("final_price"));
+                                        categoris.setProductId(jsonObject.getString("product_id"));
+                                        Fragment_Add_To_Cart.cartList.add(categoris);
+
+                                    }
+                                    reloadFragment();
+                                }else{
+                                    //if(response.getJSONObject("error").getInt("errorCode") == 10){
+
+                                    //Snackbar.make(getView(),"Sorry! no items in the cart",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                                    Log.e(TAG, "OnLoadCartDataError: "+response.getJSONObject("error").getString("errorMessage"));
+                                    // }
+                                }
+                            } catch (Exception e) {
+                                Log.e("cart", "onResponse: ", e);
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    //pd.dismiss();
+                    //Log.e(TAG, "LoadCartData: ", error);
+                    Log.d(TAG, "Error: " + volleyError.getMessage());
+
+                    // hide the progress dialog
+                    //pd.dismiss();
+                    String message = null;
+                    if (volleyError instanceof NetworkError) {
+                        message = "Cannot connect to Internet...Please check your connection!";
+                    } else if (volleyError instanceof ServerError) {
+                        message = "The server could not be found. Please try again after some time!!";
+                    } else if (volleyError instanceof AuthFailureError) {
+                        message = "Cannot connect to Internet...Please check your connection!";
+                    } else if (volleyError instanceof ParseError) {
+                        message = "Parsing error! Please try again after some time!!";
+                    } else if (volleyError instanceof NoConnectionError) {
+                        message = "Cannot connect to Internet...Please check your connection!";
+                    } else if (volleyError instanceof TimeoutError) {
+                        message = "Connection TimeOut! Please check your internet connection.";
+                    }
+                    Toast.makeText(Config.getContext(),message, Toast.LENGTH_LONG).show();
+                }
+            });
+
+            Volley.newRequestQueue(getActivity()).add(category_request);
+            //   pd.show();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
     }
 
 
@@ -290,7 +406,7 @@ public class Open_Item extends Fragment {
                     if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.main_activity_fl, new Fragment_Home_List_Detail_Grid());
+                        ft.replace(R.id.main_activity_fl, new Fragment_List());
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         ft.commit();
                         return true;

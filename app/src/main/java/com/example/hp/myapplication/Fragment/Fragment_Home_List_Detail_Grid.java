@@ -17,9 +17,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -27,6 +34,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.example.hp.myapplication.Activitis.Login_Activity;
 import com.example.hp.myapplication.Config;
+import com.example.hp.myapplication.Fruits;
 import com.example.hp.myapplication.HelperProgressDialogue;
 import com.example.hp.myapplication.Products;
 import com.example.hp.myapplication.R;
@@ -46,7 +54,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
 
     GridView home_grid;
     static String category_id;
-     String search_item;
+    String search_item;
     ProgressDialog pd;
     private String fruitId;
     private boolean isFruit;
@@ -179,9 +187,27 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                     },
                     new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Log.d(TAG, "Error: " + volleyError.getMessage());
+
+                            // hide the progress dialog
                             pd.dismiss();
-                            Log.e(TAG, "onErrorResponse: ",error );
+                            String message = null;
+                            if (volleyError instanceof NetworkError) {
+                                message = "Cannot connect to Internet...Please check your connection!";
+                            } else if (volleyError instanceof ServerError) {
+                                message = "The server could not be found. Please try again after some time!!";
+                            } else if (volleyError instanceof AuthFailureError) {
+                                message = "Cannot connect to Internet...Please check your connection!";
+                            } else if (volleyError instanceof ParseError) {
+                                message = "Parsing error! Please try again after some time!!";
+                            } else if (volleyError instanceof NoConnectionError) {
+                                message = "Cannot connect to Internet...Please check your connection!";
+                            } else if (volleyError instanceof TimeoutError) {
+                                message = "Connection TimeOut! Please check your internet connection.";
+                            }
+                            Toast.makeText(Config.getContext(),message, Toast.LENGTH_LONG).show();
+
                         }
                     });
             Volley.newRequestQueue(getActivity()).add(obj);
@@ -269,7 +295,10 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                     if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.main_activity_fl, new Fragment_List());
+                        if(isFruit)
+                            ft.replace(R.id.main_activity_fl, new Fragment_Grid());
+                        else
+                            ft.replace(R.id.main_activity_fl, new Fragment_List());
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         ft.commit();
                         return true;
