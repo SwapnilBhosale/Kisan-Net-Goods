@@ -1,0 +1,179 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.hp.myapplication.Fragment.Fragment_Checkout1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="5"
+                        android:drawablePadding="15dp"
+                        android:gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="Payment Method"
+                        android:textColor="#ff000000"
+                        android:textSize="19sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#ffcccccc" />
+                    <RadioGroup
+                        android:id="@+id/radioSex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <RadioButton
+                            android:id="@+id/radioMale"
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_height="wrap_content"
+                            android:text="Cash on Delivery"
+                            android:checked="true"
+                             />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="5"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:text="Pay with cash upon delivery"
+                        android:textSize="19sp" />
+
+
+                        <RadioButton
+                            android:id="@+id/radiofemale"
+                            android:layout_width="wrap_content"
+                            android:textSize="19sp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:text="Card Payment"
+                            android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="5"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:text="Pay with card now"
+                        android:textSize="19sp" />
+                   </RadioGroup>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        android:paddingBottom="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="5"
+                            android:drawablePadding="15dp"
+                            android:gravity="center_vertical"
+                            android:padding="5dp"
+                            android:text="Add Coupon Code"
+                            android:textColor="#ff000000"
+                            android:textSize="19sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="#ffcccccc" />
+
+                        <EditText
+                            android:id="@+id/editText"
+                            android:layout_width="160dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginRight="40dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/edittext_background"
+                            android:drawablePadding="15dp"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:hint="Coupon Code"
+                            android:inputType="phone"
+                            android:padding="5dp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/c3_back"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="#ff9900"
+            android:padding="5dp"
+            android:text="Back"
+            android:textSize="17sp" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="50dp" />
+
+        <Button
+            android:id="@+id/c3_next"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="#ff9900"
+            android:padding="5dp"
+            android:text="Next"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+
+</LinearLayout>
