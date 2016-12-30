@@ -394,7 +394,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ft.replace(R.id.main_activity_fl, new Fragment_List()).addToBackStack(Config.KEY_FRAGMENT_LIST);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
-            onBackPressed();
+            //onBackPressed();
         } else if (id == R.id.go_to_cart) {
 
             FragmentManager fm = getSupportFragmentManager();
@@ -402,7 +402,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart()).addToBackStack(Config.KEY_FRAGMENT_LIST);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
-            onBackPressed();
+            //onBackPressed();
         } else if (id == R.id.feedback) {
 
             FragmentManager fm = getSupportFragmentManager();
@@ -410,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ft.replace(R.id.main_activity_fl, new Fragment_Feedback()).addToBackStack(Config.KEY_FRAGMENT_LIST);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
-            onBackPressed();
+            //onBackPressed();
         } else {
             if (id == R.id.profile) {
 
@@ -419,7 +419,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ft.replace(R.id.main_activity_fl, new Fragment_Profile()).addToBackStack(Config.KEY_FRAGMENT_LIST);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();
-                onBackPressed();
+               // onBackPressed();
             } else {
                 if (id == R.id.change_language) {
 
@@ -513,7 +513,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     ft.replace(R.id.main_activity_fl, new Fragment_Oredr_History()).addToBackStack(Config.KEY_FRAGMENT_LIST);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     ft.commit();
-                    onBackPressed();
+                    //onBackPressed();
                 }
             }
         }

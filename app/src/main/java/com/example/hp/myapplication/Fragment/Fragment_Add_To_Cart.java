@@ -89,9 +89,9 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         CartItem item = (CartItem) adapterView.getItemAtPosition(i);
                         Bundle bundle = new Bundle();
-                        bundle.putString("basketId", item.getBasketId());
-                        bundle.putBoolean("isUpdate",true);
-                        bundle.putString("updateQuantity",item.getQuantity());
+                        //bundle.putString("basketId", item.getBasketId());
+                        //bundle.putBoolean("isUpdate",true);
+                        //bundle.putString("updateQuantity",item.getQuantity());
                         bundle.putString("product_id",item.getProductId());
                         Open_Item fo = new Open_Item();
                         fo.setArguments(bundle);
@@ -356,11 +356,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        initialized = false;
-    }
+
 
     public void reloadFragment() {
         FragmentManager fm = getActivity().getSupportFragmentManager();

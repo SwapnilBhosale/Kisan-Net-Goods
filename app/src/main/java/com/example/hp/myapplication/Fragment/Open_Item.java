@@ -78,16 +78,7 @@ public class Open_Item extends Fragment {
         CartItem item = new CartItem();
         if (getArguments() != null) {
             product_id = getArguments().getString("product_id");
-            isUpdateCart = getArguments().getBoolean("isUpdate");
-            if(isUpdateCart) {
-                updateQuantity = getArguments().getString("updateQuantity");
-                basket_id = getArguments().getString("basketId");
-            } else if ((item = isProductInCart(product_id))!= null) {
-                isUpdateCart = true;
-                updateQuantity = item.getQuantity();
-                basket_id = item.getQuantity();
-            }
-
+            //isUpdateCart = getArguments().getBoolean("isUpdate");
             Log.d("oncreate", "onCreate: "+product_id);
         }
     }
@@ -187,10 +178,9 @@ public class Open_Item extends Fragment {
 
                     }
                 });
-                if(initialized == false)
+               // if(initialized == false)
                     loadData();
-                else
-                    view.setVisibility(View.VISIBLE);
+
 
 
 
@@ -473,9 +463,5 @@ public class Open_Item extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        initialized = false;
-    }
+
 }
