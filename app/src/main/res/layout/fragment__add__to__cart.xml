@@ -65,7 +65,7 @@
             android:paddingRight="10dp"
             android:background="@drawable/button_background"
             android:textSize="17sp"
-            android:id="@+id/place_order" />
+            android:id="@+id/checkout_btn" />
 
     </LinearLayout>
 
