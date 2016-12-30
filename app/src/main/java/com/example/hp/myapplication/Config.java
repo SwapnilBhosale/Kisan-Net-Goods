@@ -61,6 +61,19 @@ public class Config extends Application {
 
     public String langauge_code;
 
+    public static final  String KEY_FRAGMENT_LIST = "Fragment_List";
+    public static final  String KEY_ADD_TO_CART = "Fragment_Add_To-Cart";
+    public static final  String KEY_FRAGMENT_FEEDBACK = "Fragment_Feedback";
+    public static final  String KEY_FRAGMENT_GRID = "Fragment_Grid";
+    public static final  String KEY_FRAGMENT_HOME_LIST_DETAIL_GRID = "Fragment_Home_List_Detail_Grid";
+    public static final  String KEY_FRAGMENT_ORDER_HISTORY = "Fragment_Order_History";
+    public static final  String KEY_FRAGMENT_PROFILE = "Fragment_Profile";
+    public static final  String KEY_OPEN_ITEM = "Open_Item";
+   /* public static final  String KEY_OPEN_ITEM = "Open_Item";
+    public static final  String KEY_OPEN_ITEM = "Open_Item";
+    public static final  String KEY_OPEN_ITEM = "Open_Item";
+    public static final  String KEY_OPEN_ITEM = "Open_Item";*/
+
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static Config mInstance;

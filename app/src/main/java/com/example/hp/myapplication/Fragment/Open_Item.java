@@ -69,6 +69,7 @@ public class Open_Item extends Fragment {
     private boolean isUpdateCart = false;
     private String updateQuantity;
     private String basket_id;
+    public boolean initialized = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -186,94 +187,13 @@ public class Open_Item extends Fragment {
 
                     }
                 });
-
-                try {
-
-                    String url = Config.PRODUCTS_INFO_URL+"lang="+new PrefManager(Config.getContext()).getAppLangId()+"&product_id="+product_id;
-                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    pd.dismiss();
-                                    try{
-                                        boolean isSuccess = response.getBoolean("status");
-                                        Log.d("duvvrddd", "isSuccess: "+isSuccess);
-                                        if(isSuccess){
-                                            JSONObject obj = response.getJSONObject("data");
-                                            JSONArray prod_data = obj.getJSONArray("product_data");
-                                            Log.d("arr", "onResponse: "+prod_data.length());
-                                            for (int i = 0; i<prod_data.length(); i++) {
-                                                JSONObject jsonObject = prod_data.getJSONObject(i);
-
-                                                f.setProductId(jsonObject.getString("product_id"));
-                                                f.setProductImage(jsonObject.getString("product_image"));
-                                                f.setProduct_Price(jsonObject.getLong("product_price"));
-                                                f.setProduct_weight(jsonObject.getString("product_weight"));
-                                                f.setManufacturer_name(jsonObject.getString("manufacturer_name"));
-                                                prod_image.setImageUrl(Config.BASE_URL+""+f.getProductImage(),imageLoader);
-                                                prod_price.setText(""+f.getProduct_Price());
-                                                prod_weight.setText(f.getProduct_weight());
-                                                prod_manufacture_name.setText(f.getManufacturer_name());
+                if(initialized == false)
+                    loadData();
+                else
+                    view.setVisibility(View.VISIBLE);
 
 
 
-                                            }
-
-                                            JSONArray array = obj.getJSONArray("product_details");
-                                            for (int i = 0; i<array.length(); i++){
-
-                                                JSONObject jsonObject = array.getJSONObject(i);
-                                                ProductInfo f = new ProductInfo();
-                                                f.setOptions_key(jsonObject.getString("options_key"));
-                                                f.setOptions_value(jsonObject.getString("options_value"));
-                                                prodList.add(f);
-
-                                            }
-
-                                            f.setProductInfo(prodList);
-                                            CustomEventAdapter event_list = new CustomEventAdapter(getActivity(),prodList);
-                                            feture_list.setAdapter(event_list);
-                                        }
-
-                                    }catch (Exception e){
-                                        e.getMessage();
-                                        Log.e("hgj", "onResponse: ",e );
-                                    }
-
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    Log.d(TAG, "Error: " + volleyError.getMessage());
-
-                                    // hide the progress dialog
-                                    pd.dismiss();
-                                    String message = null;
-                                    if (volleyError instanceof NetworkError) {
-                                        message = "Cannot connect to Internet...Please check your connection!";
-                                    } else if (volleyError instanceof ServerError) {
-                                        message = "The server could not be found. Please try again after some time!!";
-                                    } else if (volleyError instanceof AuthFailureError) {
-                                        message = "Cannot connect to Internet...Please check your connection!";
-                                    } else if (volleyError instanceof ParseError) {
-                                        message = "Parsing error! Please try again after some time!!";
-                                    } else if (volleyError instanceof NoConnectionError) {
-                                        message = "Cannot connect to Internet...Please check your connection!";
-                                    } else if (volleyError instanceof TimeoutError) {
-                                        message = "Connection TimeOut! Please check your internet connection.";
-                                    }
-                                    Toast.makeText(Config.getContext(),message, Toast.LENGTH_LONG).show();
-
-                                }
-                            });
-
-
-                    Volley.newRequestQueue(getActivity()).add(jsonObjectRequest);
-                    pd.show();
-                } catch (Exception e) {
-                    e.getMessage();
-                }
 
                 //list view implementation
 
@@ -286,6 +206,97 @@ public class Open_Item extends Fragment {
             e.getMessage();
         }
         return view;
+    }
+
+    private void loadData(){
+        try {
+
+            String url = Config.PRODUCTS_INFO_URL+"lang="+new PrefManager(Config.getContext()).getAppLangId()+"&product_id="+product_id;
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            initialized = true;
+                            pd.dismiss();
+                            try{
+                                boolean isSuccess = response.getBoolean("status");
+                                Log.d("duvvrddd", "isSuccess: "+isSuccess);
+                                if(isSuccess){
+                                    JSONObject obj = response.getJSONObject("data");
+                                    JSONArray prod_data = obj.getJSONArray("product_data");
+                                    Log.d("arr", "onResponse: "+prod_data.length());
+                                    for (int i = 0; i<prod_data.length(); i++) {
+                                        JSONObject jsonObject = prod_data.getJSONObject(i);
+
+                                        f.setProductId(jsonObject.getString("product_id"));
+                                        f.setProductImage(jsonObject.getString("product_image"));
+                                        f.setProduct_Price(jsonObject.getLong("product_price"));
+                                        f.setProduct_weight(jsonObject.getString("product_weight"));
+                                        f.setManufacturer_name(jsonObject.getString("manufacturer_name"));
+                                        prod_image.setImageUrl(Config.BASE_URL+""+f.getProductImage(),imageLoader);
+                                        prod_price.setText(""+f.getProduct_Price());
+                                        prod_weight.setText(f.getProduct_weight());
+                                        prod_manufacture_name.setText(f.getManufacturer_name());
+
+
+
+                                    }
+
+                                    JSONArray array = obj.getJSONArray("product_details");
+                                    for (int i = 0; i<array.length(); i++){
+
+                                        JSONObject jsonObject = array.getJSONObject(i);
+                                        ProductInfo f = new ProductInfo();
+                                        f.setOptions_key(jsonObject.getString("options_key"));
+                                        f.setOptions_value(jsonObject.getString("options_value"));
+                                        prodList.add(f);
+
+                                    }
+
+                                    f.setProductInfo(prodList);
+                                    CustomEventAdapter event_list = new CustomEventAdapter(getActivity(),prodList);
+                                    feture_list.setAdapter(event_list);
+                                }
+
+                            }catch (Exception e){
+                                e.getMessage();
+                                Log.e("hgj", "onResponse: ",e );
+                            }
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Log.d(TAG, "Error: " + volleyError.getMessage());
+
+                            // hide the progress dialog
+                            pd.dismiss();
+                            String message = null;
+                            if (volleyError instanceof NetworkError) {
+                                message = "Cannot connect to Internet...Please check your connection!";
+                            } else if (volleyError instanceof ServerError) {
+                                message = "The server could not be found. Please try again after some time!!";
+                            } else if (volleyError instanceof AuthFailureError) {
+                                message = "Cannot connect to Internet...Please check your connection!";
+                            } else if (volleyError instanceof ParseError) {
+                                message = "Parsing error! Please try again after some time!!";
+                            } else if (volleyError instanceof NoConnectionError) {
+                                message = "Cannot connect to Internet...Please check your connection!";
+                            } else if (volleyError instanceof TimeoutError) {
+                                message = "Connection TimeOut! Please check your internet connection.";
+                            }
+                            Toast.makeText(Config.getContext(),message, Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+
+
+            Volley.newRequestQueue(getActivity()).add(jsonObjectRequest);
+            pd.show();
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 
     public void reloadFragment() {
@@ -330,7 +341,7 @@ public class Open_Item extends Fragment {
                                         Fragment_Add_To_Cart.cartList.add(categoris);
 
                                     }
-                                    reloadFragment();
+                                    //reloadFragment();
                                 }else{
                                     //if(response.getJSONObject("error").getInt("errorCode") == 10){
 
@@ -395,30 +406,6 @@ public class Open_Item extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        try {
-            getView().setFocusableInTouchMode(true);
-            getView().requestFocus();
-            getView().setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.main_activity_fl, new Fragment_List());
-                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        ft.commit();
-                        return true;
-                    }
-                    return true;
-                }
-            });
-        } catch (Exception e) {
-
-        }
-    }
 
     public class CustomEventAdapter extends ArrayAdapter {
         private FragmentActivity activity;
@@ -484,5 +471,11 @@ public class Open_Item extends Fragment {
         }
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initialized = false;
     }
 }

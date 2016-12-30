@@ -25,6 +25,7 @@ public class Fragment_Feedback extends Fragment {
     RatingBar ratingBar;
     Button btn_feedback_submit;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,28 +66,5 @@ public class Fragment_Feedback extends Fragment {
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         btn_feedback_submit = (Button) view.findViewById(R.id.btn_feedback_submit);
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        try {
-            getView().setFocusableInTouchMode(true);
-            getView().requestFocus();
-            getView().setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.main_activity_fl, new Fragment_List());
-                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        ft.commit();
-                        return true;
-                    }
-                    return true;
-                }
-            });
-        } catch (Exception e) {
 
-        }
-    }
 }

@@ -72,13 +72,13 @@ public class Splash_Activity extends AppCompatActivity {
                         Splash_Activity.this.finish();
                     }
                 }
+                finish();
                 if(checkIfLoggedIn()){
                     intent = new Intent(Splash_Activity.this,MainActivity.class);
                 }else{
                     intent = new Intent(Splash_Activity.this,Login_Activity.class);
                 }
                 startActivity(intent);
-                Splash_Activity.this.finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

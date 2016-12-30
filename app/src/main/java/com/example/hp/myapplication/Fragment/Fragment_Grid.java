@@ -52,6 +52,7 @@ public class Fragment_Grid extends Fragment {
     ImageLoader imageLoader = Config.getInstance().getImageLoader();
     ProgressDialog pd;
     private String TAG = Fragment_Grid.class.getSimpleName();
+    public boolean initialized = false;
 
 
     @Override
@@ -74,7 +75,10 @@ public class Fragment_Grid extends Fragment {
                 setListners();
                 CustomGrid adapter = new CustomGrid(getActivity(), myList);
 
-                loadData(adapter);
+                if(initialized == false)
+                    loadData(adapter);
+                else
+                    grid.setVisibility(View.VISIBLE);
                 grid.setAdapter(adapter);
 
                 grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,7 +96,7 @@ public class Fragment_Grid extends Fragment {
                         //bundle.putString("quantity",view.findViewById());
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.main_activity_fl, fd);
+                        ft.replace(R.id.main_activity_fl, fd).addToBackStack(Config.KEY_FRAGMENT_GRID);
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         ft.commit();
                     }
@@ -130,6 +134,7 @@ public class Fragment_Grid extends Fragment {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            initialized = true;
                             pd.dismiss();
                             try {
                                 boolean isSuccess = response.getBoolean("status");
@@ -254,28 +259,4 @@ public class Fragment_Grid extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        try {
-            getView().setFocusableInTouchMode(true);
-            getView().requestFocus();
-            getView().setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.main_activity_fl, new Fragment_List());
-                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        ft.commit();
-                        return true;
-                    }
-                    return true;
-                }
-            });
-        } catch (Exception e) {
-
-        }
-    }
 }

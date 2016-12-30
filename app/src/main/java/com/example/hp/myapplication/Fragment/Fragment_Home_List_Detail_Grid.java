@@ -52,6 +52,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
     List<Products> myList = new ArrayList<Products>();
     ImageLoader imageLoader = Config.getInstance().getImageLoader();
 
+    public boolean initialized = false;
     GridView home_grid;
     static String category_id;
     String search_item;
@@ -96,7 +97,10 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                 Log.d(TAG, "Search item: "+search_item);
 
                 CustomGrid adapter = new CustomGrid(getActivity(), myList);
-                loadData(adapter);
+                if(initialized == false)
+                        loadData(adapter);
+                else
+                    home_grid.setVisibility(View.VISIBLE);
                 home_grid.setAdapter(adapter);
 
                 home_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -113,7 +117,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                         fd.setArguments(bundle);
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.main_activity_fl, fd);
+                        ft.replace(R.id.main_activity_fl, fd).addToBackStack(Config.KEY_FRAGMENT_HOME_LIST_DETAIL_GRID);
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         ft.commit();
 
@@ -158,6 +162,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            initialized = true;
                             pd.dismiss();
                             try {
                                 boolean isSuccess = response.getBoolean("status");
@@ -283,31 +288,4 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        try {
-            getView().setFocusableInTouchMode(true);
-            getView().requestFocus();
-            getView().setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-                        if(isFruit)
-                            ft.replace(R.id.main_activity_fl, new Fragment_Grid());
-                        else
-                            ft.replace(R.id.main_activity_fl, new Fragment_List());
-                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        ft.commit();
-                        return true;
-                    }
-                    return true;
-                }
-            });
-        } catch (Exception e) {
-
-        }
-    }
 }

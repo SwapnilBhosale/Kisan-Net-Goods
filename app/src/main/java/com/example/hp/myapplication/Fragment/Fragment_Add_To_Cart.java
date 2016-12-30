@@ -60,6 +60,8 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     ProgressDialog pd;
     private String TAG = Fragment_Add_To_Cart.class.getSimpleName();
     Button checkout_btn;
+    public Boolean initialized = false;
+
 
 
     //TextView close_tab;
@@ -77,7 +79,11 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
                 initiolizeId(view);
                 cartList = new ArrayList<CartItem>();
-                getList();
+                if(initialized == false){
+                    getList();
+                }else{
+                    list.setVisibility(View.VISIBLE);
+                }
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -91,7 +97,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                         fo.setArguments(bundle);
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.main_activity_fl,fo);
+                        ft.replace(R.id.main_activity_fl,fo).addToBackStack(Config.KEY_ADD_TO_CART);
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         ft.commit();
 
@@ -152,6 +158,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            initialized = true;
                             pd.dismiss();
                             try {
                                 final boolean isSuccess = response.getBoolean("status");
@@ -324,7 +331,9 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
                                         //cartList.remove(pos);
                                         //thisInstance.notifyDataSetChanged();
-                                        reloadFragment();
+                                        //reloadFragment();
+                                        //initialized = false;
+                                        Toast.makeText(getActivity(),"REMOVED SUCCESSFULLY",Toast.LENGTH_LONG).show();
                                     }
                                 } catch (Exception e) {
                                     Log.e("cart", "onResponse: ", e);
@@ -347,38 +356,18 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initialized = false;
+    }
+
     public void reloadFragment() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart());
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
-    }
-
-    @Override
-    public void onResume() {
-        Log.d(TAG, "onResume: ");
-        super.onResume();
-        try {
-            getView().setFocusableInTouchMode(true);
-            getView().requestFocus();
-            getView().setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.main_activity_fl, new Fragment_List());
-                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        ft.commit();
-                        return true;
-                    }
-                    return true;
-                }
-            });
-        } catch (Exception e) {
-
-        }
     }
 
 

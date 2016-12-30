@@ -68,6 +68,7 @@ public class Fragment_List extends Fragment {
     public List<Categoris> list_categories = new ArrayList<Categoris>();
     ProgressDialog pd;
     private String TAG = Fragment_List.class.getSimpleName();
+    public boolean initialized = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -132,8 +133,12 @@ public class Fragment_List extends Fragment {
 
                 //lsit view here
                 CustomEventAdapter event_list = new CustomEventAdapter(getActivity(),list_categories);
-                loadData(event_list);
+                if(initialized == false)
+                    loadData(event_list);
+                else
+                    home_list.setVisibility(View.VISIBLE);
                 home_list.setAdapter(event_list);
+               // setListViewHeightBasedOnChildren(home_list);
                // setListener();
                 try {
 
@@ -150,7 +155,7 @@ public class Fragment_List extends Fragment {
 
                                 FragmentManager fm = getActivity().getSupportFragmentManager();
                                 FragmentTransaction ft = fm.beginTransaction();
-                                ft.replace(R.id.main_activity_fl, new Fragment_Grid());
+                                ft.replace(R.id.main_activity_fl, new Fragment_Grid()).addToBackStack(Config.KEY_FRAGMENT_LIST);
                                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                                 ft.commit();
                             }
@@ -161,7 +166,7 @@ public class Fragment_List extends Fragment {
                                 fd.setArguments(bundle);
                                 FragmentManager fm = getActivity().getSupportFragmentManager();
                                 FragmentTransaction ft = fm.beginTransaction();
-                                ft.replace(R.id.main_activity_fl, fd);
+                                ft.replace(R.id.main_activity_fl, fd).addToBackStack(Config.KEY_FRAGMENT_LIST);
                                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                                 ft.commit();
                             }
@@ -199,6 +204,7 @@ public class Fragment_List extends Fragment {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            initialized = true;
                             pd.dismiss();
                             try{
                                 final boolean isSuccess = response.getBoolean("status");

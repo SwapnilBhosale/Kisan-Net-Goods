@@ -203,11 +203,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        //if (drawer.isDrawerOpen(GravityCompat.START)) {
+         //   drawer.closeDrawer(GravityCompat.START);
+       // } else {
+
+            Log.d(TAG, "onBackPressed: "+getFragmentManager().getBackStackEntryCount());
+            int count = getSupportFragmentManager().getBackStackEntryCount();
+            if(count == 0){
+                //super.onBackPressed();
+                //super.onBackPressed();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                builder1.setMessage("Are you sure you want to logout?");
+                builder1.setCancelable(true);
+                builder1.setPositiveButton(
+                        R.string.option_yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                                homeIntent.addCategory( Intent.CATEGORY_HOME );
+                                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(homeIntent);
+                            }
+                        });
+                builder1.setNegativeButton(
+                        R.string.option_no,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            }else{
+                getSupportFragmentManager().popBackStack();
+            }
+        //}
     }
 
     @Override
@@ -235,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fd.setArguments(bundle);
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.main_activity_fl, fd);
+                ft.replace(R.id.main_activity_fl, fd).addToBackStack(Config.KEY_FRAGMENT_LIST);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();
                 return false;
@@ -340,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_cart) {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart());
+            ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart()).addToBackStack(Config.KEY_FRAGMENT_LIST);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
             return true;
@@ -361,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.main_activity_fl, new Fragment_List());
+            ft.replace(R.id.main_activity_fl, new Fragment_List()).addToBackStack(Config.KEY_FRAGMENT_LIST);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
             onBackPressed();
@@ -369,7 +399,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart());
+            ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart()).addToBackStack(Config.KEY_FRAGMENT_LIST);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
             onBackPressed();
@@ -377,7 +407,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.main_activity_fl, new Fragment_Feedback());
+            ft.replace(R.id.main_activity_fl, new Fragment_Feedback()).addToBackStack(Config.KEY_FRAGMENT_LIST);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
             onBackPressed();
@@ -386,7 +416,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.main_activity_fl, new Fragment_Profile());
+                ft.replace(R.id.main_activity_fl, new Fragment_Profile()).addToBackStack(Config.KEY_FRAGMENT_LIST);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();
                 onBackPressed();
@@ -480,7 +510,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.main_activity_fl, new Fragment_Oredr_History());
+                    ft.replace(R.id.main_activity_fl, new Fragment_Oredr_History()).addToBackStack(Config.KEY_FRAGMENT_LIST);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     ft.commit();
                     onBackPressed();
