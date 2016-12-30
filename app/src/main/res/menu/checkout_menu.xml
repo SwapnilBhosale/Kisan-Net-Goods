@@ -4,18 +4,12 @@
     xmlns:app="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/action_cart"
+        android:id="@+id/action_cart_check"
         android:actionLayout="@layout/cart_button_layout"
         android:icon="@drawable/ic_cart"
         android:orderInCategory="100"
-        app:showAsAction="always"
         android:title="Cart"
+        app:showAsAction="ifRoom"
         appcompat:showAsAction="always" />
-    <item
-        android:title="Search box"
-        appcompat:actionViewClass="android.support.v7.widget.SearchView"
-        appcompat:showAsAction="always"
-
-        />
 
 </menu>

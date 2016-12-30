@@ -2,6 +2,7 @@ package com.example.hp.myapplication.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +34,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.example.hp.myapplication.Activitis.Checkout_Activity;
 import com.example.hp.myapplication.CartItem;
 import com.example.hp.myapplication.Config;
 import com.example.hp.myapplication.HelperProgressDialogue;
@@ -56,6 +59,8 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     TextView total_price;
     ProgressDialog pd;
     private String TAG = Fragment_Add_To_Cart.class.getSimpleName();
+    Button checkout_btn;
+
 
     //TextView close_tab;
 
@@ -90,6 +95,15 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         ft.commit();
 
+                    }
+                });
+
+                checkout_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent i = new Intent(getActivity(), Checkout_Activity.class);
+                        startActivity(i);
                     }
                 });
 
@@ -209,6 +223,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
     private void initiolizeId(View view) {
         list = (ListView) view.findViewById(R.id.cart_list);
+        checkout_btn = (Button) view.findViewById(R.id.checkout_btn);
         total_price = (TextView) view.findViewById(R.id.total_price);
         //close_tab = (TextView) list.findViewById(R.id.close_tab);
 
@@ -342,6 +357,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
     @Override
     public void onResume() {
+        Log.d(TAG, "onResume: ");
         super.onResume();
         try {
             getView().setFocusableInTouchMode(true);

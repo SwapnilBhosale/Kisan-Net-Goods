@@ -41,6 +41,8 @@
             />
         <activity android:name=".Activitis.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            /> <activity android:name=".Activitis.Checkout_Activity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             />
 
         <receiver
