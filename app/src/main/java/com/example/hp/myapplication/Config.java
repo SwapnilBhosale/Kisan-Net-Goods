@@ -55,6 +55,7 @@ public class Config extends Application {
 
     public static String LOGO_URL = BASE_URL+"/images/logos/logo.jpg";
     public static String BACKGROUND_URL = BASE_URL+"/images/logos/background.jpg";
+    public static String UPDATE_PROFILE_URL = BASE_URL+"/users/updateInfo";
 
     public static final String TAG = Config.class.getSimpleName();
 

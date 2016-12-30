@@ -58,5 +58,6 @@
     <string name="error_city">कृपया शहर तपासा.</string>
     <string name="error_state">कृपया राज्य तपासा.</string>
     <string name="error_pin_code">कृपया पिन कोड तपासा.</string>
+    <string name="update_profile_button">माहिती बदला</string>
 
 </resources>

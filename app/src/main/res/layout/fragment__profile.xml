@@ -37,8 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="30dp"
                 android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/mobile_no"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/reg_mobile_no"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
@@ -56,8 +56,8 @@
                 android:id="@+id/test2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/first_name"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/reg_first_name"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
@@ -75,8 +75,8 @@
                 android:id="@+id/test3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/last_name"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/reg_last_name"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
@@ -94,8 +94,8 @@
                 android:id="@+id/test4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/address"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/reg_address"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
@@ -113,8 +113,8 @@
                 android:id="@+id/test5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/city"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/reg_city"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
@@ -132,8 +132,8 @@
                 android:id="@+id/test6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/state"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/reg_state"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
@@ -151,8 +151,8 @@
                 android:id="@+id/test7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/postal_code"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/reg_postal_code"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
@@ -167,7 +167,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/register_btn"
+                android:id="@+id/reg_register_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:paddingRight="10dp"
@@ -175,14 +175,14 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_background"
-                android:text="register"
+                android:text="@string/update_profile_button"
                 android:textColor="#ffffff" />
 
         </LinearLayout>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/profile_image"
+                android:id="@+id/reg_logo"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:layout_marginTop="-525dp"
