@@ -493,6 +493,7 @@
             android:background="#ff9900"
             android:padding="5dp"
             android:text="Checkout"
+            android:enabled="false"
             android:textSize="17sp" />
     </LinearLayout>
 

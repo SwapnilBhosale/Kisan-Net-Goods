@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hp.myapplication.Config;
 import com.example.hp.myapplication.R;
@@ -75,7 +76,22 @@ public class Fragment_Checkout4 extends Fragment {
                 ft.commit();
             }
         });
+        c4_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b)
+                    c4_checkout.setEnabled(true);
+                else
+                    c4_checkout.setEnabled(false);
+            }
+        });
         c4_checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"WILL OPEN PAYMENT SCREEN",Toast.LENGTH_LONG).show();
+            }
+        });
+        /*c4_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -93,7 +109,7 @@ public class Fragment_Checkout4 extends Fragment {
                 });
 
             }
-        });
+        });*/
 
 
 

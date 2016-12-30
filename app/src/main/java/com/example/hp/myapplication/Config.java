@@ -33,7 +33,7 @@ import java.util.Locale;
 
 public class Config extends Application {
 
-    public static final String BASE_URL = "http://kisannetgoods.in";
+    public static final String BASE_URL = "http://192.168.1.103:8080";
     public static final String SMS_ORIGIN = "VERIFY";
     public static final String OTP_DELIMITER = "is";
     public static final String LOGIN_API_URL = BASE_URL+"/users/login";

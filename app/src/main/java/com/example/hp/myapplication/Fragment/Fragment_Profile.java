@@ -113,6 +113,7 @@ public class Fragment_Profile extends Fragment {
                                         pref.setState(data.getString("state"));
                                         pref.setCity(data.getString("city"));
                                         pref.setPinCode(data.getString("postal_code"));
+                                        Toast.makeText(getActivity(),"Data updated successfully",Toast.LENGTH_LONG).show();
                                     }
                                 }catch (Exception e){
                                     pd.dismiss();
