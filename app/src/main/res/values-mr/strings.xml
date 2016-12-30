@@ -59,5 +59,7 @@
     <string name="error_state">कृपया राज्य तपासा.</string>
     <string name="error_pin_code">कृपया पिन कोड तपासा.</string>
     <string name="update_profile_button">माहिती बदला</string>
+    <string name="exit_confirmation">आपण खरोखर एप्लिकेशन बंद करू इच्छिता का ?</string>
+    <string name="logout_confirmation">आपण खरोखर लॉगआऊट करू इच्छिता का ?</string>
 
 </resources>

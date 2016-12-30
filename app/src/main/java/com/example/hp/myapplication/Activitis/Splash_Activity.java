@@ -53,23 +53,35 @@ public class Splash_Activity extends AppCompatActivity {
                     //pref.storeAppLanguage("mr");
                     pref.storeAppLanguage("mr");
 
-                    Intent i = new Intent(Splash_Activity.this,Splash_Activity.class);
+                    /*Intent i = new Intent(Splash_Activity.this,Splash_Activity.class);
                     startActivity(i);
-                    Splash_Activity.this.finish();
+                    Splash_Activity.this.finish();*/
+                    Intent i = getIntent();
+                    i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    finish();
+                    startActivity(i);
 
-                } else if(!pref.getAppLanguage().isEmpty()){
+                } else if(!pref.getAppLanguage().isEmpty() && !pref.getAppLanguage().equals(current.getLanguage())){
                     Log.d(TAG, "restoreAppLanguage: "+pref.getAppLanguage());
                     pref.restoreAppLanguage();
-                    Intent i = new Intent(Splash_Activity.this,Splash_Activity.class);
+                    /*Intent i = new Intent(Splash_Activity.this,Splash_Activity.class);
                     startActivity(i);
-                    Splash_Activity.this.finish();
+                    Splash_Activity.this.finish();*/
+                    Intent i = getIntent();
+                    i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    finish();
+                    startActivity(i);
                 }else{
                     if(!current.getLanguage().equals(pref.getAppLanguage())){
                         pref.storeAppLanguage(pref.getAppLanguage());
                         Log.d(TAG, "Restarting splash activity ");
-                        Intent i = new Intent(Splash_Activity.this,Splash_Activity.class);
+                       /* Intent i = new Intent(Splash_Activity.this,Splash_Activity.class);
                         startActivity(i);
-                        Splash_Activity.this.finish();
+                        Splash_Activity.this.finish();*/
+                        Intent i = getIntent();
+                        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        finish();
+                        startActivity(i);
                     }
                 }
                 finish();

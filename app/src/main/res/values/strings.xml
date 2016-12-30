@@ -57,4 +57,6 @@
     <string name="error_state">Please check the state.</string>
     <string name="error_pin_code">Please check the pin code.</string>
     <string name="update_profile_button">Update</string>
+    <string name="exit_confirmation">Do you really want to exit ?</string>
+    <string name="logout_confirmation">Do you really want to logout ?</string>
 </resources>

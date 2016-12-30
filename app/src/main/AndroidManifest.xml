@@ -13,11 +13,12 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:configChanges="orientation|screenSize|keyboardHidden"
+
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".Activitis.Splash_Activity"
             android:label="@string/app_name"
+            android:configChanges="orientation|screenSize|keyboardHidden|locale"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,15 +35,15 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".Activitis.Login_Activity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="orientation|screenSize|keyboardHidden|locale"
             />
         <activity android:name=".Activitis.Register_Activity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="orientation|screenSize|keyboardHidden|locale"
             />
         <activity android:name=".Activitis.MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="orientation|screenSize|keyboardHidden|locale"
             /> <activity android:name=".Activitis.Checkout_Activity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="orientation|screenSize|keyboardHidden|locale"
             />
 
         <receiver

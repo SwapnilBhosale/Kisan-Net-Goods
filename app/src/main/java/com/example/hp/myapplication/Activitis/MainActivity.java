@@ -6,6 +6,7 @@ import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -210,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //super.onBackPressed();
                 //super.onBackPressed();
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                builder1.setMessage("Are you sure you want to logout?");
+                builder1.setMessage(getString(R.string.exit_confirmation));
                 builder1.setCancelable(true);
                 builder1.setPositiveButton(
                         R.string.option_yes,
@@ -478,14 +479,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Languages lang = Config.languageList.get(pos);
                             Log.d(TAG, "lang: " + lang.toString());
                             setLocale(lang);
-                            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                            /*Intent intent = new Intent(MainActivity.this, MainActivity.class);
                             startActivity(intent);
-                            MainActivity.this.finish();
+                            MainActivity.this.finish();*/
+                            Intent intent = getIntent();
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            finish();
+                            startActivity(intent);
                         }
                     });
                 } else if (id == R.id.logout) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                    builder1.setMessage("Are you sure you want to logout?");
+                    builder1.setMessage(getString(R.string.logout_confirmation));
                     builder1.setCancelable(true);
                     builder1.setPositiveButton(
                             R.string.option_yes,
@@ -535,6 +540,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setObject(object)
                 .setActionStatus(Action.STATUS_TYPE_COMPLETED)
                 .build();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        // refresh your views here
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override

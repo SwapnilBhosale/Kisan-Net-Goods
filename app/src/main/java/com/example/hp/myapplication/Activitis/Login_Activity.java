@@ -215,9 +215,13 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                         Languages lang = lang_list.get(pos);
                         Log.d(TAG, "lang: "+ lang.toString());
                         setLocale(lang);
-                        Intent intent = new Intent(Login_Activity.this,Login_Activity.class);
+                        /*Intent intent = new Intent(Login_Activity.this,Login_Activity.class);
                         startActivity(intent);
-                        Login_Activity.this.finish();
+                        Login_Activity.this.finish();*/
+                        Intent intent = getIntent();
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        finish();
+                        startActivity(intent);
                     }
                 });
             }
@@ -508,6 +512,12 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
     private boolean isMobileValid(String mobileNo) {
         //TODO: Replace this with your own logic
         return mobileNo.length() == 10;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        // refresh your views here
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override
