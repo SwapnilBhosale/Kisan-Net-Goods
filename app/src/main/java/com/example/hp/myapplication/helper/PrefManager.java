@@ -39,6 +39,10 @@ public class PrefManager {
     private static final String KEY_FNAME = "fname";
     private static final String KEY_LNAME = "lname";
     private static final String KEY_MOBILE = "mobile";
+    private static final String KEY_ADDRESS = "address";
+    private static final String KEY_CITY = "city";
+    private static final String KEY_STATE = "state";
+    private static final String KEY_PINCODE = "pincode";
     private static final String KEY_CUSTOMER_ID = "customerId";
     private static final String KEY_SESSION_KEY = "sessionKey";
     private static final String KEY_APP_LANG = "appLang";
@@ -100,6 +104,43 @@ public class PrefManager {
         editor.commit();
     }
 
+    public String getAddress() {
+        return pref.getString(KEY_ADDRESS,null);
+    }
+
+    public void setAddress(String add){
+        editor.putString(KEY_ADDRESS,add);
+        editor.commit();
+    }
+
+    public String getCity() {
+        return pref.getString(KEY_CITY,null);
+    }
+
+    public void setCity(String city){
+        editor.putString(KEY_CITY,city);
+        editor.commit();
+    }
+
+    public String getState() {
+        return pref.getString(KEY_STATE,null);
+    }
+
+    public void setState(String state){
+        editor.putString(KEY_STATE,state);
+        editor.commit();
+    }
+
+    public String getPincode() {
+        return pref.getString(KEY_PINCODE,null);
+    }
+
+    public void setPinCode(String pincode){
+        editor.putString(KEY_PINCODE,pincode);
+        editor.commit();
+    }
+
+
     public String getLname() {
         return pref.getString(KEY_LNAME,null);
     }
@@ -123,18 +164,6 @@ public class PrefManager {
         editor.clear();
         editor.commit();
     }
-
-    public HashMap<String, String> getUserDetails() {
-        HashMap<String, String> profile = new HashMap<>();
-        profile.put(KEY_FNAME, pref.getString(KEY_FNAME, null));
-        profile.put(KEY_LNAME, pref.getString(KEY_LNAME, null));
-        profile.put(KEY_MOBILE, pref.getString(KEY_MOBILE, null));
-        profile.put(KEY_APP_LANG, pref.getString(KEY_APP_LANG, null));
-        profile.put(KEY_CUSTOMER_ID, pref.getString(KEY_CUSTOMER_ID, null));
-        profile.put(KEY_SESSION_KEY, pref.getString(KEY_SESSION_KEY, null));
-        return profile;
-    }
-
 
     public void restoreAppLanguage(){
         /**

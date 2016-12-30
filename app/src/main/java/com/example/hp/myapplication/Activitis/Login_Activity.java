@@ -342,6 +342,10 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                                 pref.setLname(data.getString("lastname"));
                                 pref.setSessionKey(data.getString("session_key"));
                                 pref.setMobile(mobileNo);
+                                pref.setAddress(data.getString("address"));
+                                pref.setState(data.getString("state"));
+                                pref.setCity(data.getString("city"));
+                                pref.setPinCode(data.getString("postal_code"));
                                 Log.d(TAG, "Response success. Will be opening enter OTP screen" + jsonArray.toString());
 
 

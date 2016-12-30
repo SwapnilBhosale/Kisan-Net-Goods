@@ -598,6 +598,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         pref.setSessionKey(null);
         pref.setMobile(null);
         pref.setIsLoggedIn(false);
+        pref.setAddress(null);
+        pref.setPinCode(null);
+        pref.setCity(null);
+        pref.setState(null);
         Intent i = new Intent(this, Login_Activity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         finish();  //Kill the activity from which you will go to next activity
