@@ -2,6 +2,7 @@ package com.example.hp.myapplication.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -129,10 +130,13 @@ public class Open_Item extends Fragment {
                     @Override
                     public void onClick(View view) {
 
+
                         String quantity =prod_quantity.getText().toString();
                         String url;
-                        if(isUpdateCart){
-                            url = Config.UPDATE_CART_URL+"customer_id=" + new PrefManager(Config.getContext()).getCustomerId() + "&customer_basket_id=" +basket_id+"&quantity="+quantity;
+                        CartItem item = isProductInCart(product_id);
+                        if(item!=null){
+                            int quan = Integer.parseInt(quantity) + Integer.parseInt(item.getQuantity());
+                            url = Config.UPDATE_CART_URL+"customer_id=" + new PrefManager(Config.getContext()).getCustomerId() + "&customer_basket_id=" +item.getBasketId()+"&quantity="+quan;
                         }else{
                             url = Config.ADD_TO_CART_URL+"customer_id="+new PrefManager(Config.getContext()).getCustomerId()+"&price="+f.getProduct_Price()+"&quantity="+quantity+"&product_id="+product_id;
                         }
@@ -143,19 +147,16 @@ public class Open_Item extends Fragment {
                                     new Response.Listener<JSONObject>() {
                                         @Override
                                         public void onResponse(JSONObject response) {
+                                            btn_cart_button.setEnabled(true);
                                             Log.d(TAG, "onResponse: "+response.toString());
                                             pd.dismiss();
                                             try{
                                                 final boolean isSuccess = response.getBoolean("status");
                                                 Log.d(TAG, "isSuccess: "+isSuccess);
                                                 if(isSuccess){
-                                                    if(isUpdateCart)
-                                                        Toast.makeText(getContext(),R.string.update_cart_success,Toast.LENGTH_LONG).show();
-                                                    else {
+                                                        //Toast.makeText(getContext(),R.string.update_cart_success,Toast.LENGTH_LONG).show();
                                                         Toast.makeText(getContext(), R.string.add_to_cart_success, Toast.LENGTH_LONG).show();
                                                         loadCartData();
-                                                    }
-
                                                 }
 
                                             }catch (Exception e){
@@ -166,12 +167,14 @@ public class Open_Item extends Fragment {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     pd.dismiss();
+                                    btn_cart_button.setEnabled(false);
                                     Log.e(TAG, "onErrorResponse: ", error);
                                 }
                             });
 
                             Volley.newRequestQueue(getActivity()).add(category_request);
                             pd.show();
+                            btn_cart_button.setEnabled(true);
                         }catch (Exception e){
                             e.getMessage();
                         }
