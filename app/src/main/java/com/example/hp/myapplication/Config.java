@@ -147,11 +147,11 @@ public class Config extends Application {
                             for(int i=0;i<jsonArray.length();i++){
                                 JSONObject obj = jsonArray.getJSONObject(i);
                                 lang = new Languages(obj.getInt("language_id"),obj.getString("code"),obj.getString("name"));
-                                if(pref.getAppLangId().isEmpty()){
-                                    if(lang.getLanguageName().equalsIgnoreCase("marathi")){
+                                /*if(pref.getAppLangId().isEmpty()){
+                                    if(lang.getLanguageName().equalsIgnoreCase("मराठी")){
                                         pref.setAppLangId(lang.getLanguageCode());
                                     }
-                                }
+                                }*/
                                 Config.languageList.add(lang);
                             }
                             //Config.languageList = mList;

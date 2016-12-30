@@ -57,6 +57,7 @@ public class Splash_Activity extends AppCompatActivity {
                     startActivity(i);
                     Splash_Activity.this.finish();*/
                     Intent i = getIntent();
+                    pref.setAppLangId("1");
                     i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     finish();
                     startActivity(i);

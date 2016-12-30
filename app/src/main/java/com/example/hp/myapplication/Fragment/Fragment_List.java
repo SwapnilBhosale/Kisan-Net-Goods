@@ -151,7 +151,7 @@ public class Fragment_List extends Fragment {
                             Categoris categoris = (Categoris) adapterView.getItemAtPosition(i);
                             categoris.getCategory_name();
 
-                            if(categoris.getCategory_name().equalsIgnoreCase("fertilizers")) {
+                            if(categoris.getCategory_name().equalsIgnoreCase("fertilizers") || categoris.getCategory_name().equalsIgnoreCase("खते")) {
 
                                 FragmentManager fm = getActivity().getSupportFragmentManager();
                                 FragmentTransaction ft = fm.beginTransaction();
