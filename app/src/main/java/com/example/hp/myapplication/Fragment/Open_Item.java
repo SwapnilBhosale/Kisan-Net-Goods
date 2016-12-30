@@ -155,6 +155,7 @@ public class Open_Item extends Fragment {
                                             pd.dismiss();
                                             try{
                                                 final boolean isSuccess = response.getBoolean("status");
+                                                Log.d(TAG, "isSuccess: "+isSuccess);
                                                 if(isSuccess){
                                                     if(isUpdateCart)
                                                         Toast.makeText(getContext(),R.string.update_cart_success,Toast.LENGTH_LONG).show();
