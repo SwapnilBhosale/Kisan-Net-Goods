@@ -7,14 +7,17 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hp.myapplication.Config;
@@ -57,6 +61,11 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
     private PopupWindow mPopupWindow = null;
 
     ProgressDialog pd;
+
+    ImageView cancel_button;
+    Button popup_button ;
+    EditText otp_text_box ;
+    AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,38 +229,57 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
 
 
                                 Log.d(TAG, "Response success. Will be opening enter OTP screen");
-                                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-                                // Inflate the custom layout/view
-                                View customView = inflater.inflate(R.layout.otp_pop_up, null);
+                                AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(Register_Activity.this);
 
-                                mPopupWindow = new PopupWindow(
-                                        customView,
-                                        LinearLayout.LayoutParams.MATCH_PARENT,
-                                        LinearLayout.LayoutParams.MATCH_PARENT
-                                );
+                                // ...Irrelevant code for customizing the buttons and title
+                                // dialogBuilder.setTitle("Order History");
+                                LayoutInflater inflater = getLayoutInflater();
+                                View dialogView = inflater.inflate(R.layout.otp_pop_up, null);
+                                dialogBuilder.setView(dialogView);
 
-                                Log.d(TAG, "mPopupWindow: " + mPopupWindow);
-                                if (Build.VERSION.SDK_INT >= 21) {
-                                    mPopupWindow.setElevation(5.0f);
+                                cancel_button = (ImageView) dialogView.findViewById(R.id.cancel_button);
+                                popup_button = (Button) dialogView.findViewById(R.id.otp_btn);
+                                otp_text_box = (EditText) dialogView.findViewById(R.id.otp_text_box);
+
+
+
+                                alertDialog = dialogBuilder.create();
+                                alertDialog.setCanceledOnTouchOutside(false);
+                                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                lp.copyFrom(alertDialog.getWindow().getAttributes());
+                                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                                alertDialog.show();
+
+                                try {
+                                    popup_button.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                                /*Intent in = new Intent(Login_Activity.this, MainActivity.class);
+                                                startActivity(in);*/
+                                            //String otp = otp_text_box.getText().toString();
+
+                                            verifyOtp();
+                                            //alertDialog.dismiss();
+                                        }
+                                    });
+
+                                } catch (Exception e) {
+                                    e.getMessage();
+                                    Log.e("submit", "onClick: ",e );
                                 }
+                                try {
+                                    cancel_button.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
 
-                                // Get a reference for the custom view close button
-                                Button closeButton = (Button) customView.findViewById(R.id.otp_btn);
+                                            alertDialog.dismiss();
+                                        }
+                                    });
 
-                                // Set a click listener for the popup window close button
-                                closeButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        // Dismiss the popup window
-
-                                        Intent in = new Intent(Register_Activity.this, MainActivity.class);
-                                        startActivity(in);
-                                        mPopupWindow.dismiss();
-                                    }
-                                });
-                                mPopupWindow.showAtLocation(main_layout, Gravity.CENTER, 0, 0);
-
-
+                                } catch (Exception e) {
+                                    e.getMessage();
+                                }
                             } else {
                                 //error in registartion
                                 //do error handling
@@ -297,6 +325,63 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                 Log.e(TAG, "attemptLogin: " + e.getMessage(), e);
             }
         }
+    }
+
+    private void verifyOtp() {
+        String otp = (otp_text_box.getText().toString()).trim();
+        if(TextUtils.isEmpty(otp) || (otp.length() != 6)){
+            otp_text_box.setError(getString(R.string.error_empty_otp));
+        }else{
+            PrefManager pref = new PrefManager(Config.getContext());
+            String verify_otp_url_with_param = Config.VERIFY_OTP_URL+"?otp="+otp+"&session_key="+pref.getSessionKey()+"&customer_id="+pref.getCustomerId();
+            Log.d(TAG, "verifyOtp() called with: otp = [" + otp + "] url : "+verify_otp_url_with_param);
+
+            JsonObjectRequest verify_otp_req = new JsonObjectRequest(Request.Method.GET,verify_otp_url_with_param,null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d(TAG, "onResponse: verify OTP "+response.toString());
+                    pd.dismiss();
+                    try{
+                        final boolean isSuccess = response.getBoolean("status");
+                        if(isSuccess){
+                            //put in shared preference here
+                            PrefManager pref = new PrefManager(Config.getContext());
+
+                            pref.setIsLoggedIn(true);
+                            //Stop spinner and open home activitys
+                            statMainActivity();
+                        }else{
+                            int errorCode = response.getJSONObject("error").getInt("errorCode");
+                            if(errorCode == 15)
+                                otp_text_box.setError(getString(R.string.error_wrong_otp));
+                        }
+                    }catch (Exception e){
+                        Log.e(TAG, "onResponse: "+response.toString(),e);
+                    }
+
+                }
+            },new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d(TAG, "Error: " + error.getMessage());
+                    Toast.makeText(Register_Activity.this,
+                            error.getMessage(), Toast.LENGTH_SHORT).show();
+                    // hide the progress dialog
+                    pd.dismiss();
+
+                }
+            });
+            Volley.newRequestQueue(this).add(verify_otp_req);
+            pd.show();
+        }
+
+    }
+
+    private void statMainActivity(){
+        Log.d(TAG, "Started main activity");
+        Intent i = new Intent(Config.getContext(), MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Config.getContext().startActivity(i);
     }
 
    /* private void showProgress(){

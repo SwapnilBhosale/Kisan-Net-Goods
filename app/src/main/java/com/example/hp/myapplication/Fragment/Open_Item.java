@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -132,7 +133,11 @@ public class Open_Item extends Fragment {
                     public void onClick(View view) {
 
 
-                        String quantity =prod_quantity.getText().toString();
+                        String quantity =prod_quantity.getText().toString().trim();
+                        if(TextUtils.isEmpty(quantity)){
+                            prod_quantity.setError(getString(R.string.error_no_quantity));
+                            return;
+                        }
                         String url;
                         CartItem item = isProductInCart(product_id);
                         if(item!=null){

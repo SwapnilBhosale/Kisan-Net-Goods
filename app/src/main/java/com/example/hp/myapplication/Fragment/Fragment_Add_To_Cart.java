@@ -159,6 +159,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                             try {
                                 final boolean isSuccess = response.getBoolean("status");
                                 if (isSuccess) {
+                                    checkout_btn.setEnabled(true);
                                     JSONObject obj = response.getJSONObject("data");
                                     JSONArray arr = obj.getJSONArray("productData");
                                     for (int i = 0; i < arr.length(); i++) {
@@ -184,6 +185,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                                     if(response.getJSONObject("error").getInt("errorCode") == 10){
 
                                         Snackbar.make(getView(),R.string.error_no_item_in_cart,Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                                        checkout_btn.setEnabled(false);
                                     }
                                 }
                             } catch (Exception e) {

@@ -61,4 +61,5 @@
     <string name="logout_confirmation">Do you really want to logout ?</string>
     <string name="error_empty_otp">Please enter OTP</string>
     <string name="error_wrong_otp">Please enter right OTP</string>
+    <string name="error_no_quantity">Please enter quantity.</string>
 </resources>

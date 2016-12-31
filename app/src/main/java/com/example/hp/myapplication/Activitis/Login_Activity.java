@@ -253,7 +253,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
         {
             if (ContextCompat.checkSelfPermission(Config.getContext(), Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(Login_Activity.this, Manifest.permission.READ_SMS)) {
-                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mContext);
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(Login_Activity.this);
                     alertBuilder.setCancelable(true);
                     alertBuilder.setTitle("Permission necessary");
                     alertBuilder.setMessage("Read SMS permission is necessary!!!");
@@ -314,7 +314,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
 
         boolean cancel = false;
         View focusView = null;
-        if( !TextUtils.isEmpty(mobileNo) && !isMobileValid(mobileNo)) {
+        if( TextUtils.isEmpty(mobileNo) || !isMobileValid(mobileNo)) {
             mobileNoView.setError("check mobile no");
             focusView = mobileNoView;
             focusView.requestFocus();
@@ -523,7 +523,9 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                             //Stop spinner and open home activitys
                             statMainActivity();
                         }else{
-                            otp_text_box.setError(getString(R.string.error_wrong_otp));
+                            int errorCode = response.getJSONObject("error").getInt("errorCode");
+                            if(errorCode == 15)
+                                otp_text_box.setError(getString(R.string.error_wrong_otp));
                         }
                     }catch (Exception e){
                         Log.e(TAG, "onResponse: "+response.toString(),e);
