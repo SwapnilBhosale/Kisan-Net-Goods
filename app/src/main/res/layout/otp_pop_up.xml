@@ -58,7 +58,7 @@
             />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/otp_text_box"
             android:layout_width="160dp"
             android:layout_height="30dp"
             android:layout_weight="1"

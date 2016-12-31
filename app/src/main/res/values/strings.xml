@@ -59,4 +59,6 @@
     <string name="update_profile_button">Update</string>
     <string name="exit_confirmation">Do you really want to exit ?</string>
     <string name="logout_confirmation">Do you really want to logout ?</string>
+    <string name="error_empty_otp">Please enter OTP</string>
+    <string name="error_wrong_otp">Please enter right OTP</string>
 </resources>

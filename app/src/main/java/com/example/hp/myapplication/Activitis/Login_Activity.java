@@ -46,6 +46,7 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
@@ -81,6 +82,11 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
     public static final int MY_PERMISSIONS_REQUEST_SMS_READ = 123;
     ProgressDialog pd;
     private int pos;
+    ImageView cancel_button;
+    Button popup_button ;
+    EditText otp_text_box ;
+    AlertDialog alertDialog;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -115,18 +121,6 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
         PrefManager pref = new PrefManager(getApplicationContext());
         boolean isLogged = pref.isLoggedIn();
         return isLogged;
-    }
-
-    class TestMe {
-        String lang;
-
-        public String getLang() {
-            return lang;
-        }
-
-        public void setLang(String lang) {
-            this.lang = lang;
-        }
     }
 
     private void setListners() {
@@ -290,7 +284,8 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //writeCalendarEvent();
                 } else {
-//code for deny
+                    //code for deny
+                    Toast.makeText(this,"We need permission to read message. Please approve",Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -399,12 +394,13 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                                     dialogBuilder.setView(dialogView);
 
 
-                                    ImageView cancel_button = (ImageView) dialogView.findViewById(R.id.cancel_button);
-                                    Button popup_button = (Button) dialogView.findViewById(R.id.otp_btn);
+                                    cancel_button = (ImageView) dialogView.findViewById(R.id.cancel_button);
+                                    popup_button = (Button) dialogView.findViewById(R.id.otp_btn);
+                                    otp_text_box = (EditText) dialogView.findViewById(R.id.otp_text_box);
 
 
 
-                                    final AlertDialog alertDialog = dialogBuilder.create();
+                                    alertDialog = dialogBuilder.create();
                                     alertDialog.setCanceledOnTouchOutside(false);
                                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                                     lp.copyFrom(alertDialog.getWindow().getAttributes());
@@ -416,9 +412,12 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                                         popup_button.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
-                                                Intent in = new Intent(Login_Activity.this, MainActivity.class);
-                                                startActivity(in);
-                                                alertDialog.dismiss();
+                                                /*Intent in = new Intent(Login_Activity.this, MainActivity.class);
+                                                startActivity(in);*/
+                                                String otp = otp_text_box.getText().toString();
+
+                                                verifyOtp();
+                                                //alertDialog.dismiss();
                                             }
                                         });
 
@@ -498,6 +497,61 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
             }
 
         }
+    }
+
+    private void verifyOtp() {
+        String otp = (otp_text_box.getText().toString()).trim();
+        if(TextUtils.isEmpty(otp) || (otp.length() != 6)){
+            otp_text_box.setError(getString(R.string.error_empty_otp));
+        }else{
+            PrefManager pref = new PrefManager(Config.getContext());
+            String verify_otp_url_with_param = Config.VERIFY_OTP_URL+"?otp="+otp+"&session_key="+pref.getSessionKey()+"&customer_id="+pref.getCustomerId();
+            Log.d(TAG, "verifyOtp() called with: otp = [" + otp + "] url : "+verify_otp_url_with_param);
+
+            JsonObjectRequest verify_otp_req = new JsonObjectRequest(Request.Method.GET,verify_otp_url_with_param,null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d(TAG, "onResponse: verify OTP "+response.toString());
+                    pd.dismiss();
+                    try{
+                        final boolean isSuccess = response.getBoolean("status");
+                        if(isSuccess){
+                            //put in shared preference here
+                            PrefManager pref = new PrefManager(Config.getContext());
+
+                            pref.setIsLoggedIn(true);
+                            //Stop spinner and open home activitys
+                            statMainActivity();
+                        }else{
+                            otp_text_box.setError(getString(R.string.error_wrong_otp));
+                        }
+                    }catch (Exception e){
+                        Log.e(TAG, "onResponse: "+response.toString(),e);
+                    }
+
+                }
+            },new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d(TAG, "Error: " + error.getMessage());
+                    Toast.makeText(Login_Activity.this,
+                            error.getMessage(), Toast.LENGTH_SHORT).show();
+                    // hide the progress dialog
+                    pd.dismiss();
+
+                }
+            });
+            Volley.newRequestQueue(this).add(verify_otp_req);
+            pd.show();
+        }
+
+    }
+
+    private void statMainActivity(){
+        Log.d(TAG, "Started main activity");
+        Intent i = new Intent(Config.getContext(), MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Config.getContext().startActivity(i);
     }
 
     private void initiolizeId() {

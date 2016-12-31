@@ -62,4 +62,6 @@
     <string name="exit_confirmation">आपण खरोखर एप्लिकेशन बंद करू इच्छिता का ?</string>
     <string name="logout_confirmation">आपण खरोखर लॉगआऊट करू इच्छिता का ?</string>
 
+    <string name="error_empty_otp">Please enter OTP</string>
+    <string name="error_wrong_otp">Please enter right OTP</string>
 </resources>

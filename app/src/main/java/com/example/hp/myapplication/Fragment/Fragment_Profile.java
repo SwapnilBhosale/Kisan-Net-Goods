@@ -73,7 +73,7 @@ public class Fragment_Profile extends Fragment {
     }
 
     private JSONObject getRegisterJsonBody() throws JSONException {
-        return new JSONObject("{\"firstName\" : \"" + fname.getText().toString() + "\",\"lastName\" : \"" + lname.getText().toString() + "\",\"address\" : \"" + address.getText().toString() + "\",\"mobile\" : \"" + mobile.getText().toString() + "\",\"state\" : \"" + state.getText().toString() + "\",\"city\" : \"" + city.getText().toString() + "\",\"postal_code\" : \"" + pincode.getText().toString() + "\"}");
+        return new JSONObject("{\"customer_id\" : \""+new PrefManager(Config.getContext()).getCustomerId()+"\",\"firstName\" : \"" + fname.getText().toString() + "\",\"lastName\" : \"" + lname.getText().toString() + "\",\"address\" : \"" + address.getText().toString() + "\",\"mobile\" : \"" + mobile.getText().toString() + "\",\"state\" : \"" + state.getText().toString() + "\",\"city\" : \"" + city.getText().toString() + "\",\"postal_code\" : \"" + pincode.getText().toString() + "\"}");
     }
 
     private ProgressDialog getProgressBar(){
@@ -82,7 +82,7 @@ public class Fragment_Profile extends Fragment {
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         // Set the progress dialog title and message
         pd.setMessage(Config.getContext().getResources().getString(R.string.loading));
-        // Set the progress dialog background color
+        // Set the progress dialog backg    round color
         //pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFD4D9D0")));
         pd.setIndeterminate(false);
         pd.setCancelable(false);

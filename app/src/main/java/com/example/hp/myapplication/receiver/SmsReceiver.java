@@ -29,7 +29,7 @@ import org.json.JSONObject;
 public class SmsReceiver extends BroadcastReceiver {
 
     private static final String TAG = SmsReceiver.class.getSimpleName();
-    private static String verify_OTP_url = Config.BASE_URL+"/users/verifyOTP";
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -65,7 +65,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
     private void verifyOtp(String otp, final Context context){
         PrefManager pref = new PrefManager(context);
-        String verify_otp_url_with_param = verify_OTP_url+"?otp="+otp+"&session_key="+pref.getSessionKey()+"&customer_id="+pref.getCustomerId();
+        String verify_otp_url_with_param = Config.VERIFY_OTP_URL+"?otp="+otp+"&session_key="+pref.getSessionKey()+"&customer_id="+pref.getCustomerId();
         Log.d(TAG, "verifyOtp() called with: otp = [" + otp + "] url : "+verify_otp_url_with_param);
 
         JsonObjectRequest verify_otp_req = new JsonObjectRequest(Request.Method.GET,verify_otp_url_with_param,null, new Response.Listener<JSONObject>() {
