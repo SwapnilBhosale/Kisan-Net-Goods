@@ -4,7 +4,7 @@
     android:background="#fcfcfc"
     android:orientation="vertical"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+   >
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/grid_image"
         android:layout_width="100dp"
@@ -17,9 +17,12 @@
         android:id="@+id/grid_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/text_gradient"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="-10dp"
         android:textColor="#ffffff"
         android:gravity="center_horizontal|center_vertical"
         android:text="Text"

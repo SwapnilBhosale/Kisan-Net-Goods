@@ -94,11 +94,7 @@ public class Fragment_Checkout1 extends Fragment {
             @Override
             public void onClick(View view) {
 
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart());
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
+              getActivity().finish();
 
             }
         });

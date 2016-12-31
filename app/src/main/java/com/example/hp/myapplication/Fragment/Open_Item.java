@@ -121,6 +121,7 @@ public class Open_Item extends Fragment {
 
                 //  loadData();
                 initiolizeId(view);
+                prod_quantity.requestFocus();
                 if(isUpdateCart) {
                     btn_cart_button.setText(R.string.update_cart);
                     prod_quantity.setText(updateQuantity);

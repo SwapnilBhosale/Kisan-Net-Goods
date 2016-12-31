@@ -92,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:text="1036"
                 android:layout_marginTop="15dp"
+                android:drawablePadding="-5dp"
                 android:drawableLeft="@drawable/rupi1"
                 android:textColor="#218B00"
                 android:textSize="18sp"/>
