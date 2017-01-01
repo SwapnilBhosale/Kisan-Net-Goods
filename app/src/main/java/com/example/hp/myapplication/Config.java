@@ -33,7 +33,7 @@ import java.util.Locale;
 
 public class Config extends Application {
 
-    public static final String BASE_URL = "http://kisannetgoods.in";
+    public static final String BASE_URL = "http://192.168.43.226:8080";
     public static final String SMS_ORIGIN = "KISANG";
     public static final String OTP_DELIMITER = ":";
     public static final String LOGIN_API_URL = BASE_URL+"/users/login";
@@ -57,6 +57,7 @@ public class Config extends Application {
     public static String BACKGROUND_URL = BASE_URL+"/images/logos/background.jpg";
     public static String UPDATE_PROFILE_URL = BASE_URL+"/users/updateInfo";
     public static String VERIFY_OTP_URL = Config.BASE_URL+"/users/verifyOTP";
+    public static String BANNER_URL = Config.BASE_URL+"/getBanner?lang=";
 
     public static final String TAG = Config.class.getSimpleName();
     public static String OTP_SCREEN="";

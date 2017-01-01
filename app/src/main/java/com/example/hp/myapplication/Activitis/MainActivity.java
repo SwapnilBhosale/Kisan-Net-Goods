@@ -51,6 +51,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.hp.myapplication.Banner;
 import com.example.hp.myapplication.CartItem;
 import com.example.hp.myapplication.CircleTransform;
 import com.example.hp.myapplication.Config;
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String TAG = MainActivity.class.getSimpleName();
     private int pos;
     NavigationView navigationView;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -133,6 +135,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //TextView website = (TextView) hView.findViewById(R.id.website);
 
         Glide.with(this).load(Config.BACKGROUND_URL)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(background);Glide.with(this).load(Config.BACKGROUND_URL)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(background);

@@ -41,6 +41,9 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.hp.myapplication.Banner;
 import com.example.hp.myapplication.Categoris;
 import com.example.hp.myapplication.Config;
 import com.example.hp.myapplication.HelperProgressDialogue;
@@ -60,15 +63,14 @@ public class Fragment_List extends Fragment {
     private ViewPager pager;
     private TextView[] dots;
     //private LinearLayout dotsLayout;
-    private ViewPagerAdapter viewPagerAdapter;
     View view;
-    private ArrayList<Integer> items;
     public ImageLoader imageLoader = Config.getInstance().getImageLoader();
 
     public List<Categoris> list_categories = new ArrayList<Categoris>();
     ProgressDialog pd;
     private String TAG = Fragment_List.class.getSimpleName();
     public boolean initialized = false;
+    List<Banner> bannerList = new ArrayList<Banner>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,14 +105,11 @@ public class Fragment_List extends Fragment {
                 intialize_Ids(view);
 
                 pager.setOffscreenPageLimit(1);
-                items = new ArrayList<>();
-                items.add(R.drawable.chicken);
-                items.add(R.drawable.chicken1);
-                items.add(R.drawable.chicken3);
 
 
-                viewPagerAdapter = new ViewPagerAdapter(items);
-                pager.setAdapter(viewPagerAdapter);
+
+
+
                 pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -133,11 +132,16 @@ public class Fragment_List extends Fragment {
 
                 //lsit view here
                 CustomEventAdapter event_list = new CustomEventAdapter(getActivity(),list_categories);
-                if(initialized == false)
+                ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(bannerList);
+                if(initialized == false) {
                     loadData(event_list);
-                else
+                    loadBanner(viewPagerAdapter);
+                }else {
                     home_list.setVisibility(View.VISIBLE);
+                    pager.setVisibility(View.VISIBLE);
+                }
                 home_list.setAdapter(event_list);
+                pager.setAdapter(viewPagerAdapter);
                // setListViewHeightBasedOnChildren(home_list);
                // setListener();
                 try {
@@ -194,6 +198,76 @@ public class Fragment_List extends Fragment {
         pd.setCancelable(false);
         // Finally, show the progress dialog
         pd.show();
+    }
+
+    private void loadBanner(final ViewPagerAdapter adapter) {
+        PrefManager pref = new PrefManager(Config.getContext());
+        String url = Config.BANNER_URL+""+pref.getAppLangId();
+        Log.d(TAG, "loadBanner URL: "+url);
+        try {
+            final JsonObjectRequest category_request = new JsonObjectRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                final boolean isSuccess = response.getBoolean("status");
+
+                                if (isSuccess) {
+                                    Log.d(TAG, "onResponse: BannerListSize : "+bannerList.size());
+                                    JSONArray obj = response.getJSONArray("data");
+                                    for (int i = 0; i < obj.length(); i++) {
+
+                                        JSONObject jsonObject = obj.getJSONObject(i);
+                                        Banner banner = new Banner();
+                                        banner.setBannerId(jsonObject.getString("banner_id"));
+                                        banner.setBannerTitle(jsonObject.getString("banner_title"));
+                                        banner.setBannerImage(jsonObject.getString("banner_image"));
+                                        bannerList.add(banner);
+                                    }
+                                    adapter.notifyDataSetChanged();
+                                }else{
+                                    //if(response.getJSONObject("error").getInt("errorCode") == 10){
+
+                                    //Snackbar.make(getView(),"Sorry! no items in the cart",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                                    Log.e(TAG, "OnLoadCartDataError: "+response.getJSONObject("error").getString("errorMessage"));
+                                    // }
+                                }
+                            } catch (Exception e) {
+                                Log.e("cart", "onResponse: ", e);
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    //pd.dismiss();
+                    //Log.e(TAG, "LoadCartData: ", error);
+                    Log.d(TAG, "Error: " + volleyError.getMessage());
+
+                    // hide the progress dialog
+                    //pd.dismiss();
+                    String message = null;
+                    if (volleyError instanceof NetworkError) {
+                        message = "Cannot connect to Internet...Please check your connection!";
+                    } else if (volleyError instanceof ServerError) {
+                        message = "The server could not be found. Please try again after some time!!";
+                    } else if (volleyError instanceof AuthFailureError) {
+                        message = "Cannot connect to Internet...Please check your connection!";
+                    } else if (volleyError instanceof ParseError) {
+                        message = "Parsing error! Please try again after some time!!";
+                    } else if (volleyError instanceof NoConnectionError) {
+                        message = "Cannot connect to Internet...Please check your connection!";
+                    } else if (volleyError instanceof TimeoutError) {
+                        message = "Connection TimeOut! Please check your internet connection.";
+                    }
+                    Toast.makeText(getActivity(),message, Toast.LENGTH_LONG).show();
+                }
+            });
+
+            Volley.newRequestQueue(getActivity()).add(category_request);
+            //   pd.show();
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 
     private void loadData(final CustomEventAdapter adapter) {
@@ -295,18 +369,18 @@ public class Fragment_List extends Fragment {
     public class ViewPagerAdapter extends PagerAdapter {
 
         private LayoutInflater layoutInflater;
-        private ArrayList<Integer> items;
+        private List<Banner> bannerData;
         public int pos = 0;
         private Bitmap bitmap;
         private float image_radius = 0.0f;
 
-        public ViewPagerAdapter(ArrayList<Integer> listOfItems) {
-            this.items = listOfItems;
+        public ViewPagerAdapter(List<Banner> bannerData) {
+            this.bannerData = bannerData;
         }
 
         @Override
         public int getCount() {
-            return Integer.MAX_VALUE;
+            return bannerData.size();
         }
 
         @Override
@@ -316,21 +390,19 @@ public class Fragment_List extends Fragment {
             View view = layoutInflater.inflate(R.layout.view_pager_item, container, false);
             ImageView starter_imageView = (ImageView) view.findViewById(R.id.slider_image);
 
-            bitmap = BitmapFactory.decodeResource(getResources(), items.get(pos));
-            starter_imageView.setImageBitmap(bitmap);
-            RoundedBitmapDrawable RBD = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-            RBD.setCornerRadius(image_radius);
-            RBD.setAntiAlias(true);
-            starter_imageView.setImageDrawable(RBD);
+            Glide.with(getActivity()).load(Config.BASE_URL+""+bannerData.get(position).getBannerImage())
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(starter_imageView);
             // starter_imageView.setImageResource(items.get(pos));
             container.addView(view);
-            if (pos >= items.size() - 1)
+            if (pos >= bannerList.size() - 1)
                 pos = 0;
             else
                 ++pos;
 
 
-//            container.addView(view);
+            //container.addView(view);
             return view;
         }
 

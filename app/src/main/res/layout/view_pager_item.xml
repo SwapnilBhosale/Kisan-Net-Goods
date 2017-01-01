@@ -8,12 +8,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-       <com.android.volley.toolbox.NetworkImageView
+       <ImageView
            android:id="@+id/slider_image"
            android:layout_width="match_parent"
            android:layout_height="170dp"
-           android:scaleType="fitXY"
-           android:src="@mipmap/ic_launcher"/>
+           android:scaleType="fitXY"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,11 +20,11 @@
             android:layout_marginTop="-150dp"
             android:orientation="vertical">
 
-            <com.android.volley.toolbox.NetworkImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="70dp"
-                android:src="@drawable/man"/>
+            <!--<com.android.volley.toolbox.NetworkImageView-->
+                <!--android:layout_width="70dp"-->
+                <!--android:layout_height="70dp"-->
+                <!--android:layout_marginLeft="70dp"-->
+                <!--android:src="@drawable/man"/>-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
                     android:orientation="vertical">
-                    <TextView
+                   <!-- <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Once food 0 Zone 5"
@@ -54,7 +53,7 @@
                         android:text="Upto 60% off"
                         android:textColor="#000000"
                         android:textStyle="bold"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp"/>-->
 
                 </LinearLayout>
 
