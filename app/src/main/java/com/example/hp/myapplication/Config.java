@@ -59,6 +59,7 @@ public class Config extends Application {
     public static String VERIFY_OTP_URL = Config.BASE_URL+"/users/verifyOTP";
 
     public static final String TAG = Config.class.getSimpleName();
+    public static String OTP_SCREEN="";
 
     public String langauge_code;
 

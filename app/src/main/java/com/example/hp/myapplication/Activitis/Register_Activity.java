@@ -64,7 +64,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
 
     ImageView cancel_button;
     Button popup_button ;
-    EditText otp_text_box ;
+    public static EditText otp_text_box ;
     AlertDialog alertDialog;
 
     @Override
@@ -209,8 +209,8 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                             if (isSuccess) {
                                 //open verifyOTP screen
 
-
-                                Log.d(TAG, "opening OTP from register activiyt");
+                                Config.OTP_SCREEN = "register";
+                                Log.d(TAG, "opening OTP from register activiy");
                                 PrefManager pref = new PrefManager(getApplicationContext());
 
                                 //JSONArray jsonArray = response.getJSON("data");

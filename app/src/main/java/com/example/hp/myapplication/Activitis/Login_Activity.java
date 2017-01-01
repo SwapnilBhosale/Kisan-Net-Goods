@@ -84,7 +84,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
     private int pos;
     ImageView cancel_button;
     Button popup_button ;
-    EditText otp_text_box ;
+    public static EditText otp_text_box ;
     AlertDialog alertDialog;
 
     /**
@@ -331,7 +331,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                             final boolean isSuccess = response.getBoolean("status");
                             if(isSuccess){
 
-
+                                Config.OTP_SCREEN = "login";
                                 PrefManager pref = new PrefManager(getApplicationContext());
 
                                 JSONArray jsonArray = response.getJSONArray("data");

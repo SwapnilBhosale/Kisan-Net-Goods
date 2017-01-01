@@ -14,7 +14,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.hp.myapplication.Activitis.Login_Activity;
 import com.example.hp.myapplication.Activitis.MainActivity;
+import com.example.hp.myapplication.Activitis.Register_Activity;
 import com.example.hp.myapplication.Config;
 import com.example.hp.myapplication.helper.PrefManager;
 import com.example.hp.myapplication.service.HttpService;
@@ -54,7 +56,6 @@ public class SmsReceiver extends BroadcastReceiver {
                     String verificationCode = getVerificationCode(message);
 
                     Log.e(TAG, "OTP received: " + verificationCode);
-
                     verifyOtp(verificationCode,context);
                 }
             }
@@ -64,6 +65,10 @@ public class SmsReceiver extends BroadcastReceiver {
     }
 
     private void verifyOtp(String otp, final Context context){
+        if(Config.OTP_SCREEN.equalsIgnoreCase("register"))
+            Register_Activity.otp_text_box.setText(otp);
+        else if(Config.OTP_SCREEN.equalsIgnoreCase("login"))
+            Login_Activity.otp_text_box.setText(otp);
         PrefManager pref = new PrefManager(context);
         String verify_otp_url_with_param = Config.VERIFY_OTP_URL+"?otp="+otp+"&session_key="+pref.getSessionKey()+"&customer_id="+pref.getCustomerId();
         Log.d(TAG, "verifyOtp() called with: otp = [" + otp + "] url : "+verify_otp_url_with_param);
