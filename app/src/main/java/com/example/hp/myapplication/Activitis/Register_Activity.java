@@ -107,7 +107,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
     }
 
     private JSONObject getRegisterJsonBody() throws JSONException {
-        return new JSONObject("{\"firstName\" : \"" + fName.getText().toString() + "\",\"lastName\" : \"" + lName.getText().toString() + "\",\"address\" : \"" + address.getText().toString() + "\",\"mobile\" : \"" + mobileNo.getText().toString() + "\",\"state\" : \"" + state.getText().toString() + "\",\"city\" : \"" + city.getText().toString() + "\",\"postal_code\" : \"" + postalCode.getText().toString() + "\"}");
+        return new JSONObject("{\"language_id\" : "+new PrefManager(Config.getContext()).getAppLanguage()+",\"firstName\" : \"" + fName.getText().toString() + "\",\"lastName\" : \"" + lName.getText().toString() + "\",\"address\" : \"" + address.getText().toString() + "\",\"mobile\" : \"" + mobileNo.getText().toString() + "\",\"state\" : \"" + state.getText().toString() + "\",\"city\" : \"" + city.getText().toString() + "\",\"postal_code\" : \"" + postalCode.getText().toString() + "\"}");
     }
 
     private void initiolizeId() {
@@ -329,7 +329,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
 
     private void verifyOtp() {
         String otp = (otp_text_box.getText().toString()).trim();
-        if(TextUtils.isEmpty(otp) || (otp.length() != 6)){
+        if(TextUtils.isEmpty(otp) || (otp.length() != 4)){
             otp_text_box.setError(getString(R.string.error_empty_otp));
         }else{
             PrefManager pref = new PrefManager(Config.getContext());

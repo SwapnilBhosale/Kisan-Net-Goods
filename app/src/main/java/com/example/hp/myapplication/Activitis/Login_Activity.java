@@ -319,7 +319,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
             focusView = mobileNoView;
             focusView.requestFocus();
         }else{
-            String login_url_with_param = Config.LOGIN_API_URL + "?mobile="+mobileNo;
+            String login_url_with_param = Config.LOGIN_API_URL + "?mobile="+mobileNo+"&language_id="+new PrefManager(Config.getContext()).getAppLanguage();
             try {
                 JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET,login_url_with_param,null, new Response.Listener<JSONObject>() {
                     @Override
@@ -501,7 +501,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
 
     private void verifyOtp() {
         String otp = (otp_text_box.getText().toString()).trim();
-        if(TextUtils.isEmpty(otp) || (otp.length() != 6)){
+        if(TextUtils.isEmpty(otp) || (otp.length() != 4)){
             otp_text_box.setError(getString(R.string.error_empty_otp));
         }else{
             PrefManager pref = new PrefManager(Config.getContext());

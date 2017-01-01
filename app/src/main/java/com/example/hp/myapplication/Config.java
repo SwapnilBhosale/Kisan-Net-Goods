@@ -34,8 +34,8 @@ import java.util.Locale;
 public class Config extends Application {
 
     public static final String BASE_URL = "http://kisannetgoods.in";
-    public static final String SMS_ORIGIN = "VERIFY";
-    public static final String OTP_DELIMITER = "is";
+    public static final String SMS_ORIGIN = "KISANG";
+    public static final String OTP_DELIMITER = ":";
     public static final String LOGIN_API_URL = BASE_URL+"/users/login";
     public static final String GET_LANGUAGES_URL = BASE_URL+"/lang";
     public static final String REGISTER_URL = BASE_URL+"/users/register";
@@ -75,6 +75,7 @@ public class Config extends Application {
     public static final  String KEY_OPEN_ITEM = "Open_Item";
     public static final  String KEY_OPEN_ITEM = "Open_Item";
     public static final  String KEY_OPEN_ITEM = "Open_Item";*/
+
 
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
@@ -191,10 +192,5 @@ public class Config extends Application {
         config.locale = myLocale;
         getApplicationContext().getResources().updateConfiguration(config,getApplicationContext().getResources().getDisplayMetrics());
     }
-
-
-
-
-
 
 }

@@ -117,7 +117,7 @@ public class SmsReceiver extends BroadcastReceiver {
         int index = message.indexOf(Config.OTP_DELIMITER);
 
         if (index != -1) {
-            int start = index + 3;
+            int start = index + 2;
             int length = 6;
             code = message.substring(start, start + length);
             return code;
