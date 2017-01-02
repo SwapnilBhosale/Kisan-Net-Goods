@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,6 +19,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -55,6 +57,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Fragment_List extends Fragment {
@@ -71,6 +75,10 @@ public class Fragment_List extends Fragment {
     private String TAG = Fragment_List.class.getSimpleName();
     public boolean initialized = false;
     List<Banner> bannerList = new ArrayList<Banner>();
+    int currentPage = 0;
+    Timer timer;
+    final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
+    final long PERIOD_MS = 3000;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -141,8 +149,30 @@ public class Fragment_List extends Fragment {
                     pager.setVisibility(View.VISIBLE);
                 }
                 home_list.setAdapter(event_list);
+                //setListViewHeightBasedOnChildren(home_list);
+
+
                 pager.setAdapter(viewPagerAdapter);
-               // setListViewHeightBasedOnChildren(home_list);
+
+                final Handler handler = new Handler();
+                final Runnable Update = new Runnable() {
+                    public void run() {
+                        if (currentPage == 4-1) {
+                            currentPage = 0;
+                        }
+                        pager.setCurrentItem(currentPage++, true);
+                    }
+                };
+
+                timer = new Timer(); // This will create a new Thread
+                timer .schedule(new TimerTask() { // task to be scheduled
+
+                    @Override
+                    public void run() {
+                        handler.post(Update);
+                    }
+                }, 500, 3000);
+                //
                // setListener();
                 try {
 
@@ -421,24 +451,24 @@ public class Fragment_List extends Fragment {
 
 
 
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
+    public static void setListViewHeightBasedOnChildren(ListView home_list) {
+        ListAdapter listAdapter = home_list.getAdapter();
         if (listAdapter == null)
             return;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(home_list.getWidth(), View.MeasureSpec.UNSPECIFIED);
         int totalHeight = 0;
         View view = null;
         for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
+            view = listAdapter.getView(i, view, home_list);
             if (i == 0)
                 view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
 
             view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
             totalHeight += view.getMeasuredHeight();
         }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
+        ViewGroup.LayoutParams params = home_list.getLayoutParams();
+        params.height = totalHeight + (home_list.getDividerHeight() * (listAdapter.getCount() - 1));
+        home_list.setLayoutParams(params);
     }
 
 
