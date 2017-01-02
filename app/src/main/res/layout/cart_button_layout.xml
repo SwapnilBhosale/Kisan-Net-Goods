@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
+    android:id="@+id/option_item_layout"
     android:orientation="vertical"
     android:gravity="center"
     android:layout_gravity="center"
@@ -16,4 +17,22 @@
         android:gravity="center"
         android:layout_margin="0dp"
         android:contentDescription="cart"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cart_no_circle"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="-3dp"/>
+
+        <TextView
+            android:id="@+id/cart_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="7sp"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="18.2dp"
+            android:layout_marginTop="-2dp"
+        />
    </RelativeLayout>

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +62,7 @@ public class Open_Item extends Fragment {
     NetworkImageView prod_image;
     EditText prod_quantity;
     LinearLayout btn_add_to_kart;
+    LinearLayout product_data_layput;
     Button btn_cart_button;
 
     String product_id;
@@ -136,6 +139,7 @@ public class Open_Item extends Fragment {
                         String quantity =prod_quantity.getText().toString().trim();
                         if(TextUtils.isEmpty(quantity)){
                             prod_quantity.setError(getString(R.string.error_no_quantity));
+                            prod_quantity.requestFocus();
                             return;
                         }
                         String url;
@@ -255,6 +259,7 @@ public class Open_Item extends Fragment {
                                     f.setProductInfo(prodList);
                                     CustomEventAdapter event_list = new CustomEventAdapter(getActivity(),prodList);
                                     feture_list.setAdapter(event_list);
+                                     setListViewHeightBasedOnChildren(feture_list);
                                 }
 
                             }catch (Exception e){
@@ -309,6 +314,8 @@ public class Open_Item extends Fragment {
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
     }
+
+
 
     private void loadCartData() {
 
@@ -388,7 +395,6 @@ public class Open_Item extends Fragment {
     }
 
 
-
     private void initiolizeId(View view) {
 
         prod_name = (TextView) view.findViewById(R.id.prod_name);
@@ -400,13 +406,14 @@ public class Open_Item extends Fragment {
         prod_quantity = (EditText) view.findViewById(R.id.prod_quantity);
         btn_add_to_kart = (LinearLayout) view.findViewById(R.id.btn_add_to_kart);
         btn_cart_button = (Button) view.findViewById(R.id.btn_cart_button);
+        product_data_layput = (LinearLayout) view.findViewById(R.id.product_data_layout);
         Log.d("btn_add_to_kart", "btn_add_to_kart: "+btn_add_to_kart.toString());
 
 
     }
 
 
-    public class CustomEventAdapter extends ArrayAdapter {
+    public static class CustomEventAdapter extends ArrayAdapter {
         private FragmentActivity activity;
         List<ProductInfo> adapter_product_list;
 
@@ -470,7 +477,27 @@ public class Open_Item extends Fragment {
         }
 
 
+
     }
 
+    public static void setListViewHeightBasedOnChildren(ListView home_list) {
+        ListAdapter listAdapter = home_list.getAdapter();
+        if (listAdapter == null)
+            return;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(home_list.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 2; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, home_list);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = home_list.getLayoutParams();
+        params.height = totalHeight;// + (home_list.getDividerHeight() * (listAdapter.getCount() - 1));
+        home_list.setLayoutParams(params);
+    }
 
 }

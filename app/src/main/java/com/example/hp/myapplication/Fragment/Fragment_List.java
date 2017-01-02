@@ -149,7 +149,7 @@ public class Fragment_List extends Fragment {
                     pager.setVisibility(View.VISIBLE);
                 }
                 home_list.setAdapter(event_list);
-                //setListViewHeightBasedOnChildren(home_list);
+                setListViewHeightBasedOnChildren(home_list);
 
 
                 pager.setAdapter(viewPagerAdapter);
@@ -326,6 +326,7 @@ public class Fragment_List extends Fragment {
                                 }
 
                                 adapter.notifyDataSetChanged();
+                                setListViewHeightBasedOnChildren(home_list);
                                 pd.dismiss();
 
                             }catch (Exception e){
@@ -465,6 +466,7 @@ public class Fragment_List extends Fragment {
 
             view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
             totalHeight += view.getMeasuredHeight();
+
         }
         ViewGroup.LayoutParams params = home_list.getLayoutParams();
         params.height = totalHeight + (home_list.getDividerHeight() * (listAdapter.getCount() - 1));

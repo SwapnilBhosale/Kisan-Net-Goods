@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:fillViewport="true">
+    android:scrollbars="none"
+    android:fillViewport="true"
+  >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -29,30 +34,32 @@
 
             </LinearLayout>
 
-            <LinearLayout
+                <LinearLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="50dp"
+                         android:gravity="center"
+                         android:background="@drawable/xyz"
+                         android:orientation="vertical"
+                         android:paddingBottom="10dp"
+                         android:paddingTop="10dp"
+                    android:visibility="gone"
+                         >
+
+                         <TextView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center_horizontal"
+                             android:paddingLeft="18dp"
+                             android:text="@string/categories_hint"
+                             android:textStyle="bold"
+                             android:textColor="#000000"
+                             android:textSize="20sp" />
+                     </LinearLayout>
+
+                <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:background="#ffffff"
-                android:orientation="vertical"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:paddingLeft="18dp"
-                    android:text="@string/categories_hint"
-                    android:textStyle="bold"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                    android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <ListView
@@ -63,5 +70,6 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+        </LinearLayout>
+</LinearLayout>
+</ScrollView>

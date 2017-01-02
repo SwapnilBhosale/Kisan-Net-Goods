@@ -19,7 +19,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String TAG = MainActivity.class.getSimpleName();
     private int pos;
     NavigationView navigationView;
+    TextView cart_count;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -276,11 +280,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+
+                if(TextUtils.isEmpty(newText.trim()))
+                    searchView.setIconified(true);
+                return true;
             }
 
 
+
         });
+
+
     return true;
     }
 
@@ -315,6 +325,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         Fragment_Add_To_Cart.cartList.add(categoris);
 
                                     }
+
+
                                 }else{
                                     //if(response.getJSONObject("error").getInt("errorCode") == 10){
 
