@@ -329,7 +329,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
 
     private void verifyOtp() {
         String otp = (otp_text_box.getText().toString()).trim();
-        if(TextUtils.isEmpty(otp) || (otp.length() != 4)){
+        if(TextUtils.isEmpty(otp) || (otp.length() != 6)){
             otp_text_box.setError(getString(R.string.error_empty_otp));
         }else{
             PrefManager pref = new PrefManager(Config.getContext());
