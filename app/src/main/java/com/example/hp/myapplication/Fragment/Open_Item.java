@@ -406,7 +406,6 @@ public class Open_Item extends Fragment {
         prod_quantity = (EditText) view.findViewById(R.id.prod_quantity);
         btn_add_to_kart = (LinearLayout) view.findViewById(R.id.btn_add_to_kart);
         btn_cart_button = (Button) view.findViewById(R.id.btn_cart_button);
-        product_data_layput = (LinearLayout) view.findViewById(R.id.product_data_layout);
         Log.d("btn_add_to_kart", "btn_add_to_kart: "+btn_add_to_kart.toString());
 
 
@@ -487,7 +486,7 @@ public class Open_Item extends Fragment {
         int desiredWidth = View.MeasureSpec.makeMeasureSpec(home_list.getWidth(), View.MeasureSpec.UNSPECIFIED);
         int totalHeight = 0;
         View view = null;
-        for (int i = 2; i < listAdapter.getCount(); i++) {
+        for (int i = 0; i < listAdapter.getCount(); i++) {
             view = listAdapter.getView(i, view, home_list);
             if (i == 0)
                 view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
