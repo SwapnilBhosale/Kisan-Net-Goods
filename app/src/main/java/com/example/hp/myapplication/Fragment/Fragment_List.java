@@ -17,6 +17,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -75,6 +77,8 @@ public class Fragment_List extends Fragment {
     private String TAG = Fragment_List.class.getSimpleName();
     public boolean initialized = false;
     List<Banner> bannerList = new ArrayList<Banner>();
+    private ArrayList<Integer> items;
+    private LinearLayout dotsLayout;
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
@@ -118,24 +122,6 @@ public class Fragment_List extends Fragment {
 
 
 
-                pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                    }
-
-                    @Override
-                    public void onPageSelected(int position) {
-              //          drawSliderDots(position);
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-                    }
-                });
-                dots = new TextView[5];
-               // drawSliderDots(0);
-
-
 
 
                 //lsit view here
@@ -153,7 +139,6 @@ public class Fragment_List extends Fragment {
 
 
                 pager.setAdapter(viewPagerAdapter);
-
                 final Handler handler = new Handler();
                 final Runnable Update = new Runnable() {
                     public void run() {
@@ -172,6 +157,25 @@ public class Fragment_List extends Fragment {
                         handler.post(Update);
                     }
                 }, 500, 3000);
+
+                pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        drawSliderDots(position);
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                    }
+                });
+                dots = new TextView[5];
+                drawSliderDots(0);
+
+
                 //
                // setListener();
                 try {
@@ -375,24 +379,27 @@ public class Fragment_List extends Fragment {
        // dotsLayout = (LinearLayout) view.findViewById(R.id.event_pager_dots);
         //gridView = (GridView) view.findViewById(R.id.home_grid);
         home_list = (ListView) view.findViewById(R.id.home_list);
+        dotsLayout = (LinearLayout) view.findViewById(R.id.event_pager_dots);
+
     }
 
 
-   /* private void drawSliderDots(int position) {
-        position = position % items.size();
-      //  dotsLayout.removeAllViews();
-        for (int i = 0; i < items.size(); i++) {
+    private void drawSliderDots(int position) {
+        position = position % bannerList.size();
+        dotsLayout.removeAllViews();
+        for (int i = 0; i < bannerList.size(); i++) {
             dots[i] = new TextView(getActivity());
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(30);
             if (i == position) {
-                dots[i].setTextColor(getResources().getColor(R.color.colorAccent));
+                dots[i].setTextColor(Color.parseColor("#FF0000"));
             } else
-                dots[i].setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                dots[i].setTextColor(Color.parseColor("#FFFFFF"));
             dotsLayout.addView(dots[i]);
         }
-    }*/
-   // @Override
+    }
+
+    // @Override
    // public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
     //}
