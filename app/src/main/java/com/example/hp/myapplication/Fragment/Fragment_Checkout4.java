@@ -69,11 +69,12 @@ public class Fragment_Checkout4 extends Fragment {
             @Override
             public void onClick(View view) {
 
-                FragmentManager fm = getActivity().getSupportFragmentManager();
+                /*FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.checkout_frame, new Fragment_Checkout3());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
+                ft.commit();*/
+                getActivity().onBackPressed();
             }
         });
         c4_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -1,12 +1,18 @@
 package com.example.hp.myapplication.Activitis;
 
 import android.app.ActionBar;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +23,8 @@ import com.example.hp.myapplication.Fragment.Fragment_Checkout1;
 import com.example.hp.myapplication.R;
 
 public class Checkout_Activity extends ActionBarActivity {
+
+    private String TAG = Checkout_Activity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +37,7 @@ public class Checkout_Activity extends ActionBarActivity {
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setDisplayShowTitleEnabled(false);
         LayoutInflater mInflater = LayoutInflater.from(this);
+
 
         //View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
 
@@ -73,4 +82,40 @@ public class Checkout_Activity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if(count == 0){
+            //super.onBackPressed();
+            //super.onBackPressed();
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setMessage(getString(R.string.exit_confirmation));
+            builder1.setCancelable(true);
+            builder1.setPositiveButton(
+                    R.string.option_yes,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                            homeIntent.addCategory( Intent.CATEGORY_HOME );
+                            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(homeIntent);
+                        }
+                    });
+            builder1.setNegativeButton(
+                    R.string.option_no,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }else{
+            getSupportFragmentManager().popBackStack();
+        }
+        //}
+    }
+
 }

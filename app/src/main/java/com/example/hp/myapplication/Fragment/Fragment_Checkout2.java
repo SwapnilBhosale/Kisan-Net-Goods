@@ -22,6 +22,7 @@ public class Fragment_Checkout2 extends Fragment {
     CheckBox c2_checkbox;
     LinearLayout c2_linear_layout;
     Button c2_back,c2_next;
+    private String TAG = Fragment_Checkout2.class.getSimpleName();
 
 
     @Nullable
@@ -88,11 +89,7 @@ public class Fragment_Checkout2 extends Fragment {
             @Override
             public void onClick(View view) {
 
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.checkout_frame, new Fragment_Checkout1());
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
+                getActivity().onBackPressed();
             }
         });
 
@@ -102,7 +99,8 @@ public class Fragment_Checkout2 extends Fragment {
 
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.checkout_frame, new Fragment_Checkout3());
+                ft.add(R.id.checkout_frame, new Fragment_Checkout3()).addToBackStack(TAG);
+                ft.hide(Fragment_Checkout2.this);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();
             }

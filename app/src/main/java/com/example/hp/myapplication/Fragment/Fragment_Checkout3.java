@@ -17,6 +17,7 @@ import com.example.hp.myapplication.R;
 public class Fragment_Checkout3 extends Fragment {
 
     Button c3_next,c3_back;
+    private String TAG = Fragment_Checkout3.class.getSimpleName();
 
     @Nullable
     @Override
@@ -44,11 +45,12 @@ public class Fragment_Checkout3 extends Fragment {
             @Override
             public void onClick(View view) {
 
-                FragmentManager fm = getActivity().getSupportFragmentManager();
+                /*FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.checkout_frame, new Fragment_Checkout2());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
+                ft.commit();*/
+                getActivity().onBackPressed();
             }
         });
 
@@ -58,7 +60,8 @@ public class Fragment_Checkout3 extends Fragment {
 
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.checkout_frame, new Fragment_Checkout4());
+                ft.add(R.id.checkout_frame, new Fragment_Checkout4()).addToBackStack(TAG);
+                ft.hide(Fragment_Checkout3.this);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();
             }

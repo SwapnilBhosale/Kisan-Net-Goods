@@ -79,7 +79,8 @@ public class Fragment_Checkout1 extends Fragment {
 
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.checkout_frame, new Fragment_Checkout2());
+                ft.add(R.id.checkout_frame, new Fragment_Checkout2()).addToBackStack(TAG);
+                ft.hide(Fragment_Checkout1.this);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();
 
