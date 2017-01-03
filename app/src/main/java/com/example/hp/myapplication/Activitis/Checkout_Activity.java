@@ -89,29 +89,7 @@ public class Checkout_Activity extends ActionBarActivity {
         int count = getSupportFragmentManager().getBackStackEntryCount();
         if(count == 0){
             //super.onBackPressed();
-            //super.onBackPressed();
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-            builder1.setMessage(getString(R.string.exit_confirmation));
-            builder1.setCancelable(true);
-            builder1.setPositiveButton(
-                    R.string.option_yes,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-                            homeIntent.addCategory( Intent.CATEGORY_HOME );
-                            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(homeIntent);
-                        }
-                    });
-            builder1.setNegativeButton(
-                    R.string.option_no,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
+            super.onBackPressed();
         }else{
             getSupportFragmentManager().popBackStack();
         }
