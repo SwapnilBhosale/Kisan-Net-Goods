@@ -385,17 +385,21 @@ public class Fragment_List extends Fragment {
 
 
     private void drawSliderDots(int position) {
-        position = position % bannerList.size();
-        dotsLayout.removeAllViews();
-        for (int i = 0; i < bannerList.size(); i++) {
-            dots[i] = new TextView(getActivity());
-            dots[i].setText(Html.fromHtml("&#8226;"));
-            dots[i].setTextSize(30);
-            if (i == position) {
-                dots[i].setTextColor(Color.parseColor("#FF0000"));
-            } else
-                dots[i].setTextColor(Color.parseColor("#FFFFFF"));
-            dotsLayout.addView(dots[i]);
+        try {
+            position = position % bannerList.size();
+            dotsLayout.removeAllViews();
+            for (int i = 0; i < bannerList.size(); i++) {
+                dots[i] = new TextView(Config.getContext());
+                dots[i].setText(Html.fromHtml("&#8226;"));
+                dots[i].setTextSize(30);
+                if (i == position) {
+                    dots[i].setTextColor(Color.parseColor("#FF0000"));
+                } else
+                    dots[i].setTextColor(Color.parseColor("#FFFFFF"));
+                dotsLayout.addView(dots[i]);
+            }
+        }catch(Exception e){
+            Log.e(TAG, "drawSliderDots: ",e );
         }
     }
 

@@ -80,7 +80,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                 initiolizeId(view);
                 cartList = new ArrayList<CartItem>();
                 getList();
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                /*list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         CartItem item = (CartItem) adapterView.getItemAtPosition(i);
@@ -98,7 +98,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                         ft.commit();
 
                     }
-                });
+                });*/
 
                 checkout_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -286,10 +286,15 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                     @Override
                     public void onClick(View view) {
                         try {
-                            Integer q = Integer.valueOf(product_quntity.getText().toString());
+                            Integer q = Integer.parseInt(cartList.get(position).getQuantity());
+                            Log.d(TAG, "onClick: Quantity increment: "+q);
                             q = q + 1;
-                            product_quntity.setText(q.toString());
+                            //product_quntity.setText(q.toString());
+
+
+                            modifyCart(position,q);
                         } catch (Exception e) {
+                            Log.e(TAG, "onClick: ",e );
                         }
 
                     }
@@ -299,15 +304,15 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                     @Override
                     public void onClick(View view) {
                         try {
-                            Integer q = Integer.valueOf(product_quntity.getText().toString());
-
+                            Integer q = Integer.parseInt(cartList.get(position).getQuantity());
+                            Log.d(TAG, "onClick: Quantity decrement: "+q);
                             if (q != 0) {
                                 q = q - 1;
-                                product_quntity.setText(q.toString());
-
+                                modifyCart(position,q);
 
                             }
                         } catch (Exception e) {
+                            Log.e(TAG, "onClick: ",e );
                         }
                     }
                 });
@@ -320,13 +325,52 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                 });
                 //setListener(thisInstance);
             } catch (Exception e) {
-
+                Log.e(TAG, "getView: ",e );
             }
             return view;
         }
 
 
 
+        private void modifyCart(int pos,int quantity){
+            String url = Config.UPDATE_CART_URL+"customer_id=" + new PrefManager(Config.getContext()).getCustomerId() + "&customer_basket_id=" +cartList.get(pos).getBasketId()+"&quantity="+quantity;
+            Log.d(TAG, "modifyCart: "+url);
+            try{
+                JsonObjectRequest updateCartReq = new JsonObjectRequest(Request.Method.GET,url,null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.d(TAG, "onResponse: "+response.toString());
+                                pd.dismiss();
+                                try{
+                                    final boolean isSuccess = response.getBoolean("status");
+                                    Log.d(TAG, "isSuccess: "+isSuccess);
+                                    if(isSuccess){
+                                        //Toast.makeText(getContext(),R.string.update_cart_success,Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getContext(), R.string.update_cart_success, Toast.LENGTH_SHORT).show();
+                                        reloadFragment();
+                                    }
+
+                                }catch (Exception e){
+                                    Log.e(TAG, "onResponse: ",e );
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pd.dismiss();
+                        Log.e(TAG, "onErrorResponse: ", error);
+                    }
+                });
+
+                Volley.newRequestQueue(getActivity()).add(updateCartReq);
+                pd.show();
+            }catch (Exception e){
+                Log.e(TAG, "modifyCart: ",e );
+            }
+
+
+        }
         private void setItems(CartItem cart) {
 
             cart_image.setImageUrl(Config.BASE_URL + "" + cart.getImage(), imageLoader);
