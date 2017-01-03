@@ -109,6 +109,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
@@ -120,8 +122,24 @@
                         android:layout_weight="5"
                         android:textColor="#000000"
                         android:gravity="right"
-                        android:text="Product quantity: "
+                        android:layout_gravity="center_vertical"
+                        android:text="Quantity: "
                         android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/decrement_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:text="-"
+                        android:background="@drawable/circle_backgound"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="15sp" />
+
 
                     <TextView
                         android:id="@+id/product_quntity"
@@ -130,10 +148,26 @@
                         android:layout_weight="5"
                         android:paddingRight="2dp"
                         android:paddingLeft="2dp"
+                        android:layout_gravity="center_vertical"
                         android:gravity="right"
                         android:textColor="#000000"
                         android:text="2563"
                         android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/increment_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+"
+                        android:background="@drawable/circle_backgound"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="#2FAA96"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="15sp"
+
+                        />
                 </LinearLayout>
 
                 <View

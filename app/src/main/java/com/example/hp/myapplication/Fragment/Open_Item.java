@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -64,7 +65,7 @@ public class Open_Item extends Fragment {
     LinearLayout btn_add_to_kart;
     LinearLayout product_data_layput;
     Button btn_cart_button;
-
+    private boolean zoomOut =  false;
     String product_id;
     List<ProductInfo> prodList = new ArrayList<>();
     ImageLoader imageLoader = Config.getInstance().getImageLoader();
@@ -125,12 +126,28 @@ public class Open_Item extends Fragment {
 
                 //  loadData();
                 initiolizeId(view);
+
+                prod_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(zoomOut) {
+
+                            prod_image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                            prod_image.setAdjustViewBounds(true);
+                            zoomOut =false;
+                        }else{
+                            prod_image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                            prod_image.setScaleType(ImageView.ScaleType.FIT_XY);
+                            zoomOut = true;
+                        }
+                    }
+                });
+
                 prod_quantity.requestFocus();
                 if(isUpdateCart) {
                     btn_cart_button.setText(R.string.update_cart);
                     prod_quantity.setText(updateQuantity);
                 }
-
                 btn_add_to_kart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -195,14 +212,7 @@ public class Open_Item extends Fragment {
                     loadData();
 
 
-
-
-
                 //list view implementation
-
-
-
-
             }
 
         } catch (Exception e) {
@@ -393,6 +403,7 @@ public class Open_Item extends Fragment {
         }
 
     }
+
 
 
     private void initiolizeId(View view) {

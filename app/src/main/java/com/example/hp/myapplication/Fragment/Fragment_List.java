@@ -47,7 +47,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.hp.myapplication.Activitis.MainActivity;
 import com.example.hp.myapplication.Banner;
 import com.example.hp.myapplication.Categoris;
 import com.example.hp.myapplication.Config;
@@ -213,12 +212,11 @@ public class Fragment_List extends Fragment {
                         }
                     });
                 }catch (Exception e){
-                    Log.e(TAG, "onCreateView: ",e );
+                    e.getMessage();
                 }
 
             }
         } catch (Exception e) {
-            Log.e(TAG, "onCreateView: ",e );
         }
         return view;
     }
@@ -387,15 +385,10 @@ public class Fragment_List extends Fragment {
 
 
     private void drawSliderDots(int position) {
-        try {
-            position = position % bannerList.size();
-        }catch(Exception e){
-            Log.e(TAG, "drawSliderDots: ",e );
-            return;
-        }
+        position = position % bannerList.size();
         dotsLayout.removeAllViews();
         for (int i = 0; i < bannerList.size(); i++) {
-            dots[i] = new TextView(Config.getContext());
+            dots[i] = new TextView(getActivity());
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(30);
             if (i == position) {

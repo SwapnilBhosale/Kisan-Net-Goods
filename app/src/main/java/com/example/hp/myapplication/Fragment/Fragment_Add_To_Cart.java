@@ -278,6 +278,40 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
                 initializeIds(view);
                 setItems(list.get(position));
+
+                TextView increment_button = (TextView) view.findViewById(R.id.increment_button);
+                TextView decrement_btn = (TextView) view.findViewById(R.id.decrement_btn);
+
+                increment_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            Integer q = Integer.valueOf(product_quntity.getText().toString());
+                            q = q + 1;
+                            product_quntity.setText(q.toString());
+                        } catch (Exception e) {
+                        }
+
+                    }
+                });
+
+                decrement_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            Integer q = Integer.valueOf(product_quntity.getText().toString());
+
+                            if (q != 0) {
+                                q = q - 1;
+                                product_quntity.setText(q.toString());
+
+
+                            }
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+
                 close_tab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -290,6 +324,8 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
             }
             return view;
         }
+
+
 
         private void setItems(CartItem cart) {
 

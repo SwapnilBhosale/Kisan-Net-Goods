@@ -183,9 +183,11 @@
         android:id="@+id/btn_add_to_kart"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:orientation="horizontal"
         android:background="#00cccc"
         android:clickable="true"
         android:gravity="center_horizontal">
+
 
         <Button
             android:id="@+id/btn_cart_button"
@@ -193,12 +195,21 @@
             android:layout_height="50dp"
             android:background="#00cccc"
             android:clickable="false"
-            android:drawableLeft="@drawable/ic_cart"
-            android:drawablePadding="5dp"
-            android:paddingLeft="120dp"
-            android:paddingRight="110dp"
+            android:drawablePadding="-50dp"
+            android:paddingLeft="80dp"
+            android:paddingRight="50dp"
             android:text="@string/add_to_cart"
+            android:maxLines="1"
             android:textColor="#ffffff"
             android:textSize="19sp" />
+
+        />
     </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-37dp"
+        android:layout_marginLeft="-70dp"
+        android:src="@drawable/ic_cart"/>
 </LinearLayout>
