@@ -1,5 +1,7 @@
 package com.example.hp.myapplication;
 
+import java.math.BigDecimal;
+
 /**
  * Created by hp on 23/12/2016.
  */
@@ -8,11 +10,11 @@ public class CartItem {
 
     private String basketId;
     private String quantity;
-    private Long price;
+    private BigDecimal price;
     private String image;
     private String weight;
     private String name;
-    private Long Total;
+    private BigDecimal total;
     private String productId;
 
     public String getProductId() {
@@ -39,11 +41,11 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public Long getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -71,11 +73,25 @@ public class CartItem {
         this.name = name;
     }
 
-    public Long getTotal() {
-        return Total;
+    public BigDecimal getTotal() {
+        return total;
     }
 
-    public void setTotal(Long total) {
-        Total = total;
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "basketId='" + basketId + '\'' +
+                ", quantity='" + quantity + '\'' +
+                ", price=" + price +
+                ", image='" + image + '\'' +
+                ", weight='" + weight + '\'' +
+                ", name='" + name + '\'' +
+                ", total=" + total +
+                ", productId='" + productId + '\'' +
+                '}';
     }
 }

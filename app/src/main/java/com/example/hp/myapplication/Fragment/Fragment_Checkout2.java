@@ -25,6 +25,7 @@ public class Fragment_Checkout2 extends Fragment {
     private String TAG = Fragment_Checkout2.class.getSimpleName();
 
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

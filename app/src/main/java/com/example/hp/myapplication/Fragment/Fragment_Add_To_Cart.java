@@ -44,6 +44,7 @@ import com.example.hp.myapplication.helper.PrefManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +58,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     private ListView list;
     public static List<CartItem> cartList;
     TextView total_price;
+    public static BigDecimal total;
     ProgressDialog pd;
     private String TAG = Fragment_Add_To_Cart.class.getSimpleName();
     Button checkout_btn;
@@ -149,6 +151,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     private void loadData(final CustomEventAdapter adapter) {
         PrefManager pref = new PrefManager(Config.getContext());
         String url = Config.CART_URL+"lang="+pref.getAppLangId()+"&customer_id="+pref.getCustomerId();
+        Log.d(TAG, "loadCartData URL: "+url);
         try {
             final JsonObjectRequest category_request = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>() {
@@ -170,15 +173,17 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                                         categoris.setQuantity(jsonObject.getString("quantity"));
                                         categoris.setName(jsonObject.getString("options_value"));
                                         categoris.setImage(jsonObject.getString("product_image"));
-                                        categoris.setPrice(jsonObject.getLong("product_price"));
+                                        categoris.setPrice(BigDecimal.valueOf(jsonObject.getDouble("product_price")));
                                         categoris.setWeight(jsonObject.getString("product_weight"));
-                                        categoris.setTotal(jsonObject.getLong("final_price"));
+                                        categoris.setTotal(BigDecimal.valueOf(jsonObject.getDouble("final_price")));
                                         categoris.setProductId(jsonObject.getString("product_id"));
                                         cartList.add(categoris);
 
                                     }
 
-                                    total_price.setText("" + obj.getLong("total"));
+                                    total = BigDecimal.valueOf(obj.getDouble("total"));
+                                    Log.d(TAG, "onResponse: total price in Cart : "+total);
+                                    total_price.setText(""+total);
 
                                     adapter.notifyDataSetChanged();
                                 }else{
@@ -372,6 +377,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
         }
         private void setItems(CartItem cart) {
+            Log.d(TAG, "setItems CartItems: "+cart.toString());
 
             cart_image.setImageUrl(Config.BASE_URL + "" + cart.getImage(), imageLoader);
             product_name.setText(cart.getName());

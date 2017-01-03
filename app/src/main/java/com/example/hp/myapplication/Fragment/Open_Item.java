@@ -51,6 +51,7 @@ import com.example.hp.myapplication.helper.PrefManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -58,7 +59,7 @@ import java.util.List;
 
 public class Open_Item extends Fragment {
     ListView feture_list;
-
+    
     TextView prod_name, prod_price, prod_manufacture_name,prod_weight;
     NetworkImageView prod_image;
     EditText prod_quantity;
@@ -72,7 +73,6 @@ public class Open_Item extends Fragment {
     ProductData f = new ProductData();
     ProgressDialog pd ;
     private String TAG = Open_Item.class.getSimpleName();
-    private boolean isUpdateCart = false;
     private String updateQuantity;
     private String basket_id;
     public boolean initialized = false;
@@ -84,7 +84,6 @@ public class Open_Item extends Fragment {
         CartItem item = new CartItem();
         if (getArguments() != null) {
             product_id = getArguments().getString("product_id");
-            //isUpdateCart = getArguments().getBoolean("isUpdate");
             Log.d("oncreate", "onCreate: "+product_id);
         }
     }
@@ -130,6 +129,7 @@ public class Open_Item extends Fragment {
                 prod_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Log.d(TAG, "onClick: Inside image click");
                         if(zoomOut) {
 
                             prod_image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -144,10 +144,6 @@ public class Open_Item extends Fragment {
                 });
 
                 prod_quantity.requestFocus();
-                if(isUpdateCart) {
-                    btn_cart_button.setText(R.string.update_cart);
-                    prod_quantity.setText(updateQuantity);
-                }
                 btn_add_to_kart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -243,7 +239,7 @@ public class Open_Item extends Fragment {
 
                                         f.setProductId(jsonObject.getString("product_id"));
                                         f.setProductImage(jsonObject.getString("product_image"));
-                                        f.setProduct_Price(jsonObject.getLong("product_price"));
+                                        f.setProduct_Price(BigDecimal.valueOf(jsonObject.getDouble("product_price")));
                                         f.setProduct_weight(jsonObject.getString("product_weight"));
                                         f.setManufacturer_name(jsonObject.getString("manufacturer_name"));
                                         prod_image.setImageUrl(Config.BASE_URL+""+f.getProductImage(),imageLoader);
@@ -350,9 +346,9 @@ public class Open_Item extends Fragment {
                                         categoris.setQuantity(jsonObject.getString("quantity"));
                                         categoris.setName(jsonObject.getString("options_value"));
                                         categoris.setImage(jsonObject.getString("product_image"));
-                                        categoris.setPrice(jsonObject.getLong("product_price"));
+                                        categoris.setPrice(BigDecimal.valueOf(jsonObject.getDouble("product_price")));
                                         categoris.setWeight(jsonObject.getString("product_weight"));
-                                        categoris.setTotal(jsonObject.getLong("final_price"));
+                                        categoris.setTotal(BigDecimal.valueOf(jsonObject.getDouble("final_price")));
                                         categoris.setProductId(jsonObject.getString("product_id"));
                                         Fragment_Add_To_Cart.cartList.add(categoris);
 

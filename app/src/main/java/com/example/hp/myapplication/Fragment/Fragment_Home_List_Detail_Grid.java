@@ -43,6 +43,7 @@ import com.example.hp.myapplication.helper.PrefManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -177,7 +178,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                                         f.setProductImage(jsonObject.getString("product_image"));
                                         f.setProductName(jsonObject.getString("options_value"));
                                         f.setProductWeight(jsonObject.getString("product_weight"));
-                                        f.setProductPrice(jsonObject.getLong("product_price"));
+                                        f.setProductPrice(BigDecimal.valueOf(jsonObject.getDouble("product_price")));
                                         myList.add(f);
                                     }
                                     //myList = list;

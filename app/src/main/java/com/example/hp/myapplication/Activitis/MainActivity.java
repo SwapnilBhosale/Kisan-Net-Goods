@@ -79,6 +79,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -318,9 +319,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         categoris.setQuantity(jsonObject.getString("quantity"));
                                         categoris.setName(jsonObject.getString("options_value"));
                                         categoris.setImage(jsonObject.getString("product_image"));
-                                        categoris.setPrice(jsonObject.getLong("product_price"));
+                                        categoris.setPrice(BigDecimal.valueOf(jsonObject.getDouble("product_price")));
                                         categoris.setWeight(jsonObject.getString("product_weight"));
-                                        categoris.setTotal(jsonObject.getLong("final_price"));
+                                        categoris.setTotal(BigDecimal.valueOf(jsonObject.getDouble("final_price")));
                                         categoris.setProductId(jsonObject.getString("product_id"));
                                         Fragment_Add_To_Cart.cartList.add(categoris);
 

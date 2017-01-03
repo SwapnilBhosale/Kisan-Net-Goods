@@ -1,5 +1,6 @@
 package com.example.hp.myapplication;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ public class ProductData {
 
     private String productId;
     private String productImage;
-    private Long product_Price;
+    private BigDecimal product_Price;
     private String product_weight;
     private String manufacturer_name;
     private String manufacturer_image;
@@ -32,11 +33,11 @@ public class ProductData {
         this.productImage = productImage;
     }
 
-    public Long getProduct_Price() {
+    public BigDecimal getProduct_Price() {
         return product_Price;
     }
 
-    public void setProduct_Price(Long product_Price) {
+    public void setProduct_Price(BigDecimal product_Price) {
         this.product_Price = product_Price;
     }
 

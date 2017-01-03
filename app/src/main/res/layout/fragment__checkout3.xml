@@ -120,7 +120,7 @@
                             android:background="#ffcccccc" />
 
                         <EditText
-                            android:id="@+id/editText"
+                            android:id="@+id/coupoun_code_text"
                             android:layout_width="160dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center_horizontal"
@@ -132,11 +132,11 @@
                             android:drawablePadding="15dp"
                             android:gravity="center_horizontal|center_vertical"
                             android:hint="Coupon Code"
-                            android:inputType="phone"
+                            android:inputType="textCapCharacters"
                             android:padding="5dp" />
 
                         <Button
-                            android:id="@+id/coupon_submit"
+                            android:id="@+id/coupon_submit_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_gravity="center_horizontal"

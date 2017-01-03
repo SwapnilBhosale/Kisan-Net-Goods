@@ -58,6 +58,8 @@ public class Config extends Application {
     public static String UPDATE_PROFILE_URL = BASE_URL+"/users/updateInfo";
     public static String VERIFY_OTP_URL = Config.BASE_URL+"/users/verifyOTP";
     public static String BANNER_URL = Config.BASE_URL+"/getBanner?lang=";
+    public static String PAYMENT_TYPE_URL = Config.BASE_URL+"/paymentTypes?lang=";
+    public static String APPLY_COUPON_URL = Config.BASE_URL+"/users/applyCoupon?coupon_code=";
 
     public static final String TAG = Config.class.getSimpleName();
     public static String OTP_SCREEN="";

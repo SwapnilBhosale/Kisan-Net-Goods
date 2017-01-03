@@ -1,5 +1,7 @@
 package com.example.hp.myapplication;
 
+import java.math.BigDecimal;
+
 /**
  * Created by hp on 22/12/2016.
  */
@@ -9,7 +11,7 @@ public class Products {
     private String productId;
     private String productImage;
     private String productName;
-    private Long productPrice;
+    private BigDecimal productPrice;
     private String productWeight;
 
     public String getProductId() {
@@ -36,11 +38,11 @@ public class Products {
         this.productName = productName;
     }
 
-    public Long getProductPrice() {
+    public BigDecimal getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(Long productPrice) {
+    public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
     }
 

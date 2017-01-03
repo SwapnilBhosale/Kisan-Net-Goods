@@ -386,6 +386,8 @@ public class Fragment_List extends Fragment {
 
     private void drawSliderDots(int position) {
         try {
+            if(bannerList.size() == 0)
+                return;
             position = position % bannerList.size();
             dotsLayout.removeAllViews();
             for (int i = 0; i < bannerList.size(); i++) {
