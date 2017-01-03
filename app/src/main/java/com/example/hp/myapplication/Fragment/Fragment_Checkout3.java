@@ -68,7 +68,8 @@ public class Fragment_Checkout3 extends Fragment {
 
                 intioliseId(view);
                 setListners();
-                loadPaymentTypeData();
+                if(paymentTypeList.size() == 0)
+                    loadPaymentTypeData();
 
             }
         }catch (Exception e) {
