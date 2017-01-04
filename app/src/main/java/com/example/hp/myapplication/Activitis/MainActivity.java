@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     public static TextView tv;
     TextView cart_count;
+    public RelativeLayout rl;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -297,6 +298,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         try {
             RelativeLayout badgeLayout = (RelativeLayout) menu.findItem(R.id.action_cart).getActionView();
+            rl = (RelativeLayout) badgeLayout.findViewById(R.id.option_item_layout);
+
             tv = (TextView) badgeLayout.findViewById(R.id.cart_count);
 
             List<CartItem> list = Fragment_Add_To_Cart.cartList;
@@ -313,20 +316,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } catch (Exception e) {
             Log.e(TAG, "onCreateOptionsMenu: ", e);
         }
-        MenuItem cart = menu.findItem(R.id.action_cart);
-        cart.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+        //Log.d(TAG, "onCreateOptionsMenu cart : "+cart.toString());
+        rl.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
+            public void onClick(View view) {
                 Log.d(TAG, "onMenuItemClick: ");
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart()).addToBackStack(Config.KEY_FRAGMENT_LIST);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();
-                return true;
             }
         });
-        //super.onCreateOptionsMenu(menu);
+        super.onCreateOptionsMenu(menu);
         return true;
     }
 
