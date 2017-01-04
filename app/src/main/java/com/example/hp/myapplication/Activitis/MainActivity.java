@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int pos;
     NavigationView navigationView;
     TextView cart_count;
+    TextView tv;
+    RelativeLayout rl;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -297,19 +299,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         try {
             RelativeLayout badgeLayout = (RelativeLayout) menu.findItem(R.id.action_cart).getActionView();
-            TextView tv = (TextView) badgeLayout.findViewById(R.id.cart_count);
+            tv= (TextView) badgeLayout.findViewById(R.id.itemcount);
+            rl = (RelativeLayout) badgeLayout.findViewById(R.id.option_item_layout);
 
-            List<CartItem> list = Fragment_Add_To_Cart.cartList;
+            rl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart()).addToBackStack(Config.KEY_FRAGMENT_LIST);
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    ft.commit();
+                }
+            });
+
+         /*   List<CartItem> list = new ArrayList<CartItem>();
+            list =Fragment_Add_To_Cart.cartList;
             Log.d(TAG, "onCreateOptionsMenu: " + list);
 
             int j = list.size();
-            if (list.size() == 0) {
+
+            if (j == 0) {
                 tv.setText(0);
             } else
                 tv.setText(j);
+*/
 
-
-            return true;
 
 }catch (Exception e){
     Log.e(TAG, "onCreateOptionsMenu: ",e );
@@ -407,11 +423,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_cart) {
 
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart()).addToBackStack(Config.KEY_FRAGMENT_LIST);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            ft.commit();
+
 
         }
 
