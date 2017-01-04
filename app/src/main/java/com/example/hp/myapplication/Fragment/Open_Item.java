@@ -3,6 +3,7 @@ package com.example.hp.myapplication.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -129,17 +130,18 @@ public class Open_Item extends Fragment {
                 prod_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d(TAG, "onClick: Inside image click");
-                        if(zoomOut) {
 
-                            prod_image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                            prod_image.setAdjustViewBounds(true);
-                            zoomOut =false;
-                        }else{
-                            prod_image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                            prod_image.setScaleType(ImageView.ScaleType.FIT_XY);
-                            zoomOut = true;
-                        }
+                        prod_image.buildDrawingCache();
+                        Bitmap image= prod_image.getDrawingCache();
+                        Bundle bundle =new Bundle();
+                        bundle.putParcelable("Image",image);
+                        Fragment_Open_Image fd=  new Fragment_Open_Image();
+                        fd.setArguments(bundle);
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        ft.replace(R.id.main_activity_fl, fd).addToBackStack("Open_Item");
+                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        ft.commit();
                     }
                 });
 
