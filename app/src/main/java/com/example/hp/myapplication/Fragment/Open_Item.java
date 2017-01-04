@@ -132,14 +132,14 @@ public class Open_Item extends Fragment {
                     public void onClick(View v) {
 
                         prod_image.buildDrawingCache();
-                        Bitmap image= prod_image.getDrawingCache();
+                        Bitmap image= Bitmap.createBitmap(prod_image.getDrawingCache());
                         Bundle bundle =new Bundle();
                         bundle.putParcelable("Image",image);
                         Fragment_Open_Image fd=  new Fragment_Open_Image();
                         fd.setArguments(bundle);
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.main_activity_fl, fd).addToBackStack("Open_Item");
+                        ft.replace(R.id.main_activity_fl, fd).addToBackStack(TAG);
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         ft.commit();
                     }
