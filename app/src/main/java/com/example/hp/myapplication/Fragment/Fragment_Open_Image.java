@@ -38,8 +38,7 @@ public class Fragment_Open_Image extends Fragment {
                 setListners();
 
                 Bitmap bmp = getArguments().getParcelable("Image");
-               // if(!bmp.isRecycled())
-                    opened_image.setImageBitmap(bmp );
+                opened_image.setImageBitmap(bmp );
 
             }
         } catch (Exception e) {

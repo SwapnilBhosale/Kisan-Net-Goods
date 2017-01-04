@@ -1,14 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
    >
     <item
         android:id="@+id/action_cart"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_cart"
-        android:actionLayout="@layout/cart_button_layout"
+        app:actionLayout="@layout/cart_button_layout"
         android:title="Cart"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_search"
         android:title="Search box"

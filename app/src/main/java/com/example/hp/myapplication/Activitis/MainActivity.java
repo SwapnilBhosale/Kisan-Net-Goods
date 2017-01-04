@@ -89,6 +89,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.provider.MediaStore.Images.Media.getBitmap;
 import static com.example.hp.myapplication.Activitis.Login_Activity.setLocale;
+import static com.example.hp.myapplication.R.id.cart_list;
 import static com.example.hp.myapplication.R.id.imageView;
 
 
@@ -165,6 +166,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void doThis(MenuItem item){
+
+    }
 
 
     /*private void popUp() {
@@ -291,7 +295,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         });
 
+        try {
+            RelativeLayout badgeLayout = (RelativeLayout) menu.findItem(R.id.action_cart).getActionView();
+            TextView tv = (TextView) badgeLayout.findViewById(R.id.cart_count);
 
+            List<CartItem> list = Fragment_Add_To_Cart.cartList;
+            Log.d(TAG, "onCreateOptionsMenu: " + list);
+
+            int j = list.size();
+            if (list.size() == 0) {
+                tv.setText(0);
+            } else
+                tv.setText(j);
+
+
+            return true;
+
+}catch (Exception e){
+    Log.e(TAG, "onCreateOptionsMenu: ",e );
+}
     return true;
     }
 
@@ -384,12 +406,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_cart) {
+
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart()).addToBackStack(Config.KEY_FRAGMENT_LIST);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
-            return true;
+
         }
 
 
