@@ -115,7 +115,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
         register_btn = (Button) findViewById(R.id.register_btn);
         mobileNo = (EditText) findViewById(R.id.mobile_no);
         fName = (EditText) findViewById(R.id.first_name);
-        lName = (EditText) findViewById(R.id.last_name);
+        lName = (EditText) findViewById(R.id.village);
         address = (EditText) findViewById(R.id.address);
         city = (EditText) findViewById(R.id.city);
         state = (EditText) findViewById(R.id.state);

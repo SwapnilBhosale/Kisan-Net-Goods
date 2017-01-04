@@ -25,25 +25,6 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#ffffff"
-                    android:orientation="vertical"
-                    android:padding="5dp">
-
-
-                    <TextView
-                        android:id="@+id/prod_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/select_quantity_hint"
-                        android:textColor="#000000"
-                        android:textSize="15sp" />
-                </LinearLayout>
-
-
-                <LinearLayout
                     android:id="@+id/product_data_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -52,8 +33,8 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="110dp"
-                        android:layout_height="130dp"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
                         android:orientation="vertical">
 
                         <com.android.volley.toolbox.NetworkImageView
@@ -68,7 +49,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="#ffffff"
                         android:orientation="vertical"
                         android:padding="10dp">
@@ -78,6 +59,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="#ffffff"
+                            android:layout_marginTop="20dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -86,12 +68,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:text="@string/select_quantity_hint"
-                                android:textSize="15sp" />
+                                android:textSize="16sp" />
 
 
                             <EditText
                                 android:id="@+id/prod_quantity"
-                                android:layout_width="120dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="30dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
@@ -101,7 +83,7 @@
                                 android:inputType="number"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="20dp"
-                                android:textSize="15sp" />
+                                android:textSize="16sp" />
 
                         </LinearLayout>
 
@@ -115,37 +97,12 @@
                             android:textColor="#000000"
                             android:textSize="15sp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-
-                                android:id="@+id/textView3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/manufacturer_company_hint"
-                                android:textColor="#000000"
-                                android:textSize="15sp" />
-
-                            <TextView
-                                android:id="@+id/prod_manufacture_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="3dp"
-                                android:text="fgsdsf"
-                                android:textColor="#000000"
-                                android:textSize="15sp" />
-                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="right"
-                            android:orientation="horizontal">
+                            android:layout_height="match_parent"
+                            android:gravity="right|bottom"
+                            android:orientation="vertical">
 
 
                             <TextView

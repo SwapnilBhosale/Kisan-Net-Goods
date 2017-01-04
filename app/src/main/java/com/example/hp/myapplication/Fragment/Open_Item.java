@@ -248,7 +248,6 @@ public class Open_Item extends Fragment {
                                         prod_image.setImageUrl(Config.BASE_URL+""+f.getProductImage(),imageLoader);
                                         prod_price.setText(""+f.getProduct_Price());
                                         prod_weight.setText(f.getProduct_weight());
-                                        prod_manufacture_name.setText(f.getManufacturer_name());
 
 
 
@@ -408,9 +407,8 @@ public class Open_Item extends Fragment {
 
     private void initiolizeId(View view) {
 
-        prod_name = (TextView) view.findViewById(R.id.prod_name);
+        //prod_name = (TextView) view.findViewById(R.id.prod_name);
         prod_price = (TextView) view.findViewById(R.id.prod_price);
-        prod_manufacture_name = (TextView) view.findViewById(R.id.prod_manufacture_name);
         prod_image = (NetworkImageView) view.findViewById(R.id.prod_image);
         prod_weight = (TextView) view.findViewById(R.id.prod_weight);
         feture_list = (ListView) view.findViewById(R.id.feture_list);

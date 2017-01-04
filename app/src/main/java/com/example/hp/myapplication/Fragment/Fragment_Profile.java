@@ -233,7 +233,7 @@ public class Fragment_Profile extends Fragment {
         state = (TextInputEditText) view.findViewById(R.id.reg_state);
         address = (TextInputEditText) view.findViewById(R.id.reg_address);
         fname = (TextInputEditText) view.findViewById(R.id.reg_first_name);
-        lname = (TextInputEditText) view.findViewById(R.id.reg_last_name);
+        lname = (TextInputEditText) view.findViewById(R.id.reg_village);
         pincode = (TextInputEditText) view.findViewById(R.id.reg_postal_code);
         updateButton = (Button) view.findViewById(R.id.reg_register_btn);
 

@@ -41,6 +41,7 @@
                         android:drawableLeft="@drawable/ic_call"
                         android:drawablePadding="15dp"
                         android:hint="@string/enter_mobile_no"
+                        android:maxLines="1"
                         android:inputType="phone"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
@@ -59,9 +60,11 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
+                        android:maxLines="1"
+                        android:inputType="textCapWords"
                         android:drawableLeft="@drawable/ic_person"
                         android:drawablePadding="15dp"
-                        android:hint="@string/enter_first_name"
+                        android:hint="Name"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
                 </android.support.design.widget.TextInputLayout>
@@ -73,15 +76,17 @@
                     android:layout_marginTop="2dp">
 
                     <EditText
-                        android:id="@+id/last_name"
+                        android:id="@+id/village"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
+                        android:maxLines="1"
+                        android:inputType="textCapWords"
                         android:drawableLeft="@drawable/ic_person"
                         android:drawablePadding="15dp"
-                        android:hint="@string/enter_last_name"
+                        android:hint="Village"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
                 </android.support.design.widget.TextInputLayout>
@@ -99,6 +104,8 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
+                        android:maxLines="1"
+                        android:inputType="textCapSentences"
                         android:drawableLeft="@drawable/ic_address"
                         android:drawablePadding="15dp"
                         android:hint="@string/enter_address"
@@ -119,6 +126,8 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
+                        android:maxLines="1"
+                        android:inputType="textCapWords"
                         android:drawableLeft="@drawable/ic_city"
                         android:drawablePadding="15dp"
                         android:hint="@string/enter_city"
@@ -139,6 +148,8 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
+                        android:maxLines="1"
+                        android:inputType="textCapWords"
                         android:drawableLeft="@drawable/ic_state"
                         android:drawablePadding="15dp"
                         android:hint="@string/enter_state"
@@ -159,6 +170,8 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
+                        android:maxLines="1"
+                        android:inputType="textCapWords"
                         android:drawableLeft="@drawable/ic_post"
                         android:drawablePadding="15dp"
                         android:hint="@string/enter_postal_code"
