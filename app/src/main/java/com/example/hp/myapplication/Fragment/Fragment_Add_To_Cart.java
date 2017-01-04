@@ -35,6 +35,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.example.hp.myapplication.Activitis.Checkout_Activity;
+import com.example.hp.myapplication.Activitis.MainActivity;
 import com.example.hp.myapplication.CartItem;
 import com.example.hp.myapplication.Config;
 import com.example.hp.myapplication.HelperProgressDialogue;
@@ -56,7 +57,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     //String[] dishes = {"Shirt", "T shirt", "Shirt"};
     //int[] images = {R.drawable.shirt_order, R.drawable.shirt_order, R.drawable.shirt_order};
     private ListView list;
-    public static List<CartItem> cartList;
+    public static List<CartItem> cartList = new ArrayList<CartItem>();
     TextView total_price;
     public static BigDecimal total;
     ProgressDialog pd;
@@ -191,8 +192,10 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
                                         Snackbar.make(getView(),R.string.error_no_item_in_cart,Snackbar.LENGTH_LONG).setAction("Action",null).show();
                                         checkout_btn.setEnabled(false);
+
                                     }
                                 }
+                                MainActivity.tv.setText(String.valueOf(getCartSize()));
                             } catch (Exception e) {
                                 Log.e("cart", "onResponse: ", e);
                             }
@@ -446,8 +449,15 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     public void reloadFragment() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+        ft.setTransition(FragmentTransaction.TRANSIT_NONE);
         ft.detach(this).attach(this);
         ft.commit();
+    }
+
+
+    public static int getCartSize(){
+        return cartList.size();
     }
 
 

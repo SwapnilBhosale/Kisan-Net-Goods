@@ -102,9 +102,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String TAG = MainActivity.class.getSimpleName();
     private int pos;
     NavigationView navigationView;
+    public static TextView tv;
     TextView cart_count;
-    TextView tv;
-    RelativeLayout rl;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -128,13 +127,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-      //  NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //  NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
-        View hView =  navigationView.getHeaderView(0);
+        View hView = navigationView.getHeaderView(0);
         ImageView nav_image = (ImageView) hView.findViewById(R.id.header_image);
         ImageView background = (ImageView) hView.findViewById(R.id.img_header_bg);
 
@@ -145,7 +143,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Glide.with(this).load(Config.BACKGROUND_URL)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(background);Glide.with(this).load(Config.BACKGROUND_URL)
+                .into(background);
+        Glide.with(this).load(Config.BACKGROUND_URL)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(background);
@@ -168,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void doThis(MenuItem item){
+    public void doThis(MenuItem item) {
 
     }
 
@@ -217,40 +216,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-         if(drawer.isDrawerOpen(GravityCompat.START))
+        if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
-       // } else {
+        // } else {
 
-            Log.d(TAG, "onBackPressed: "+getFragmentManager().getBackStackEntryCount());
-            int count = getSupportFragmentManager().getBackStackEntryCount();
-            if(count == 0){
-                //super.onBackPressed();
-                //super.onBackPressed();
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                builder1.setMessage(getString(R.string.exit_confirmation));
-                builder1.setCancelable(true);
-                builder1.setPositiveButton(
-                        R.string.option_yes,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-                                homeIntent.addCategory( Intent.CATEGORY_HOME );
-                                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(homeIntent);
-                            }
-                        });
-                builder1.setNegativeButton(
-                        R.string.option_no,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            }else{
-                getSupportFragmentManager().popBackStack();
-            }
+        Log.d(TAG, "onBackPressed: " + getFragmentManager().getBackStackEntryCount());
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            //super.onBackPressed();
+            //super.onBackPressed();
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setMessage(getString(R.string.exit_confirmation));
+            builder1.setCancelable(true);
+            builder1.setPositiveButton(
+                    R.string.option_yes,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                            homeIntent.addCategory(Intent.CATEGORY_HOME);
+                            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(homeIntent);
+                        }
+                    });
+            builder1.setNegativeButton(
+                    R.string.option_no,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
         //}
     }
 
@@ -261,9 +260,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         MenuItem item = menu.findItem(R.id.menu_search);
         final SearchView searchView =
-                (SearchView)item.getActionView();
+                (SearchView) item.getActionView();
         SearchManager searchManager =
-                (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchableInfo info =
                 searchManager.getSearchableInfo(getComponentName());
         searchView.setSearchableInfo(info);
@@ -288,56 +287,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if(TextUtils.isEmpty(newText.trim()))
+                if (TextUtils.isEmpty(newText.trim()))
                     searchView.setIconified(true);
                 return true;
             }
-
 
 
         });
 
         try {
             RelativeLayout badgeLayout = (RelativeLayout) menu.findItem(R.id.action_cart).getActionView();
-            tv= (TextView) badgeLayout.findViewById(R.id.itemcount);
-            rl = (RelativeLayout) badgeLayout.findViewById(R.id.option_item_layout);
+            tv = (TextView) badgeLayout.findViewById(R.id.cart_count);
 
-            rl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            List<CartItem> list = Fragment_Add_To_Cart.cartList;
+            //Log.d(TAG, "onCreateOptionsMenu: " + list);
 
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart()).addToBackStack(Config.KEY_FRAGMENT_LIST);
-                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    ft.commit();
-                }
-            });
-
-         /*   List<CartItem> list = new ArrayList<CartItem>();
-            list =Fragment_Add_To_Cart.cartList;
-            Log.d(TAG, "onCreateOptionsMenu: " + list);
-
-            int j = list.size();
-
-            if (j == 0) {
-                tv.setText(0);
+            String j = String.valueOf(list.size());
+            Log.d(TAG, "onCreateOptionsMenu: TV " + tv.toString());
+            if (list.size() == 0) {
+                tv.setText("0");
             } else
                 tv.setText(j);
-*/
 
 
-}catch (Exception e){
-    Log.e(TAG, "onCreateOptionsMenu: ",e );
-}
-    return true;
+        } catch (Exception e) {
+            Log.e(TAG, "onCreateOptionsMenu: ", e);
+        }
+        MenuItem cart = menu.findItem(R.id.action_cart);
+        cart.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Log.d(TAG, "onMenuItemClick: ");
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart()).addToBackStack(Config.KEY_FRAGMENT_LIST);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.commit();
+                return true;
+            }
+        });
+        //super.onCreateOptionsMenu(menu);
+        return true;
     }
 
 
     private void loadCartData() {
 
         PrefManager pref = new PrefManager(Config.getContext());
-        String url = Config.CART_URL+"lang="+pref.getAppLangId()+"&customer_id="+pref.getCustomerId();
+        String url = Config.CART_URL + "lang=" + pref.getAppLangId() + "&customer_id=" + pref.getCustomerId();
         try {
             final JsonObjectRequest category_request = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>() {
@@ -364,13 +361,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         Fragment_Add_To_Cart.cartList.add(categoris);
 
                                     }
+                                    tv.setText(String.valueOf(Fragment_Add_To_Cart.getCartSize()));
 
-
-                                }else{
+                                } else {
                                     //if(response.getJSONObject("error").getInt("errorCode") == 10){
 
                                     //Snackbar.make(getView(),"Sorry! no items in the cart",Snackbar.LENGTH_LONG).setAction("Action",null).show();
-                                    Log.e(TAG, "OnLoadCartDataError: "+response.getJSONObject("error").getString("errorMessage"));
+                                    Log.e(TAG, "OnLoadCartDataError: " + response.getJSONObject("error").getString("errorMessage"));
                                     // }
                                 }
                             } catch (Exception e) {
@@ -400,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     } else if (volleyError instanceof TimeoutError) {
                         message = "Connection TimeOut! Please check your internet connection.";
                     }
-                    Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -418,12 +415,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
+
+        Log.d(TAG, "onOptionsItemSelected: ");
         int id = item.getItemId();
 
+        
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_cart) {
 
-
+            Log.d(TAG, "onOptionsItemSelected: "+id);
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart()).addToBackStack(Config.KEY_FRAGMENT_LIST);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.commit();
 
         }
 
@@ -470,7 +476,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ft.replace(R.id.main_activity_fl, new Fragment_Profile()).addToBackStack(Config.KEY_FRAGMENT_LIST);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();
-               // onBackPressed();
+                // onBackPressed();
             } else {
                 if (id == R.id.change_language) {
 

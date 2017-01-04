@@ -40,6 +40,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.example.hp.myapplication.Activitis.MainActivity;
 import com.example.hp.myapplication.CartItem;
 import com.example.hp.myapplication.Categoris;
 import com.example.hp.myapplication.Config;
@@ -355,6 +356,7 @@ public class Open_Item extends Fragment {
                                         Fragment_Add_To_Cart.cartList.add(categoris);
 
                                     }
+                                    MainActivity.tv.setText(String.valueOf(Fragment_Add_To_Cart.getCartSize()));
                                     //reloadFragment();
                                 }else{
                                     //if(response.getJSONObject("error").getInt("errorCode") == 10){
