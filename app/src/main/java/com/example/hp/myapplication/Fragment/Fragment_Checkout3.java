@@ -97,7 +97,7 @@ public class Fragment_Checkout3 extends Fragment {
         payment_list.setAdapter(adapter);
     }
 
-    private ProgressDialog getProgressBar(){
+        private ProgressDialog getProgressBar(){
         ProgressDialog pd = new ProgressDialog(getActivity());
         // Set progress dialog style spinner
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
