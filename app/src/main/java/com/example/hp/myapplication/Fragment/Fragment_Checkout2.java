@@ -48,7 +48,7 @@ public class Fragment_Checkout2 extends Fragment {
                                                  boolean isChecked) {
                         // TODO Auto-generated method stub
                         if (isChecked) {
-                          //  c2_linear_layout.setVisibility(View.VISIBLE);
+                           c2_linear_layout.setVisibility(View.VISIBLE);
 
                         } else {
                             c2_linear_layout.setVisibility(View.GONE);
