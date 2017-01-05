@@ -27,7 +27,7 @@ import java.util.List;
 
 public class Fragment_Checkout1 extends Fragment {
 
-    private TextView c1_address,c1_first_name,c1_last_name,c1_Country,c1_city,c1_state,c1_postal_code,c1_mobile_no;
+    private TextView c1_address,c1_name,c1_village,c1_city,c1_state,c1_postal_code,c1_mobile_no;
     private Button c1_back,c1_next;
     public static List<String> infoList;
     private String TAG = Fragment_Checkout1.class.getSimpleName();
@@ -57,14 +57,30 @@ public class Fragment_Checkout1 extends Fragment {
         return view;
     }
 
+    public void setActionBarTitle(String title) {
+        getActivity().setTitle(title);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setActionBarTitle(getString(R.string.billing_address));
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setActionBarTitle(getString(R.string.billing_address));
+    }
+
     private void loadData() {
 
         PrefManager pref = new PrefManager(Config.getContext());
 
         Log.d(TAG, "loadData: "+pref.getAddress());
         c1_address.setText(pref.getAddress());
-        c1_first_name.setText(pref.getName());
-        c1_last_name.setText(pref.getVillage());
+        c1_name.setText(pref.getName());
+        c1_village.setText(pref.getVillage());
         c1_city.setText(pref.getCity());
         c1_state.setText(pref.getState());
         c1_mobile_no.setText(pref.getMobile());
@@ -105,9 +121,8 @@ public class Fragment_Checkout1 extends Fragment {
     private void intioliseId(View view) {
 
         c1_address = (TextView) view.findViewById(R.id.c1_address);
-        c1_first_name = (TextView) view.findViewById(R.id.c1_first_name);
-        c1_last_name = (TextView) view.findViewById(R.id.c1_last_name);
-        c1_Country = (TextView) view.findViewById(R.id.c1_Country);
+        c1_name = (TextView) view.findViewById(R.id.c1_name);
+        c1_village = (TextView) view.findViewById(R.id.c1_village);
         c1_city = (TextView) view.findViewById(R.id.c1_city);
         c1_state = (TextView) view.findViewById(R.id.c1_state);
         c1_postal_code = (TextView) view.findViewById(R.id.c1_postal_code);

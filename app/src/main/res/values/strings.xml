@@ -64,5 +64,9 @@
     <string name="error_no_quantity">Please enter quantity.</string>
     <string name="error_no_internet_conenction">Please check your Internet connection!</string>
     <string name="error_mobile_is_not_registered">Mobile no is not registered!</string>
-    <string name="error_general_error">Eeror occured!</string>
+    <string name="error_general_error">Error occured!</string>
+    <string name="billing_address">Billing Address</string>
+    <string name="ship_to_diffrent_address">Ship to different address ?</string>
+    <string name="go_back">Back</string>
+    <string name="delivery_address">Delivery address</string>
 </resources>

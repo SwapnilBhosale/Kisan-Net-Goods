@@ -50,7 +50,7 @@
                     android:drawablePadding="15dp"
                     android:gravity="center_vertical"
                     android:padding="5dp"
-                    android:text="Ship to different address?"
+                    android:text="@string/ship_to_diffrent_address"
                     android:textColor="#ff000000"
                     android:textSize="19sp" />
 
@@ -59,7 +59,7 @@
                     android:id="@+id/c2_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <android.support.design.widget.TextInputLayout
@@ -69,7 +69,7 @@
                         android:layout_marginTop="2dp">
 
                         <EditText
-                            android:id="@+id/name"
+                            android:id="@+id/c2_name"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginLeft="20dp"
@@ -79,7 +79,7 @@
                             android:inputType="textCapWords"
                             android:drawableLeft="@drawable/ic_address"
                             android:drawablePadding="15dp"
-                            android:hint="Name"
+                            android:hint="@string/enter_name"
                             android:padding="5dp"
                             android:textColorHint="#ff9900" />
                     </android.support.design.widget.TextInputLayout>
@@ -92,7 +92,7 @@
                     android:layout_marginTop="2dp">
 
                     <EditText
-                        android:id="@+id/address"
+                        android:id="@+id/c2_address"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
@@ -117,7 +117,7 @@
                     android:layout_marginTop="2dp">
 
                     <EditText
-                        android:id="@+id/city"
+                        android:id="@+id/c2_city"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
@@ -139,7 +139,7 @@
                     android:layout_marginTop="2dp">
 
                     <EditText
-                        android:id="@+id/state"
+                        android:id="@+id/c2_state"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
@@ -161,7 +161,7 @@
                     android:layout_marginTop="2dp">
 
                     <EditText
-                        android:id="@+id/postal_code"
+                        android:id="@+id/c2_postal_code"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
@@ -184,7 +184,7 @@
                     android:layout_marginTop="2dp">
 
                     <EditText
-                        android:id="@+id/mobile_no"
+                        android:id="@+id/c2_mobile_no"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
@@ -216,7 +216,7 @@
             android:layout_weight="1"
             android:background="#ff9900"
             android:padding="5dp"
-            android:text="Back"
+            android:text="@string/go_back"
             android:textSize="17sp" />
 
         <View
@@ -230,7 +230,7 @@
             android:layout_weight="1"
             android:background="#ff9900"
             android:padding="5dp"
-            android:text="Next"
+            android:text="@string/go_ahead"
             android:textSize="17sp" />
     </LinearLayout>
 
