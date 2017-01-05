@@ -81,6 +81,25 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                 view = li.inflate(R.layout.fragment__add__to__cart, container, false);
 
 
+                if(cartList.size()== 0){
+
+                    LayoutInflater l = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    view = li.inflate(R.layout.empty_cart_layout, container, false);
+
+                    Button gotoShopping = (Button) view.findViewById(R.id.go_to_shopping);
+
+                    gotoShopping.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+
+                            Intent i = new Intent(getActivity(),MainActivity.class);
+                            startActivity(i);
+                        }
+                    });
+                }
+
+
                 initiolizeId(view);
                 cartList = new ArrayList<CartItem>();
                 getList();
