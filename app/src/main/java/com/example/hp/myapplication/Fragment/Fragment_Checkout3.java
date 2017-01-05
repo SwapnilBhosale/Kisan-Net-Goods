@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -93,10 +95,32 @@ public class Fragment_Checkout3 extends Fragment {
     private void getLst() {
 
         PaymentListAdapter adapter = new PaymentListAdapter(getActivity(), paymentTypeList);
-        if (paymentTypeList.size() == 0)
+       // if (paymentTypeList.size() == 0)
             loadPaymentTypeData(adapter);
 
         payment_list.setAdapter(adapter);
+        //setListViewHeightBasedOnChildren(payment_list);
+    }
+
+    public static void setListViewHeightBasedOnChildren(ListView home_list) {
+        ListAdapter listAdapter = home_list.getAdapter();
+        if (listAdapter == null)
+            return;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(home_list.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, home_list);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+
+        }
+        ViewGroup.LayoutParams params = home_list.getLayoutParams();
+        params.height = totalHeight + (home_list.getDividerHeight() * (listAdapter.getCount() - 1));
+        home_list.setLayoutParams(params);
     }
 
     private ProgressDialog getProgressBar() {
@@ -351,6 +375,7 @@ public class Fragment_Checkout3 extends Fragment {
                     view = li.inflate(R.layout.payment_list_item, null);
                 }
                 initializeIds(view);
+
                 setItems(paymentTypeList.get(position));
 
             } catch (Exception e) {
