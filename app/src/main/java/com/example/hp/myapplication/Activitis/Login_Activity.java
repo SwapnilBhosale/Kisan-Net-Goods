@@ -230,7 +230,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    public static void setLocale(Languages lang){
+    public void setLocale(Languages lang){
         Locale myLocale = null;
         PrefManager pref = new PrefManager(Config.getContext());
         pref.storeAppLanguage(lang.getLanguageCode());
@@ -241,7 +241,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
         Locale.setDefault(myLocale);
         config.locale = myLocale;
         Log.d("Change Local", "setLocale: "+myLocale);
-        Config.getContext().getResources().updateConfiguration(config,Config.getContext().getResources().getDisplayMetrics());
+        getBaseContext().getResources().updateConfiguration(config,Config.getContext().getResources().getDisplayMetrics());
 
 
     }

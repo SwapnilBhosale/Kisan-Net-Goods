@@ -85,11 +85,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.provider.MediaStore.Images.Media.getBitmap;
-import static com.example.hp.myapplication.Activitis.Login_Activity.setLocale;
 import static com.example.hp.myapplication.R.id.cart_list;
 import static com.example.hp.myapplication.R.id.imageView;
 
@@ -576,6 +576,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    public void setLocale(Languages lang){
+        Locale myLocale = null;
+        PrefManager pref = new PrefManager(Config.getContext());
+        pref.storeAppLanguage(lang.getLanguageCode());
+        pref.setAppLangId(""+lang.getLanguageId());
+        Log.d("LanguageDialogue", "setLocale in pref : "+lang.getLanguageCode());
+        Configuration config = new Configuration();
+        myLocale = new Locale(lang.getLanguageCode());
+        Locale.setDefault(myLocale);
+        config.locale = myLocale;
+        Log.d("Change Local", "setLocale: "+myLocale);
+        getBaseContext().getResources().updateConfiguration(config,Config.getContext().getResources().getDisplayMetrics());
+
+
     }
 
     /**

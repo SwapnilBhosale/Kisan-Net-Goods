@@ -56,13 +56,14 @@ public class Config extends Application {
     public static final String FRUIT_PROD_MAP_URL = BASE_URL+"/product/getFruitProd?";
     public static final String SEARCH_URL = BASE_URL+"/product/search?";
 
-    public static String LOGO_URL = BASE_URL+"/images/logos/logo.jpg";
-    public static String BACKGROUND_URL = BASE_URL+"/images/logos/background.jpg";
-    public static String UPDATE_PROFILE_URL = BASE_URL+"/users/updateInfo";
-    public static String VERIFY_OTP_URL = Config.BASE_URL+"/users/verifyOTP";
-    public static String BANNER_URL = Config.BASE_URL+"/getBanner?lang=";
-    public static String PAYMENT_TYPE_URL = Config.BASE_URL+"/paymentTypes?lang=";
-    public static String APPLY_COUPON_URL = Config.BASE_URL+"/users/applyCoupon?coupon_code=";
+    public static final String LOGO_URL = BASE_URL+"/images/logos/logo.jpg";
+    public static final String BACKGROUND_URL = BASE_URL+"/images/logos/background.jpg";
+    public static final String UPDATE_PROFILE_URL = BASE_URL+"/users/updateInfo";
+    public static final  String VERIFY_OTP_URL = Config.BASE_URL+"/users/verifyOTP";
+    public static final String BANNER_URL = Config.BASE_URL+"/getBanner?lang=";
+    public static final String PAYMENT_TYPE_URL = Config.BASE_URL+"/paymentTypes?lang=";
+    public static final String APPLY_COUPON_URL = Config.BASE_URL+"/users/applyCoupon?coupon_code=";
+    public static final String FEEDBACK_URL = Config.BASE_URL+"/users/feedback";
 
     public static final String TAG = Config.class.getSimpleName();
     public static String OTP_SCREEN="";

@@ -50,11 +50,11 @@ import java.util.List;
 
 public class Fragment_Checkout3 extends Fragment {
 
-    Button c3_next,c3_back,coupon_submit_btn;
+    Button c3_next, c3_back, coupon_submit_btn;
     EditText coupoun_code_text;
     private String TAG = Fragment_Checkout3.class.getSimpleName();
     private String user_coupon_code;
-    public BigDecimal discount = BigDecimal.ZERO,discountedBill = BigDecimal.ZERO;
+    public BigDecimal discount = BigDecimal.ZERO, discountedBill = BigDecimal.ZERO;
     public String couponDiscPercentage = "";
     ProgressDialog pd;
     private List<PaymentType> paymentTypeList = new ArrayList<PaymentType>();
@@ -72,7 +72,7 @@ public class Fragment_Checkout3 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment__checkout3, container, false); // see it full way
-        Log.d(TAG, "onCreateView: "+view.toString());
+        Log.d(TAG, "onCreateView: " + view.toString());
         try {
             if (view != null) {
                 LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -84,7 +84,7 @@ public class Fragment_Checkout3 extends Fragment {
                 getLst();
 
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.e(TAG, "onCreateView: ", e);
         }
         return view;
@@ -92,14 +92,14 @@ public class Fragment_Checkout3 extends Fragment {
 
     private void getLst() {
 
-        PaymentListAdapter adapter = new PaymentListAdapter(getActivity(),paymentTypeList);
-        if(paymentTypeList.size() == 0)
+        PaymentListAdapter adapter = new PaymentListAdapter(getActivity(), paymentTypeList);
+        if (paymentTypeList.size() == 0)
             loadPaymentTypeData(adapter);
 
         payment_list.setAdapter(adapter);
     }
 
-        private ProgressDialog getProgressBar(){
+    private ProgressDialog getProgressBar() {
         ProgressDialog pd = new ProgressDialog(getActivity());
         // Set progress dialog style spinner
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -113,10 +113,10 @@ public class Fragment_Checkout3 extends Fragment {
         return pd;
     }
 
-    public void loadPaymentTypeData(final PaymentListAdapter adapter){
-        try{
-            String url = Config.PAYMENT_TYPE_URL+""+new PrefManager(Config.getContext()).getAppLangId();
-            Log.d(TAG, "loadPaymentTypeData URL : "+url);
+    public void loadPaymentTypeData(final PaymentListAdapter adapter) {
+        try {
+            String url = Config.PAYMENT_TYPE_URL + "" + new PrefManager(Config.getContext()).getAppLangId();
+            Log.d(TAG, "loadPaymentTypeData URL : " + url);
             JsonObjectRequest getPaymentTypeRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -126,10 +126,10 @@ public class Fragment_Checkout3 extends Fragment {
 
                         if (isSuccess) {
                             JSONArray obj = response.getJSONArray("data");
-                            if(obj.length() > 0){
+                            if (obj.length() > 0) {
                                 PaymentType paymentType;
                                 JSONObject jsonObject;
-                                for(int i=0;i<obj.length();i++){
+                                for (int i = 0; i < obj.length(); i++) {
                                     paymentType = new PaymentType();
                                     jsonObject = obj.getJSONObject(i);
                                     paymentType.setPaymentTypeId(jsonObject.getString("payment_type_id"));
@@ -137,15 +137,15 @@ public class Fragment_Checkout3 extends Fragment {
                                     paymentType.setPayment_details(jsonObject.getString("payment_details"));
                                     paymentTypeList.add(paymentType);
                                 }
-                                Log.d(TAG, "onResponse: "+paymentTypeList.toString());
+                                Log.d(TAG, "onResponse: " + paymentTypeList.toString());
                                 adapter.notifyDataSetChanged();
-                            }else{
-                                Toast.makeText(getActivity(),"No Payment Types available",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), "No Payment Types available", Toast.LENGTH_SHORT).show();
                             }
-                        }else{
-                            Toast.makeText(getActivity(),"Get Payment Type error",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Get Payment Type error", Toast.LENGTH_SHORT).show();
                         }
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         Log.e(TAG, "loadPaymentTypeData onResponse: ", e);
                     }
                 }
@@ -157,16 +157,16 @@ public class Fragment_Checkout3 extends Fragment {
                     // hide the progress dialog
                     pd.dismiss();
                     if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
-                      Toast.makeText(getActivity(),R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
-                    Toast.makeText(getActivity(),R.string.error_general_error,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.error_general_error, Toast.LENGTH_SHORT).show();
                 }
             });
 
-            getPaymentTypeRequest.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            getPaymentTypeRequest.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT, Config.WEB_RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             Volley.newRequestQueue(getActivity()).add(getPaymentTypeRequest);
             pd.show();
-        }catch(Exception e){
-            Log.e(TAG, "loadPaymentTypeData: ",e );
+        } catch (Exception e) {
+            Log.e(TAG, "loadPaymentTypeData: ", e);
         }
 
     }
@@ -207,7 +207,7 @@ public class Fragment_Checkout3 extends Fragment {
 
                 //validate coupon code if empty requrest focus
 
-                if(user_coupon_code.trim().length() == 0){
+                if (user_coupon_code.trim().length() == 0) {
                     coupoun_code_text.setError("Please enter coupon code");
                     View focusView = coupoun_code_text;
                     focusView.requestFocus();
@@ -236,34 +236,34 @@ public class Fragment_Checkout3 extends Fragment {
     }
 
     private void validateCoupon(String couponCode) {
-        try{
+        try {
             final BigDecimal total = Fragment_Add_To_Cart.total;
-            String url = Config.APPLY_COUPON_URL+""+couponCode+"&bill="+total;
+            String url = Config.APPLY_COUPON_URL + "" + couponCode + "&bill=" + total;
 
-            Log.d(TAG, "validateCoupon url: "+url);
+            Log.d(TAG, "validateCoupon url: " + url);
             JsonObjectRequest applyCouponReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     pd.dismiss();
                     try {
                         final boolean isSuccess = response.getBoolean("status");
-                        Log.d(TAG, "onResponse isSuccess: "+response.toString());
+                        Log.d(TAG, "onResponse isSuccess: " + response.toString());
                         if (isSuccess) {
                             JSONObject jsonObject = response.getJSONObject("data");
                             setDiscount(BigDecimal.valueOf(jsonObject.getDouble("totalDiscount")));
                             setDiscountedBill(BigDecimal.valueOf(jsonObject.getDouble("newTotalBill")));
                             couponDiscPercentage = jsonObject.getString("percentDiscount");
-                            Log.d(TAG, "Original Bill: "+total);
-                            Log.d(TAG, "Discount : "+discount);
-                            Log.d(TAG, "DiscountPercentage "+couponDiscPercentage);
-                            Log.d(TAG, "DiscountedBill: "+discountedBill);
-                            Toast.makeText(getActivity(),"Coupon Code applied Successfully .",Toast.LENGTH_SHORT).show();
-                        }else{
-                            if(response.getJSONObject("error").getInt("errorCode") == 10){
-                                Toast.makeText(getActivity(),"Please check Coupon Code .",Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Original Bill: " + total);
+                            Log.d(TAG, "Discount : " + discount);
+                            Log.d(TAG, "DiscountPercentage " + couponDiscPercentage);
+                            Log.d(TAG, "DiscountedBill: " + discountedBill);
+                            Toast.makeText(getActivity(), "Coupon Code applied Successfully .", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (response.getJSONObject("error").getInt("errorCode") == 10) {
+                                Toast.makeText(getActivity(), "Please check Coupon Code .", Toast.LENGTH_SHORT).show();
                             }
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         Log.e(TAG, "onResponse validateCoupon: ", e);
                     }
 
@@ -276,15 +276,15 @@ public class Fragment_Checkout3 extends Fragment {
                     // hide the progress dialog
                     pd.dismiss();
                     if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
-                      Toast.makeText(getActivity(),R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
-                    Toast.makeText(getActivity(),R.string.error_general_error,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.error_general_error, Toast.LENGTH_SHORT).show();
                 }
             });
-            applyCouponReq.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            applyCouponReq.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT, Config.WEB_RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             Volley.newRequestQueue(getActivity()).add(applyCouponReq);
             pd.show();
-        }catch(Exception e){
-            Log.e(TAG, "validateCoupon: ",e );
+        } catch (Exception e) {
+            Log.e(TAG, "validateCoupon: ", e);
         }
     }
 
@@ -318,13 +318,13 @@ public class Fragment_Checkout3 extends Fragment {
     private class PaymentListAdapter extends ArrayAdapter {
         List<PaymentType> adapterpaymentTypeList = new ArrayList<PaymentType>();
         FragmentActivity activity;
-        private TextView pay_method_name,pay_method_detail;
+        private TextView pay_method_name, pay_method_detail;
         private RadioButton listRadioButton;
-       // int listIndex = -1;
+        // int listIndex = -1;
 
 
         public PaymentListAdapter(FragmentActivity activity, List<PaymentType> adapterpaymentTypeList) {
-            super(activity,R.layout.payment_list_item);
+            super(activity, R.layout.payment_list_item);
             this.adapterpaymentTypeList = adapterpaymentTypeList;
             this.activity = activity;
 
@@ -354,7 +354,7 @@ public class Fragment_Checkout3 extends Fragment {
                 setItems(paymentTypeList.get(position));
 
             } catch (Exception e) {
-                Log.e(TAG, "getView: ",e );
+                Log.e(TAG, "getView: ", e);
             }
             return view;
         }
@@ -362,7 +362,7 @@ public class Fragment_Checkout3 extends Fragment {
         private void setItems(PaymentType paymenttype) {
 
             pay_method_name.setText(paymenttype.getPayment_type_name());
-            if(!paymenttype.getPayment_details().equalsIgnoreCase("null"))
+            if (!paymenttype.getPayment_details().equalsIgnoreCase("null"))
                 pay_method_detail.setText(paymenttype.getPayment_details());
         }
 
