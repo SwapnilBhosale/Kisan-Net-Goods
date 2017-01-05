@@ -72,6 +72,7 @@ public class Fragment_Checkout3 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment__checkout3, container, false); // see it full way
+        Log.d(TAG, "onCreateView: "+view.toString());
         try {
             if (view != null) {
                 LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -84,7 +85,8 @@ public class Fragment_Checkout3 extends Fragment {
 
             }
         }catch (Exception e) {
-            e.getMessage();}
+            Log.e(TAG, "onCreateView: ", e);
+        }
         return view;
     }
 
@@ -134,9 +136,8 @@ public class Fragment_Checkout3 extends Fragment {
                                     paymentType.setPayment_type_name(jsonObject.getString("payment_type_name"));
                                     paymentType.setPayment_details(jsonObject.getString("payment_details"));
                                     paymentTypeList.add(paymentType);
-
-                                    Log.d(TAG, "onResponse: "+paymentTypeList);
                                 }
+                                Log.d(TAG, "onResponse: "+paymentTypeList.toString());
                                 adapter.notifyDataSetChanged();
                             }else{
                                 Toast.makeText(getActivity(),"No Payment Types available",Toast.LENGTH_SHORT).show();
@@ -216,7 +217,7 @@ public class Fragment_Checkout3 extends Fragment {
             }
         });
 
-        listRadioButton.setOnClickListener(new View.OnClickListener() {
+        /*listRadioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View vMain = ((View) view.getParent());
@@ -231,7 +232,7 @@ public class Fragment_Checkout3 extends Fragment {
                     listIndex = -1;
                 }
             }
-        });
+        });*/
     }
 
     private void validateCoupon(String couponCode) {
@@ -353,7 +354,7 @@ public class Fragment_Checkout3 extends Fragment {
                 setItems(paymentTypeList.get(position));
 
             } catch (Exception e) {
-
+                Log.e(TAG, "getView: ",e );
             }
             return view;
         }
@@ -361,7 +362,8 @@ public class Fragment_Checkout3 extends Fragment {
         private void setItems(PaymentType paymenttype) {
 
             pay_method_name.setText(paymenttype.getPayment_type_name());
-            pay_method_detail.setText(paymenttype.getPayment_details());
+            if(!paymenttype.getPayment_details().equalsIgnoreCase("null"))
+                pay_method_detail.setText(paymenttype.getPayment_details());
         }
 
 

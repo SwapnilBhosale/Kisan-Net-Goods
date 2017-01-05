@@ -51,7 +51,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:divider="#fafafa"
-                        android:dividerHeight="10dp"></ListView>
+                        android:dividerHeight="10dp">
+
+                    </ListView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
