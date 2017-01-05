@@ -47,6 +47,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -400,11 +401,15 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
             cart_image.setImageUrl(Config.BASE_URL + "" + cart.getImage(), imageLoader);
             product_name.setText(cart.getName());
             product_price.setText(Config.formatCurrency(cart.getPrice()));
-            product_quntity.setText(cart.getQuantity());
+            product_quntity.setText(getLocaliseQuantity(cart.getQuantity()));
             product_weight.setText(cart.getWeight());
             final_price.setText(Config.formatCurrency(cart.getTotal()));
         }
 
+        public String getLocaliseQuantity(String quantity){
+            NumberFormat nf = NumberFormat.getInstance();
+            return nf.format(Integer.valueOf(quantity));
+        }
         private void initializeIds(View view) {
 
             cart_image = (NetworkImageView) view.findViewById(R.id.cart_image);
