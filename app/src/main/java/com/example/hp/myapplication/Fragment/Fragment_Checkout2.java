@@ -93,7 +93,6 @@ public class Fragment_Checkout2 extends Fragment {
                             if (c2_linear_layout.getVisibility() == View.GONE)
                                 c2_linear_layout.setVisibility(View.VISIBLE);
                         } else {
-
                             c2_linear_layout.setVisibility(View.GONE);
                         }
                     }
@@ -114,6 +113,7 @@ public class Fragment_Checkout2 extends Fragment {
 
                 Boolean isChecked = c2_checkbox.isChecked();
                 Bundle bundle = new Bundle();
+                Log.d(TAG, "onClick: "+isChecked);
                 bundle.putBoolean("isDeliveryAddSame",!isChecked);
                 if(isChecked){
                   if(!validateData())

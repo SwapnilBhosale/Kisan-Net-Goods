@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shoping_Cart</string>
+    <string name="app_name">KNG App</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -41,7 +41,7 @@
     <string name="categories_hint">Categories</string>
     <string name="select_quantity_hint">SELECT QUANTITY</string>
     <string name="manufacturer_company_hint">Manufacturer : </string>
-    <string name="select_lang">निवडा</string>
+    <string name="select_lang">Select</string>
     <string name="verify_mobile_hint">Please wait, We are verifying your mobile number ! \n Mobile number : </string>
     <string name="enter_otp_hint">Enter OTP </string>
     <string name="enter_otp"> Enter OTP</string>
@@ -70,4 +70,10 @@
     <string name="go_back">Back</string>
     <string name="delivery_address">Delivery address</string>
     <string name="thanks_for_feedback">Thank you for your precious feedback ..!!</string>
+    <string name="product_price">Product price :</string>
+    <string name="product_quantity">Quantity :</string>
+    <string name="final_price">Total :</string>
+    <string name="product_weight">Product weight :</string>
+    <string name="feedback_button">Submit</string>
+    <string name="rate_us_on_play_store">Rate us on Play Store.</string>
 </resources>

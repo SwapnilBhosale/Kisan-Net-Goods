@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:background="#ff9900"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context="in.metrogarageadmin.shoping_cart.Main.Fragment.Fragment_Grid">
 
     <GridView

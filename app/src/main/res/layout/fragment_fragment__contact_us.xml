@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
                 android:textColor="#000000"
-                android:text="Address :\nOffice No.14, 1st Floor,\nNavarang Plaza, Near Sawant Petrol Pump,\nAirport Road, Vishrantwadi,\nPune - 411015."/>
+                android:text="Address :\nRow house no 1, Anand Niwas,\nShitole Nagar, Old Sangavi,\nPune - 411027."/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                 android:textSize="17sp"
                 android:layout_marginTop="5dp"
                 android:textColor="#000000"
-                android:text="Contact : 020 – 30282999"/>
+                android:text="Contact : 8087726968"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
                 android:textSize="17sp"
                 android:layout_marginTop="5dp"
                 android:textColor="#000000"
-                android:text="Email : www.rnltechnologies.com"/>
+                android:text="Email : kisannetgoods@yahoo.com \nMobile : 8087726968"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

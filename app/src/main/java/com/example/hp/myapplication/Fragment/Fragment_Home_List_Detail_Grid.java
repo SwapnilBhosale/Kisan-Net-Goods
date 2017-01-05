@@ -198,6 +198,8 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                                     //myList = list;
                                     Log.d("getProduct", "onResponse: " + myList.toString());
                                     adapter.notifyDataSetChanged();
+                                }else{
+                                    Toast.makeText(getActivity(),"No Product available in this category",Toast.LENGTH_SHORT).show();
                                 }
                             } catch (Exception e) {
 
@@ -212,6 +214,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
 
                             // hide the progress dialog
                             pd.dismiss();
+
                             if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
                                 Toast.makeText(getActivity(), R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
                             Toast.makeText(getActivity(), R.string.error_general_error, Toast.LENGTH_SHORT).show();

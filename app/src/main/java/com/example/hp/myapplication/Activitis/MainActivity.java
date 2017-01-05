@@ -387,13 +387,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     // hide the progress dialog
                     //pd.dismiss();
-                    if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError )
-                        Toast.makeText(MainActivity.this,R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
-                    Toast.makeText(MainActivity.this,R.string.error_general_error,Toast.LENGTH_SHORT).show();
+                    if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
+                        Toast.makeText(MainActivity.this, R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, R.string.error_general_error, Toast.LENGTH_SHORT).show();
                 }
             });
 
-            category_request.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            category_request.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT, Config.WEB_RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             Volley.newRequestQueue(this).add(category_request);
             //   pd.show();
         } catch (Exception e) {
@@ -413,11 +413,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "onOptionsItemSelected: ");
         int id = item.getItemId();
 
-        
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_cart) {
 
-            Log.d(TAG, "onOptionsItemSelected: "+id);
+            Log.d(TAG, "onOptionsItemSelected: " + id);
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.main_activity_fl, new Fragment_Add_To_Cart()).addToBackStack(Config.KEY_FRAGMENT_LIST);
@@ -461,26 +461,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
             //onBackPressed();
-        } else {
-            if (id == R.id.profile) {
+        } else if (id == R.id.profile) {
 
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.main_activity_fl, new Fragment_Profile()).addToBackStack(Config.KEY_FRAGMENT_LIST);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
-                // onBackPressed();
-            } else {
-                if (id == R.id.change_language) {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.main_activity_fl, new Fragment_Profile()).addToBackStack(Config.KEY_FRAGMENT_LIST);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.commit();
+            // onBackPressed();
+        } else if (id == R.id.change_language) {
 
 
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
 
-                    // ...Irrelevant code for customizing the buttons and title
-                    dialogBuilder.setTitle("Change Language");
-                    LayoutInflater inflater = getLayoutInflater();
-                    View dialogView = inflater.inflate(R.layout.language_layout, null);
-                    dialogBuilder.setView(dialogView);
+            // ...Irrelevant code for customizing the buttons and title
+            dialogBuilder.setTitle("Change Language");
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.language_layout, null);
+            dialogBuilder.setView(dialogView);
 
                /* TextView tv_hindi = (TextView) dialogView.findViewById(R.id.tv_hindi);
                 TextView tv_marathi = (TextView) dialogView.findViewById(R.id.tv_marathi);
@@ -490,212 +488,216 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 LinearLayout english = (LinearLayout) dialogView.findViewById(R.id.english);*/
 
 
-                    List<Languages> lang_list = Config.languageList;
-                    final ListView language_list = (ListView) dialogView.findViewById(R.id.language_list);
-                    CustomEventAdapter event_list = new CustomEventAdapter(MainActivity.this, lang_list);
-                    language_list.setAdapter(event_list);
+            List<Languages> lang_list = Config.languageList;
+            final ListView language_list = (ListView) dialogView.findViewById(R.id.language_list);
+            CustomEventAdapter event_list = new CustomEventAdapter(MainActivity.this, lang_list);
+            language_list.setAdapter(event_list);
 
-                    final AlertDialog alertDialog = dialogBuilder.create();
-                    alertDialog.setCanceledOnTouchOutside(false);
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(alertDialog.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                    alertDialog.show();
-                    language_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            //adapterView.get
-                            TextView tv_image_selected = (TextView) view.findViewById(R.id.tv_image_selected);
-                            pos = i;
-                            if (tv_image_selected.getVisibility() == View.INVISIBLE)
-                                tv_image_selected.setVisibility(View.VISIBLE);
-                            for (int j = 0; j < Config.languageList.size(); j++) {
-                                if (i != j) {
-                                    TextView tv_image_sel = (TextView) adapterView.getChildAt(j).findViewById(R.id.tv_image_selected);
-                                    tv_image_sel.setVisibility(View.INVISIBLE);
-                                }
-                            }
-
-
+            final AlertDialog alertDialog = dialogBuilder.create();
+            alertDialog.setCanceledOnTouchOutside(false);
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alertDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            alertDialog.show();
+            language_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    //adapterView.get
+                    TextView tv_image_selected = (TextView) view.findViewById(R.id.tv_image_selected);
+                    pos = i;
+                    if (tv_image_selected.getVisibility() == View.INVISIBLE)
+                        tv_image_selected.setVisibility(View.VISIBLE);
+                    for (int j = 0; j < Config.languageList.size(); j++) {
+                        if (i != j) {
+                            TextView tv_image_sel = (TextView) adapterView.getChildAt(j).findViewById(R.id.tv_image_selected);
+                            tv_image_sel.setVisibility(View.INVISIBLE);
                         }
+                    }
 
-                    });
 
-                    Button btn = (Button) dialogView.findViewById(R.id.lang_select_btn);
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
+                }
 
-                            alertDialog.dismiss();
-                            Languages lang = Config.languageList.get(pos);
-                            Log.d(TAG, "lang: " + lang.toString());
-                            setLocale(lang);
+            });
+
+            Button btn = (Button) dialogView.findViewById(R.id.lang_select_btn);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    alertDialog.dismiss();
+                    Languages lang = Config.languageList.get(pos);
+                    Log.d(TAG, "lang: " + lang.toString());
+                    setLocale(lang);
                             /*Intent intent = new Intent(MainActivity.this, MainActivity.class);
                             startActivity(intent);
                             MainActivity.this.finish();*/
-                            Intent intent = getIntent();
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            finish();
-                            startActivity(intent);
+                    Intent intent = getIntent();
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    finish();
+                    startActivity(intent);
+                }
+            });
+        } else if (id == R.id.logout) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setMessage(getString(R.string.logout_confirmation));
+            builder1.setCancelable(true);
+            builder1.setPositiveButton(
+                    R.string.option_yes,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            openLoginScreenAndSetPref();
                         }
                     });
-                } else if (id == R.id.logout) {
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                    builder1.setMessage(getString(R.string.logout_confirmation));
-                    builder1.setCancelable(true);
-                    builder1.setPositiveButton(
-                            R.string.option_yes,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    openLoginScreenAndSetPref();
-                                }
-                            });
-                    builder1.setNegativeButton(
-                            R.string.option_no,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alert11 = builder1.create();
-                    alert11.show();
-                } else if (id == R.id.order_history) {
+            builder1.setNegativeButton(
+                    R.string.option_no,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        } else if (id == R.id.order_history) {
 
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.main_activity_fl, new Fragment_Oredr_History()).addToBackStack(Config.KEY_FRAGMENT_LIST);
-                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    ft.commit();
-                    //onBackPressed();
-                }
-            }
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.main_activity_fl, new Fragment_Oredr_History()).addToBackStack(Config.KEY_FRAGMENT_LIST);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.commit();
+            //onBackPressed();
+        } else if(id == R.id.contact_us) {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.main_activity_fl, new Fragment_Contact_us()).addToBackStack(Config.KEY_FRAGMENT_LIST);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.commit();
         }
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
 
-    public void setLocale(Languages lang){
-        Locale myLocale = null;
-        PrefManager pref = new PrefManager(Config.getContext());
+
+
+public void setLocale(Languages lang){
+        Locale myLocale=null;
+        PrefManager pref=new PrefManager(Config.getContext());
         pref.storeAppLanguage(lang.getLanguageCode());
         pref.setAppLangId(""+lang.getLanguageId());
-        Log.d("LanguageDialogue", "setLocale in pref : "+lang.getLanguageCode());
-        Configuration config = new Configuration();
-        myLocale = new Locale(lang.getLanguageCode());
+        Log.d("LanguageDialogue","setLocale in pref : "+lang.getLanguageCode());
+        Configuration config=new Configuration();
+        myLocale=new Locale(lang.getLanguageCode());
         Locale.setDefault(myLocale);
-        config.locale = myLocale;
-        Log.d("Change Local", "setLocale: "+myLocale);
+        config.locale=myLocale;
+        Log.d("Change Local","setLocale: "+myLocale);
         getBaseContext().getResources().updateConfiguration(config,Config.getContext().getResources().getDisplayMetrics());
 
 
-    }
+        }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Main Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
+/**
+ * ATTENTION: This was auto-generated to implement the App Indexing API.
+ * See https://g.co/AppIndexing/AndroidStudio for more information.
+ */
+public Action getIndexApiAction(){
+        Thing object=new Thing.Builder()
+        .setName("Main Page") // TODO: Define a title for the content shown.
+        // TODO: Make sure this auto-generated URL is correct.
+        .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+        .build();
         return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
+        .setObject(object)
+        .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+        .build();
+        }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+@Override
+public void onConfigurationChanged(Configuration newConfig){
         // refresh your views here
         super.onConfigurationChanged(newConfig);
-    }
+        }
 
-    @Override
-    public void onStart() {
+@Override
+public void onStart(){
         super.onStart();
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
+        AppIndex.AppIndexApi.start(client,getIndexApiAction());
+        }
 
-    @Override
-    public void onStop() {
+@Override
+public void onStop(){
         super.onStop();
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        AppIndex.AppIndexApi.end(client,getIndexApiAction());
         client.disconnect();
+        }
+
+public class CustomEventAdapter extends ArrayAdapter {
+    private Activity activity;
+    List<Languages> languageList;
+    private TextView tv_lang_name;
+
+
+    public CustomEventAdapter(Activity activity, List<Languages> languageList) {
+        super(activity, R.layout.language_list_item);
+        this.languageList = languageList;
+        this.activity = activity;
     }
 
-    public class CustomEventAdapter extends ArrayAdapter {
-        private Activity activity;
-        List<Languages> languageList;
-        private TextView tv_lang_name;
 
+    public int getCount() {
+        return languageList.size();
+    }
 
-        public CustomEventAdapter(Activity activity, List<Languages> languageList) {
-            super(activity, R.layout.language_list_item);
-            this.languageList = languageList;
-            this.activity = activity;
-        }
+    public Object getItem(int position) {
+        return languageList.get(position);
+    }
 
+    public long getItemId(int position) {
+        return position;
+    }
 
-        public int getCount() {
-            return languageList.size();
-        }
+    @Override
+    public View getView(final int position, View view, ViewGroup parent) {
+        try {
+            if (view == null) {
+                LayoutInflater li = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        public Object getItem(int position) {
-            return languageList.get(position);
-        }
-
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View view, ViewGroup parent) {
-            try {
-                if (view == null) {
-                    LayoutInflater li = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                    view = li.inflate(R.layout.language_list_item, null);
-                }
-                initializeIds(view);
-                setItems(languageList.get(position));
-
-            } catch (Exception e) {
-
+                view = li.inflate(R.layout.language_list_item, null);
             }
-            return view;
-        }
+            initializeIds(view);
+            setItems(languageList.get(position));
 
-        private void setItems(Languages lang) {
-
-            tv_lang_name.setText(lang.getLanguageName());
-
+        } catch (Exception e) {
 
         }
+        return view;
+    }
 
+    private void setItems(Languages lang) {
 
-        private void initializeIds(View view) {
-
-            tv_lang_name = (TextView) view.findViewById(R.id.tv_lang_name);
-
-
-        }
+        tv_lang_name.setText(lang.getLanguageName());
 
 
     }
+
+
+    private void initializeIds(View view) {
+
+        tv_lang_name = (TextView) view.findViewById(R.id.tv_lang_name);
+
+
+    }
+
+
+}
 
     private void openLoginScreenAndSetPref() {
         PrefManager pref = new PrefManager(getApplicationContext());

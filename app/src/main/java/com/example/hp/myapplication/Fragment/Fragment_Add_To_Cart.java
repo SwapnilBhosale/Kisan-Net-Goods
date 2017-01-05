@@ -88,6 +88,8 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                     view = li.inflate(R.layout.empty_cart_layout, container, false);
 
                     Button gotoShopping = (Button) view.findViewById(R.id.go_to_shopping);
+                    TextView emptyCartMessage = (TextView) view.findViewById(R.id.empty_cart_messaage);
+                    emptyCartMessage.setText("Your cart is empty");
 
                     gotoShopping.setOnClickListener(new View.OnClickListener() {
                         @Override

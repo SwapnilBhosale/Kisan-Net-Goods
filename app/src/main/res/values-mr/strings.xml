@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Shoping_Cart</string>
+    <string name="app_name">KNG App</string>
 
     <string name="navigation_drawer_open">नेव्हिगेशन ड्रॉवर उघडा</string>
     <string name="navigation_drawer_close">नेव्हिगेशन ड्रॉवर बंद करा</string>
@@ -26,7 +26,7 @@
     <string name="log_out">लॉग आउट</string>
     <string name="user_profile">वापरकर्ता प्रोफाइल</string>
     <string name="contact_us">आमच्याशी संपर्क साधा</string>
-    <string name="feedback">प्रतिक्रिया</string>
+    <string name="feedback">प्रतिक्रिया द्या</string>
     <string name="order_history">मागील ऑर्डर</string>
 
     <string name="option_yes">होय</string>
@@ -43,7 +43,7 @@
     <string name="categories_hint">श्रेणी</string>
     <string name="select_quantity_hint">खरेदी संख्या निवडा</string>
     <string name="manufacturer_company_hint">उत्पादन निर्माता कंपनी : </string>
-    <string name="select_lang">Select</string>
+    <string name="select_lang">निवडा</string>
     <string name="verify_mobile_hint">कृपया थांबा, आम्हाला आपल्या मोबाइल नंबर सत्यापित आहेत! \n मोबाईल क्रमांक:</string>
     <string name="enter_otp_hint"> स्वत: OTP टाका</string>
     <string name="enter_otp"> OTP टाका</string>
@@ -73,4 +73,11 @@
     <string name="go_back">मागे जा </string>
     <string name="delivery_address">डिलिव्हरी चा पत्ता</string>
     <string name="thanks_for_feedback">तुमच्या प्रतिक्रिया दिल्याबद्दल धन्यवाद ..!!</string>
+    <string name="product_price">किंमत :</string>
+    <string name="product_quantity">खरेदी संख्या :</string>
+    <string name="final_price">एकूण :</string>
+    <string name="product_weight">प्रोडक्टचे वजन : </string>
+    <string name="feedback_button">प्रतिक्रिया द्या </string>
+    <string name="rate_us_on_play_store">आम्हाला प्ले स्टोअर वर रेटिंग द्या </string>
+
 </resources>

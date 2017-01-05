@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:background="#f0f0f0"
     android:layout_width="match_parent"
+    android:visibility="gone"
     android:layout_height="match_parent">
 
     <TextView
@@ -11,7 +12,7 @@
         android:textSize="20dp"
         android:padding="5dp"
         android:textColor="#000000"
-        android:text="Your Shoping Cart Is Empty"/>
+        android:text=""/>
 
     <ImageView
         android:layout_width="match_parent"
@@ -28,15 +29,16 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:textColor="#ff0000"
-        android:text="No item present in you cart"/>
+        android:text=""/>
     <TextView
+        android:id="@+id/empty_cart_messaage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17sp"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:textColor="#ff0000"
-        android:text="Please go to shopping"/>
+        android:text=""/>
     <Button
         android:id="@+id/go_to_shopping"
         android:layout_width="wrap_content"
