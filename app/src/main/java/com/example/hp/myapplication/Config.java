@@ -91,12 +91,14 @@ public class Config extends Application {
     private ImageLoader mImageLoader;
     private static Config mInstance;
     private static Context context;
+    private static Context baseContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
         context = this;
+        baseContext = getBaseContext();
     }
 
     public static Context getContext() {
@@ -209,6 +211,11 @@ public class Config extends Application {
         String newPattern = pattern.replace("\u00A4", "").trim();
         NumberFormat newFormat = new DecimalFormat(newPattern);
         return newFormat.format(num);
+    }
+
+
+    public static Context getAppBaseContext(){
+        return baseContext;
     }
 
 }

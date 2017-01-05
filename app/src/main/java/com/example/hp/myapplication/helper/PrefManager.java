@@ -169,7 +169,7 @@ public class PrefManager {
             Locale.setDefault(myLocale);
             Configuration config = new Configuration();
             config.locale = myLocale;
-            Config.getContext().getResources().updateConfiguration( config, Config.getContext().getResources().getDisplayMetrics());
+            Config.getAppBaseContext().getResources().updateConfiguration( config, Config.getAppBaseContext().getResources().getDisplayMetrics());
         }
     }
 
@@ -183,7 +183,7 @@ public class PrefManager {
         Locale.setDefault(myLocale);
         Configuration config = new Configuration();
         config.locale = myLocale;
-        Config.getContext().getResources().updateConfiguration( config, Config.getContext().getResources().getDisplayMetrics() );
+        Config.getAppBaseContext().getResources().updateConfiguration( config, Config.getAppBaseContext().getResources().getDisplayMetrics() );
         editor.putString(KEY_APP_LANG, lang);
         editor.commit();
     }
@@ -199,7 +199,7 @@ public class PrefManager {
         Locale.setDefault(myLocale);
         Configuration config = new Configuration();
         config.locale = myLocale;
-        Config.getContext().getResources().updateConfiguration( config, Config.getContext().getResources().getDisplayMetrics() );
+        Config.getAppBaseContext().getResources().updateConfiguration( config, Config.getAppBaseContext().getResources().getDisplayMetrics() );
     }
 
     public String getAppLanguage(){
