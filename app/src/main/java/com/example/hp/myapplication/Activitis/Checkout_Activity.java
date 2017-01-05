@@ -17,14 +17,22 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.example.hp.myapplication.CartItem;
+import com.example.hp.myapplication.Config;
 import com.example.hp.myapplication.Fragment.Fragment_Add_To_Cart;
 import com.example.hp.myapplication.Fragment.Fragment_Checkout1;
 import com.example.hp.myapplication.R;
 
+import java.util.List;
+
 public class Checkout_Activity extends ActionBarActivity {
 
     private String TAG = Checkout_Activity.class.getSimpleName();
+    public static TextView tv;
+    public RelativeLayout rl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +71,33 @@ public class Checkout_Activity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.checkout_menu, menu);
 
+        try {
+            RelativeLayout badgeLayout = (RelativeLayout) menu.findItem(R.id.action_cart_check).getActionView();
+            rl = (RelativeLayout) badgeLayout.findViewById(R.id.option_item_layout);
+
+            tv = (TextView) badgeLayout.findViewById(R.id.cart_count);
+
+            List<CartItem> list = Fragment_Add_To_Cart.cartList;
+            //Log.d(TAG, "onCreateOptionsMenu: " + list);
+
+            String j = String.valueOf(list.size());
+            Log.d(TAG, "onCreateOptionsMenu: TV " + tv.toString());
+            if (list.size() == 0) {
+                tv.setText("0");
+            } else
+                tv.setText(j);
+
+
+        } catch (Exception e) {
+            Log.e(TAG, "onCreateOptionsMenu: ", e);
+        }
+        rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         return true;
     }
 
@@ -75,7 +110,7 @@ public class Checkout_Activity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_cart_check) {
-            this.finish();
+
 
         }
 

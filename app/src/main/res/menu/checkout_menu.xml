@@ -1,15 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:appcompat="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_cart_check"
-        android:actionLayout="@layout/cart_button_layout"
-        android:icon="@drawable/ic_cart"
         android:orderInCategory="100"
+        app:actionLayout="@layout/cart_button_layout"
         android:title="Cart"
-        app:showAsAction="ifRoom"
-        appcompat:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
 
 </menu>
