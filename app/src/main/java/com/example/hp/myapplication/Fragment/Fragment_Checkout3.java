@@ -5,14 +5,20 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -26,7 +32,9 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.example.hp.myapplication.Categoris;
 import com.example.hp.myapplication.Config;
 import com.example.hp.myapplication.PaymentType;
 import com.example.hp.myapplication.R;
@@ -50,6 +58,9 @@ public class Fragment_Checkout3 extends Fragment {
     public String couponDiscPercentage = "";
     ProgressDialog pd;
     private List<PaymentType> paymentTypeList = new ArrayList<PaymentType>();
+    private ListView payment_list;
+    private RadioButton listRadioButton = null;
+    int listIndex = -1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,13 +80,21 @@ public class Fragment_Checkout3 extends Fragment {
 
                 intioliseId(view);
                 setListners();
-                if(paymentTypeList.size() == 0)
-                    loadPaymentTypeData();
+                getLst();
 
             }
         }catch (Exception e) {
             e.getMessage();}
         return view;
+    }
+
+    private void getLst() {
+
+        PaymentListAdapter adapter = new PaymentListAdapter(getActivity(),paymentTypeList);
+        if(paymentTypeList.size() == 0)
+            loadPaymentTypeData(adapter);
+
+        payment_list.setAdapter(adapter);
     }
 
     private ProgressDialog getProgressBar(){
@@ -92,7 +111,7 @@ public class Fragment_Checkout3 extends Fragment {
         return pd;
     }
 
-    public void loadPaymentTypeData(){
+    public void loadPaymentTypeData(final PaymentListAdapter adapter){
         try{
             String url = Config.PAYMENT_TYPE_URL+""+new PrefManager(Config.getContext()).getAppLangId();
             Log.d(TAG, "loadPaymentTypeData URL : "+url);
@@ -115,7 +134,10 @@ public class Fragment_Checkout3 extends Fragment {
                                     paymentType.setPayment_type_name(jsonObject.getString("payment_type_name"));
                                     paymentType.setPayment_details(jsonObject.getString("payment_details"));
                                     paymentTypeList.add(paymentType);
+
+                                    Log.d(TAG, "onResponse: "+paymentTypeList);
                                 }
+                                adapter.notifyDataSetChanged();
                             }else{
                                 Toast.makeText(getActivity(),"No Payment Types available",Toast.LENGTH_SHORT).show();
                             }
@@ -134,7 +156,7 @@ public class Fragment_Checkout3 extends Fragment {
                     // hide the progress dialog
                     pd.dismiss();
                     if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
-                        Toast.makeText(getActivity(),R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                      Toast.makeText(getActivity(),R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
                     Toast.makeText(getActivity(),R.string.error_general_error,Toast.LENGTH_SHORT).show();
                 }
             });
@@ -194,6 +216,22 @@ public class Fragment_Checkout3 extends Fragment {
             }
         });
 
+        listRadioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View vMain = ((View) view.getParent());
+                if (listRadioButton != null) listRadioButton.setChecked(false);
+                // assign to the variable the new one
+                listRadioButton = (RadioButton) view;
+                // find if the new one is checked or not, and set "listIndex"
+                if (listRadioButton.isChecked()) {
+                    listIndex = ((ViewGroup) vMain.getParent()).indexOfChild(vMain);
+                } else {
+                    listRadioButton = null;
+                    listIndex = -1;
+                }
+            }
+        });
     }
 
     private void validateCoupon(String couponCode) {
@@ -237,7 +275,7 @@ public class Fragment_Checkout3 extends Fragment {
                     // hide the progress dialog
                     pd.dismiss();
                     if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
-                        Toast.makeText(getActivity(),R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                      Toast.makeText(getActivity(),R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
                     Toast.makeText(getActivity(),R.string.error_general_error,Toast.LENGTH_SHORT).show();
                 }
             });
@@ -254,6 +292,9 @@ public class Fragment_Checkout3 extends Fragment {
         c3_back = (Button) view.findViewById(R.id.c3_back);
         coupoun_code_text = (EditText) view.findViewById(R.id.coupoun_code_text);
         coupon_submit_btn = (Button) view.findViewById(R.id.coupon_submit_btn);
+        payment_list = (ListView) view.findViewById(R.id.payment_list);
+
+        listRadioButton = (RadioButton) view.findViewById(R.id.listRadioButton);
 
     }
 
@@ -271,5 +312,66 @@ public class Fragment_Checkout3 extends Fragment {
 
     public void setDiscountedBill(BigDecimal discountedBill) {
         this.discountedBill = discountedBill.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+    }
+
+    private class PaymentListAdapter extends ArrayAdapter {
+        List<PaymentType> adapterpaymentTypeList = new ArrayList<PaymentType>();
+        FragmentActivity activity;
+        private TextView pay_method_name,pay_method_detail;
+        private RadioButton listRadioButton;
+       // int listIndex = -1;
+
+
+        public PaymentListAdapter(FragmentActivity activity, List<PaymentType> adapterpaymentTypeList) {
+            super(activity,R.layout.payment_list_item);
+            this.adapterpaymentTypeList = adapterpaymentTypeList;
+            this.activity = activity;
+
+        }
+
+        public int getCount() {
+            return adapterpaymentTypeList.size();
+        }
+
+        public Object getItem(int position) {
+            return adapterpaymentTypeList.get(position);
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup parent) {
+            try {
+                if (view == null) {
+                    LayoutInflater li = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                    view = li.inflate(R.layout.payment_list_item, null);
+                }
+                initializeIds(view);
+                setItems(paymentTypeList.get(position));
+
+            } catch (Exception e) {
+
+            }
+            return view;
+        }
+
+        private void setItems(PaymentType paymenttype) {
+
+            pay_method_name.setText(paymenttype.getPayment_type_name());
+            pay_method_detail.setText(paymenttype.getPayment_details());
+        }
+
+
+        private void initializeIds(View view) {
+            listRadioButton = (RadioButton) view.findViewById(R.id.listRadioButton);
+            pay_method_name = (TextView) view.findViewById(R.id.pay_method_name);
+            pay_method_detail = (TextView) view.findViewById(R.id.pay_method_detail);
+
+
+        }
+
     }
 }

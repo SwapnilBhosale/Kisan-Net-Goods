@@ -45,54 +45,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:background="#ffcccccc" />
-                    <RadioGroup
-                        android:id="@+id/radioSex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
 
-                        <RadioButton
-                            android:id="@+id/radioMale"
-                            android:layout_width="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_height="wrap_content"
-                            android:text="Cash on Delivery"
-                            android:checked="true"
-                             />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <ListView
+                        android:id="@+id/payment_list"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_weight="5"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="5dp"
-                        android:text="Pay with cash upon delivery"
-                        android:textSize="19sp" />
-
-
-                        <RadioButton
-                            android:id="@+id/radiofemale"
-                            android:layout_width="wrap_content"
-                            android:textSize="19sp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:text="Card Payment"
-                            android:layout_height="wrap_content" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_weight="5"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="5dp"
-                        android:text="Pay with card now"
-                        android:textSize="19sp" />
-                   </RadioGroup>
+                        android:divider="#fafafa"
+                        android:dividerHeight="10dp"></ListView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
