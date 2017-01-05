@@ -8,8 +8,14 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -18,6 +24,7 @@ import com.example.hp.myapplication.Activitis.Login_Activity;
 import com.example.hp.myapplication.Activitis.MainActivity;
 import com.example.hp.myapplication.Activitis.Register_Activity;
 import com.example.hp.myapplication.Config;
+import com.example.hp.myapplication.R;
 import com.example.hp.myapplication.helper.PrefManager;
 import com.example.hp.myapplication.service.HttpService;
 
@@ -94,11 +101,11 @@ public class SmsReceiver extends BroadcastReceiver {
             }
         },new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Toast.makeText(context,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
-                // hide the progress dialog
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e(TAG, "Error: " + volleyError);
+                if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
+                    Toast.makeText(Config.getContext(),R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                Toast.makeText(Config.getContext(),R.string.error_general_error,Toast.LENGTH_SHORT).show();
 
             }
         });

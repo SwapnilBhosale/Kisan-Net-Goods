@@ -14,8 +14,8 @@
     <string name="enter_mobile_no">मोबाइल नंबर</string>
     <string name="change_language">Change Language</string>
     <string name="register_user">साइन अप करा</string>
-    <string name="enter_first_name">नाव</string>
-    <string name="enter_last_name">आडनाव</string>
+    <string name="enter_name">नाव</string>
+    <string name="enter_village">गाव</string>
     <string name="enter_address">पत्ता</string>
     <string name="enter_city">शहर</string>
     <string name="enter_state">राज्य</string>
@@ -31,15 +31,15 @@
 
     <string name="option_yes">होय</string>
     <string name="option_no">नाही</string>
-    <string name="add_to_cart_success">खरेदी यादीत समाविष्ट केले</string>
+    <string name="add_to_cart_success">खरेदी यादीत समाविष्ट केले .</string>
     <string name="loading">लोड होत आहे ...</string>
-    <string name="update_cart_success">खरेदी यादीत बदल यशस्वी</string>
-    <string name="add_to_cart">खरेदी यादीत टाका</string>
-    <string name="update_cart">खरेदी यादीत बदल</string>
+    <string name="update_cart_success">खरेदी यादीत बदल यशस्वी .</string>
+    <string name="add_to_cart">खरेदी यादीत टाका .</string>
+    <string name="update_cart">खरेदी यादीत बदल .</string>
     <string name="err_mobile_already_exist">मोबाइल फोन आधीच नोंदणीकृत आहे</string>
     <string name="amount_payable">देय रक्कम : </string>
     <string name="check_out">पुढे जा</string>
-    <string name="feedback_hint">चांगले किंवा वाईट. जे काही आहे. कृपया आपल्या प्रतिक्रिया द्या</string>
+    <string name="feedback_hint">चांगले किंवा वाईट. जे काही आहे. कृपया आपल्या प्रतिक्रिया द्या ...</string>
     <string name="categories_hint">श्रेणी</string>
     <string name="select_quantity_hint">खरेदी संख्या निवडा</string>
     <string name="manufacturer_company_hint">उत्पादन निर्माता कंपनी : </string>
@@ -51,18 +51,21 @@
     <string name="search_here">येथे शोधा</string>
     <string name="error_no_item_in_cart">खरेदी यादीमध्ये कोणतेही आयटम नाहीत. कृपया काहीतरी खरेदी करा.</string>
 
-    <string name="error_mobile_no">कृपया मोबाईल नंबर तपासा</string>
-    <string name="error_fname">कृपया नाव तपासा</string>
-    <string name="error_lname">कृपया आडनाव तपासा</string>
-    <string name="error_address">कृपया पत्ता तपासा.</string>
-    <string name="error_city">कृपया शहर तपासा.</string>
-    <string name="error_state">कृपया राज्य तपासा.</string>
-    <string name="error_pin_code">कृपया पिन कोड तपासा.</string>
+    <string name="error_mobile_no">कृपया मोबाईल नंबर तपासुन पहा .</string>
+    <string name="error_name">कृपया नाव तपासुन पहा .</string>
+    <string name="error_village">कृपया गावाचे नाव तपासुन पहा .</string>
+    <string name="error_address">कृपया पत्ता तपासुन पहा .</string>
+    <string name="error_city">कृपया शहराचे नाव तपासुन पहा .</string>
+    <string name="error_state">कृपया राज्याचे नाव तपासुन पहा .</string>
+    <string name="error_pin_code">कृपया पिन कोड तपासुन पहा .</string>
     <string name="update_profile_button">माहिती बदला</string>
     <string name="exit_confirmation">आपण खरोखर एप्लिकेशन बंद करू इच्छिता का ?</string>
     <string name="logout_confirmation">आपण खरोखर लॉगआऊट करू इच्छिता का ?</string>
 
-    <string name="error_empty_otp">Please enter OTP</string>
-    <string name="error_wrong_otp">Please enter right OTP</string>
-    <string name="error_no_quantity">Please enter quantity.</string>
+    <string name="error_empty_otp">कृपया OTP टाका .</string>
+    <string name="error_wrong_otp">कृपया बरोबर OTP टाका .</string>
+    <string name="error_no_quantity">कृपया खरेदी संख्या निवडा .</string>
+    <string name="error_no_internet_conenction"> कृपया तुमचे इंटरनेट चेक करा ...</string>
+    <string name="error_mobile_is_not_registered">तुमचा मोबईल नंबर रजिस्टर नाही !</string>
+    <string name="error_general_error">काहीतरी चुकीचं होतंय !</string>
 </resources>

@@ -63,8 +63,8 @@ public class Fragment_Checkout1 extends Fragment {
 
         Log.d(TAG, "loadData: "+pref.getAddress());
         c1_address.setText(pref.getAddress());
-        c1_first_name.setText(pref.getFname());
-        c1_last_name.setText(pref.getLname());
+        c1_first_name.setText(pref.getName());
+        c1_last_name.setText(pref.getVillage());
         c1_city.setText(pref.getCity());
         c1_state.setText(pref.getState());
         c1_mobile_no.setText(pref.getMobile());

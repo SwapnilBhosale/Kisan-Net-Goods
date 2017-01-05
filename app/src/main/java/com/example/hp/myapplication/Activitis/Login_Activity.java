@@ -38,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -337,8 +338,8 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                                 JSONArray jsonArray = response.getJSONArray("data");
                                 JSONObject data = jsonArray.getJSONObject(0);
                                 pref.setCustomerId(data.getString("customer_id"));
-                                pref.setFname(data.getString("firstname"));
-                                pref.setLname(data.getString("lastname"));
+                                pref.setName(data.getString("name"));
+                                pref.setVillage(data.getString("village"));
                                 pref.setSessionKey(data.getString("session_key"));
                                 pref.setMobile(mobileNo);
                                 pref.setAddress(data.getString("address"));
@@ -450,6 +451,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                                     Log.d(TAG, "User is not registered");
                                     Intent intent = new Intent(getApplicationContext(),Register_Activity.class);
                                     intent.putExtra("MOBILE_NO",mobileNo);
+                                    Toast.makeText(Config.getContext(),R.string.error_mobile_is_not_registered,Toast.LENGTH_LONG).show();
                                     startActivity(intent);
 
                                 }else if(errorCode.equals("20")){
@@ -467,28 +469,17 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                 },new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Log.d(TAG, "Error: " + volleyError.getMessage());
+                        Log.e(TAG, "Error: " , volleyError);
 
                         // hide the progress dialog
                         pd.dismiss();
-                        String message = null;
-                        if (volleyError instanceof NetworkError) {
-                            message = "Cannot connect to Internet...Please check your connection!";
-                        } else if (volleyError instanceof ServerError) {
-                            message = "The server could not be found. Please try again after some time!!";
-                        } else if (volleyError instanceof AuthFailureError) {
-                            message = "Cannot connect to Internet...Please check your connection!";
-                        } else if (volleyError instanceof ParseError) {
-                            message = "Parsing error! Please try again after some time!!";
-                        } else if (volleyError instanceof NoConnectionError) {
-                            message = "Cannot connect to Internet...Please check your connection!";
-                        } else if (volleyError instanceof TimeoutError) {
-                            message = "Connection TimeOut! Please check your internet connection.";
-                        }
-                        Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG).show();
-
+                        if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError
+                                || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError )
+                            Toast.makeText(Login_Activity.this,R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                        Toast.makeText(Login_Activity.this,R.string.error_general_error,Toast.LENGTH_SHORT).show();
                     }
                 });
+                loginRequest.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 Volley.newRequestQueue(getApplicationContext()).add(loginRequest);
                 pd.show();
             }
@@ -534,15 +525,18 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                 }
             },new Response.ErrorListener() {
                 @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
-                    Toast.makeText(Login_Activity.this,
-                            error.getMessage(), Toast.LENGTH_SHORT).show();
-                    // hide the progress dialog
+                public void onErrorResponse(VolleyError volleyError) {
+                    VolleyLog.e(TAG, "Error: " , volleyError);
                     pd.dismiss();
+                    if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError
+                            || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
+                        Toast.makeText(Login_Activity.this,R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login_Activity.this,R.string.error_general_error,Toast.LENGTH_SHORT).show();
+
 
                 }
             });
+            verify_otp_req.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             Volley.newRequestQueue(this).add(verify_otp_req);
             pd.show();
         }

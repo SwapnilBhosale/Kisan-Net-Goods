@@ -46,8 +46,8 @@ public class Fragment_Checkout4 extends Fragment {
                 PrefManager pref = new PrefManager(Config.getContext());
 
                 c4_address.setText(pref.getAddress());
-                c4_first_name.setText(pref.getFname());
-                c4_last_name.setText(pref.getLname());
+                c4_first_name.setText(pref.getName());
+                c4_last_name.setText(pref.getVillage());
                 //c4_country.setText(pref.get());
                 c4_city.setText(pref.getCity());
                 c4_state.setText(pref.getState());

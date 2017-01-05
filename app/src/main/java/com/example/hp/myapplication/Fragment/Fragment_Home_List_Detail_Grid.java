@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -69,7 +70,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
         if (getArguments() != null) {
             category_id = getArguments().getString("category_id");
             isFruit = getArguments().getBoolean("isFruit");
-            if(isFruit){
+            if (isFruit) {
                 fruitId = getArguments().getString("fruit_id");
             }
 
@@ -95,11 +96,11 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                 initiolizeId(view);
 
                 search_item = getArguments().getString("search_item");
-                Log.d(TAG, "Search item: "+search_item);
+                Log.d(TAG, "Search item: " + search_item);
 
                 CustomGrid adapter = new CustomGrid(getActivity(), myList);
-                if(initialized == false)
-                        loadData(adapter);
+                if (initialized == false)
+                    loadData(adapter);
                 else
                     home_grid.setVisibility(View.VISIBLE);
                 home_grid.setAdapter(adapter);
@@ -132,7 +133,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
         return view;
     }
 
-    private ProgressDialog getProgressBar(){
+    private ProgressDialog getProgressBar() {
         ProgressDialog pd = new ProgressDialog(getActivity());
         // Set progress dialog style spinner
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -149,14 +150,14 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
     private void loadData(final CustomGrid adapter) {
         //final List<Fruits> list = new ArrayList<>();
         String url = "";
-        if(isFruit)
-            url = Config.FRUIT_PROD_MAP_URL+"lang="+new PrefManager(Config.getContext()).getAppLangId()+"&fruit_id="+fruitId;
-        else if(search_item!=null)
-            url = Config.SEARCH_URL+"lang="+ new PrefManager(Config.getContext()).getAppLangId()+ "&q=" +search_item;
+        if (isFruit)
+            url = Config.FRUIT_PROD_MAP_URL + "lang=" + new PrefManager(Config.getContext()).getAppLangId() + "&fruit_id=" + fruitId;
+        else if (search_item != null)
+            url = Config.SEARCH_URL + "lang=" + new PrefManager(Config.getContext()).getAppLangId() + "&q=" + search_item;
         else
-            url = Config.PRODUCTS_URL + "lang="+new PrefManager(Config.getContext()).getAppLangId()+"&category_id=" + category_id;
+            url = Config.PRODUCTS_URL + "lang=" + new PrefManager(Config.getContext()).getAppLangId() + "&category_id=" + category_id;
 
-        Log.d(TAG, "URL in loadData : "+url);
+        Log.d(TAG, "URL in loadData : " + url);
         try {
             Log.d("grid", "loadData: ");
             JsonObjectRequest obj = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -198,24 +199,13 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
 
                             // hide the progress dialog
                             pd.dismiss();
-                            String message = null;
-                            if (volleyError instanceof NetworkError) {
-                                message = "Cannot connect to Internet...Please check your connection!";
-                            } else if (volleyError instanceof ServerError) {
-                                message = "The server could not be found. Please try again after some time!!";
-                            } else if (volleyError instanceof AuthFailureError) {
-                                message = "Cannot connect to Internet...Please check your connection!";
-                            } else if (volleyError instanceof ParseError) {
-                                message = "Parsing error! Please try again after some time!!";
-                            } else if (volleyError instanceof NoConnectionError) {
-                                message = "Cannot connect to Internet...Please check your connection!";
-                            } else if (volleyError instanceof TimeoutError) {
-                                message = "Connection TimeOut! Please check your internet connection.";
-                            }
-                            Toast.makeText(Config.getContext(),message, Toast.LENGTH_LONG).show();
+                            if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
+                                Toast.makeText(getActivity(), R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), R.string.error_general_error, Toast.LENGTH_SHORT).show();
 
                         }
                     });
+            obj.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT, Config.WEB_RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             Volley.newRequestQueue(getActivity()).add(obj);
             pd.show();
         } catch (Exception e) {

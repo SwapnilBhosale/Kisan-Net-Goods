@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -35,7 +36,7 @@ import org.json.JSONObject;
 
 public class Fragment_Profile extends Fragment {
 
-    private TextInputEditText mobile,fname,lname,address,city,state,pincode;
+    private TextInputEditText mobile,name,village,address,city,state,pincode;
     private Button updateButton;
     private String TAG = Fragment_Profile.class.getSimpleName();
     ProgressDialog pd;
@@ -65,15 +66,15 @@ public class Fragment_Profile extends Fragment {
         PrefManager pref = new PrefManager(Config.getContext());
         mobile.setText(pref.getMobile());
         address.setText(pref.getAddress());
-        fname.setText(pref.getFname());
-        lname.setText(pref.getLname());
+        name.setText(pref.getName());
+        village.setText(pref.getVillage());
         pincode.setText(pref.getPincode());
         state.setText(pref.getState());
         city.setText(pref.getCity());
     }
 
     private JSONObject getRegisterJsonBody() throws JSONException {
-        return new JSONObject("{\"customer_id\" : \""+new PrefManager(Config.getContext()).getCustomerId()+"\",\"firstName\" : \"" + fname.getText().toString() + "\",\"lastName\" : \"" + lname.getText().toString() + "\",\"address\" : \"" + address.getText().toString() + "\",\"mobile\" : \"" + mobile.getText().toString() + "\",\"state\" : \"" + state.getText().toString() + "\",\"city\" : \"" + city.getText().toString() + "\",\"postal_code\" : \"" + pincode.getText().toString() + "\"}");
+        return new JSONObject("{\"customer_id\" : \""+new PrefManager(Config.getContext()).getCustomerId()+"\",\"name\" : \"" + name.getText().toString() + "\",\"village\" : \"" + village.getText().toString() + "\",\"address\" : \"" + address.getText().toString() + "\",\"mobile\" : \"" + mobile.getText().toString() + "\",\"state\" : \"" + state.getText().toString() + "\",\"city\" : \"" + city.getText().toString() + "\",\"postal_code\" : \"" + pincode.getText().toString() + "\"}");
     }
 
     private ProgressDialog getProgressBar(){
@@ -106,8 +107,8 @@ public class Fragment_Profile extends Fragment {
                                     if (isSuccess) {
                                         JSONObject data = response.getJSONObject("data");
                                         PrefManager pref = new PrefManager(Config.getContext());
-                                        pref.setFname(data.getString("firstname"));
-                                        pref.setLname(data.getString("lastname"));
+                                        pref.setName(data.getString("name"));
+                                        pref.setVillage(data.getString("village"));
                                         pref.setAddress(data.getString("address"));
                                         pref.setMobile(data.getString("mobile_no"));
                                         pref.setState(data.getString("state"));
@@ -128,24 +129,13 @@ public class Fragment_Profile extends Fragment {
 
                                 // hide the progress dialog
                                 pd.dismiss();
-                                String message = null;
-                                if (volleyError instanceof NetworkError) {
-                                    message = "Cannot connect to Internet...Please check your connection!";
-                                } else if (volleyError instanceof ServerError) {
-                                    message = "The server could not be found. Please try again after some time!!";
-                                } else if (volleyError instanceof AuthFailureError) {
-                                    message = "Cannot connect to Internet...Please check your connection!";
-                                } else if (volleyError instanceof ParseError) {
-                                    message = "Parsing error! Please try again after some time!!";
-                                } else if (volleyError instanceof NoConnectionError) {
-                                    message = "Cannot connect to Internet...Please check your connection!";
-                                } else if (volleyError instanceof TimeoutError) {
-                                    message = "Connection TimeOut! Please check your internet connection.";
-                                }
-                                Toast.makeText(getContext(),message, Toast.LENGTH_LONG).show();
+                                if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError )
+                                    Toast.makeText(getActivity(),R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(),R.string.error_general_error,Toast.LENGTH_SHORT).show();
 
                             }
                         });
+                        req.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                         Volley.newRequestQueue(getContext()).add(req);
                         pd.show();
                     }catch(Exception e){
@@ -159,21 +149,21 @@ public class Fragment_Profile extends Fragment {
 
     public boolean validateData(){
         String usr_mobile = mobile.getText().toString();
-        String usr_fname = fname.getText().toString();
-        String usr_lname = lname.getText().toString();
+        String usr_name = name.getText().toString();
+        String usr_village = village.getText().toString();
         String usr_add = address.getText().toString();
         String usr_city = city.getText().toString();
         String usr_state = state.getText().toString();
         String usr_pincode = pincode.getText().toString();
 
-        if(isMobileValid(usr_mobile) && isfNameValid(usr_fname) && islNameValid(usr_lname) && isAddressValid(usr_add) && isCityValid(usr_city)
+        if(isMobileValid(usr_mobile) && isNameValid(usr_name) && islNameValid(usr_village) && isAddressValid(usr_add) && isCityValid(usr_city)
                 && isStateValid(usr_state) && isPinCodeValid(usr_pincode))
             return true;
         return false;
     }
 
     private boolean isPinCodeValid(String pinCode) {
-        if(!TextUtils.isEmpty(pinCode) && pinCode.length() == 6)
+        if(!TextUtils.isEmpty(pinCode) && pinCode.trim().length() == 6)
             return true;
         else
             pincode.setError(getString(R.string.error_pin_code));
@@ -208,15 +198,15 @@ public class Fragment_Profile extends Fragment {
         if(!TextUtils.isEmpty(lName))
             return true;
         else
-            lname.setError(getString(R.string.error_lname));
+            village.setError(getString(R.string.error_village));
         return false;
     }
 
-    private boolean isfNameValid(String fName) {
-        if(!TextUtils.isEmpty(fName))
+    private boolean isNameValid(String usr_name) {
+        if(!TextUtils.isEmpty(usr_name))
             return true;
         else
-            fname.setError(getString(R.string.error_fname));
+            name.setError(getString(R.string.error_name));
         return false;
     }
     private boolean isMobileValid(String mob) {
@@ -232,10 +222,9 @@ public class Fragment_Profile extends Fragment {
         city = (TextInputEditText) view.findViewById(R.id.reg_city);
         state = (TextInputEditText) view.findViewById(R.id.reg_state);
         address = (TextInputEditText) view.findViewById(R.id.reg_address);
-        fname = (TextInputEditText) view.findViewById(R.id.reg_first_name);
-        lname = (TextInputEditText) view.findViewById(R.id.reg_village);
+        name = (TextInputEditText) view.findViewById(R.id.reg_name);
+        village = (TextInputEditText) view.findViewById(R.id.reg_village);
         pincode = (TextInputEditText) view.findViewById(R.id.reg_postal_code);
         updateButton = (Button) view.findViewById(R.id.reg_register_btn);
-
     }
 }

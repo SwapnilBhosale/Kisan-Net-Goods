@@ -23,6 +23,7 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -48,8 +49,8 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
 
     private Button register_btn;
     private EditText mobileNo;
-    private EditText fName;
-    private EditText lName;
+    private EditText name;
+    private EditText village;
     private EditText address;
     private EditText city;
     private EditText state;
@@ -107,15 +108,15 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
     }
 
     private JSONObject getRegisterJsonBody() throws JSONException {
-        return new JSONObject("{\"language_id\" : "+new PrefManager(Config.getContext()).getAppLanguage()+",\"firstName\" : \"" + fName.getText().toString() + "\",\"lastName\" : \"" + lName.getText().toString() + "\",\"address\" : \"" + address.getText().toString() + "\",\"mobile\" : \"" + mobileNo.getText().toString() + "\",\"state\" : \"" + state.getText().toString() + "\",\"city\" : \"" + city.getText().toString() + "\",\"postal_code\" : \"" + postalCode.getText().toString() + "\"}");
+        return new JSONObject("{\"language_id\" : "+new PrefManager(Config.getContext()).getAppLanguage()+",\"name\" : \"" + name.getText().toString() + "\",\"village\" : \"" + village.getText().toString() + "\",\"address\" : \"" + address.getText().toString() + "\",\"mobile\" : \"" + mobileNo.getText().toString() + "\",\"state\" : \"" + state.getText().toString() + "\",\"city\" : \"" + city.getText().toString() + "\",\"postal_code\" : \"" + postalCode.getText().toString() + "\"}");
     }
 
     private void initiolizeId() {
 
         register_btn = (Button) findViewById(R.id.register_btn);
         mobileNo = (EditText) findViewById(R.id.mobile_no);
-        fName = (EditText) findViewById(R.id.first_name);
-        lName = (EditText) findViewById(R.id.village);
+        name = (EditText) findViewById(R.id.user_name);
+        village = (EditText) findViewById(R.id.village);
         address = (EditText) findViewById(R.id.address);
         city = (EditText) findViewById(R.id.city);
         state = (EditText) findViewById(R.id.state);
@@ -125,8 +126,8 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
 
     public boolean validateData(){
         String mobile = mobileNo.getText().toString();
-        String fname = fName.getText().toString();
-        String lname = lName.getText().toString();
+        String fname = name.getText().toString();
+        String lname = village.getText().toString();
         String add = address.getText().toString();
         String clientCity = city.getText().toString();
         String clientState = state.getText().toString();
@@ -174,7 +175,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
         if(!TextUtils.isEmpty(lname))
             return true;
         else
-            lName.setError(getString(R.string.error_lname));
+            village.setError(getString(R.string.error_village));
         return false;
     }
 
@@ -182,7 +183,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
         if(!TextUtils.isEmpty(fname))
             return true;
         else
-            fName.setError(getString(R.string.error_fname));
+            name.setError(getString(R.string.error_name));
         return false;
     }
     private boolean isMobileValid(String mobile) {
@@ -216,8 +217,8 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                                 //JSONArray jsonArray = response.getJSON("data");
                                 JSONObject data = response.getJSONObject("data");
                                 pref.setCustomerId(data.getString("customer_id"));
-                                pref.setFname(data.getString("firstname"));
-                                pref.setLname(data.getString("lastname"));
+                                pref.setName(data.getString("name"));
+                                pref.setVillage(data.getString("village"));
                                 pref.setSessionKey(data.getString("session_key"));
                                 pref.setMobile(data.getString("mobile_no"));
                                 pref.setAddress(data.getString("address"));
@@ -255,20 +256,11 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                                     popup_button.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                                /*Intent in = new Intent(Login_Activity.this, MainActivity.class);
-                                                startActivity(in);*/
-                                            //String otp = otp_text_box.getText().toString();
-
                                             verifyOtp();
                                             //alertDialog.dismiss();
                                         }
                                     });
 
-                                } catch (Exception e) {
-                                    e.getMessage();
-                                    Log.e("submit", "onClick: ",e );
-                                }
-                                try {
                                     cancel_button.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
@@ -279,15 +271,16 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
 
                                 } catch (Exception e) {
                                     e.getMessage();
+                                    Log.e("submit", "onClick: ",e );
                                 }
                             } else {
                                 //error in registartion
                                 //do error handling
                                 pd.dismiss();
                                 if (response.getJSONObject("error").getInt("errorCode") == 5)
-                                    Toast.makeText(getApplicationContext(), R.string.err_mobile_already_exist, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Register_Activity.this, R.string.err_mobile_already_exist, Toast.LENGTH_LONG).show();
                                 else
-                                    Toast.makeText(getApplicationContext(), "User registartion error" + response.getJSONObject("error").getString("errorMessage"), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Register_Activity.this, "User registartion error" + response.getJSONObject("error").getString("errorMessage"), Toast.LENGTH_LONG).show();
                             }
                         } catch (Exception e) {
                             Log.e(TAG, "onResponse: " + response.toString(), e);
@@ -302,23 +295,13 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                         // hide the progress dialog
                         pd.dismiss();
                         String message = null;
-                        if (volleyError instanceof NetworkError) {
-                            message = "Cannot connect to Internet...Please check your connection!";
-                        } else if (volleyError instanceof ServerError) {
-                            message = "The server could not be found. Please try again after some time!!";
-                        } else if (volleyError instanceof AuthFailureError) {
-                            message = "Cannot connect to Internet...Please check your connection!";
-                        } else if (volleyError instanceof ParseError) {
-                            message = "Parsing error! Please try again after some time!!";
-                        } else if (volleyError instanceof NoConnectionError) {
-                            message = "Cannot connect to Internet...Please check your connection!";
-                        } else if (volleyError instanceof TimeoutError) {
-                            message = "Connection TimeOut! Please check your internet connection.";
-                        }
-                        Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG).show();
+                        if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError
+                                || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError )
+                            Toast.makeText(getApplicationContext(),R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
 
                     }
                 });
+                loginRequest.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 Volley.newRequestQueue(getApplicationContext()).add(loginRequest);
                 pd.show();
             } catch (Exception e) {
@@ -362,15 +345,17 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                 }
             },new Response.ErrorListener() {
                 @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
-                    Toast.makeText(Register_Activity.this,
-                            error.getMessage(), Toast.LENGTH_SHORT).show();
-                    // hide the progress dialog
+                public void onErrorResponse(VolleyError volleyError) {
+                    VolleyLog.d(TAG, "Error: " + volleyError.getMessage());
+
                     pd.dismiss();
 
+                    if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError )
+                        Toast.makeText(Register_Activity.this,R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register_Activity.this,R.string.error_general_error,Toast.LENGTH_SHORT).show();
                 }
             });
+            verify_otp_req.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             Volley.newRequestQueue(this).add(verify_otp_req);
             pd.show();
         }
@@ -383,18 +368,4 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Config.getContext().startActivity(i);
     }
-
-   /* private void showProgress(){
-        pd = new ProgressDialog(Register_Activity.this);
-        // Set progress dialog style spinner
-        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        // Set the progress dialog title and message
-        pd.setMessage("Loading.........");
-        // Set the progress dialog background color
-        //pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFD4D9D0")));
-        pd.setIndeterminate(false);
-        pd.setCancelable(false);
-        // Finally, show the progress dialog
-        pd.show();
-    }*/
 }

@@ -40,6 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -386,24 +387,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     // hide the progress dialog
                     //pd.dismiss();
-                    String message = null;
-                    if (volleyError instanceof NetworkError) {
-                        message = "Cannot connect to Internet...Please check your connection!";
-                    } else if (volleyError instanceof ServerError) {
-                        message = "The server could not be found. Please try again after some time!!";
-                    } else if (volleyError instanceof AuthFailureError) {
-                        message = "Cannot connect to Internet...Please check your connection!";
-                    } else if (volleyError instanceof ParseError) {
-                        message = "Parsing error! Please try again after some time!!";
-                    } else if (volleyError instanceof NoConnectionError) {
-                        message = "Cannot connect to Internet...Please check your connection!";
-                    } else if (volleyError instanceof TimeoutError) {
-                        message = "Connection TimeOut! Please check your internet connection.";
-                    }
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError )
+                        Toast.makeText(MainActivity.this,R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this,R.string.error_general_error,Toast.LENGTH_SHORT).show();
                 }
             });
 
+            category_request.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             Volley.newRequestQueue(this).add(category_request);
             //   pd.show();
         } catch (Exception e) {
@@ -693,8 +683,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void openLoginScreenAndSetPref() {
         PrefManager pref = new PrefManager(getApplicationContext());
         pref.setCustomerId(null);
-        pref.setFname(null);
-        pref.setLname(null);
+        pref.setName(null);
+        pref.setVillage(null);
         pref.setSessionKey(null);
         pref.setMobile(null);
         pref.setIsLoggedIn(false);

@@ -34,10 +34,9 @@ public class PrefManager {
     private static final String PREF_NAME = "kisaan_anand";
 
     // All Shared Preferences Keys
-    private static final String KEY_IS_WAITING_FOR_SMS = "IsWaitingForSms";
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
-    private static final String KEY_FNAME = "fname";
-    private static final String KEY_LNAME = "lname";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_VILLAGE = "village";
     private static final String KEY_MOBILE = "mobile";
     private static final String KEY_ADDRESS = "address";
     private static final String KEY_CITY = "city";
@@ -55,15 +54,6 @@ public class PrefManager {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
-    }
-
-    public void setIsWaitingForSms(boolean isWaiting) {
-        editor.putBoolean(KEY_IS_WAITING_FOR_SMS, isWaiting);
-        editor.commit();
-    }
-
-    public boolean isWaitingForSms() {
-        return pref.getBoolean(KEY_IS_WAITING_FOR_SMS, false);
     }
 
     public void setMobile(String mobileNumber) {
@@ -95,12 +85,12 @@ public class PrefManager {
         return pref.getString(KEY_SESSION_KEY, null);
     }
 
-    public String getFname() {
-        return pref.getString(KEY_FNAME,null);
+    public String getName() {
+        return pref.getString(KEY_NAME,null);
     }
 
-    public void setFname(String fName){
-        editor.putString(KEY_FNAME,fName);
+    public void setName(String name){
+        editor.putString(KEY_NAME,name);
         editor.commit();
     }
 
@@ -141,12 +131,12 @@ public class PrefManager {
     }
 
 
-    public String getLname() {
-        return pref.getString(KEY_LNAME,null);
+    public String getVillage() {
+        return pref.getString(KEY_VILLAGE,null);
     }
 
-    public void setLname(String lName){
-        editor.putString(KEY_LNAME,lName);
+    public void setVillage(String village){
+        editor.putString(KEY_VILLAGE,village);
         editor.commit();
     }
 

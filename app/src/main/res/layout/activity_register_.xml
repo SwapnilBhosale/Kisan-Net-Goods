@@ -1,15 +1,14 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_register_"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/activity_register_"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         tools:context="com.example.hp.myapplication.Fragment.Fragment_Profile">
 
@@ -41,8 +40,8 @@
                         android:drawableLeft="@drawable/ic_call"
                         android:drawablePadding="15dp"
                         android:hint="@string/enter_mobile_no"
-                        android:maxLines="1"
                         android:inputType="phone"
+                        android:maxLines="1"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
                 </android.support.design.widget.TextInputLayout>
@@ -54,17 +53,17 @@
                     android:layout_marginTop="2dp">
 
                     <EditText
-                        android:id="@+id/first_name"
+                        android:id="@+id/user_name"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
-                        android:maxLines="1"
-                        android:inputType="textCapWords"
                         android:drawableLeft="@drawable/ic_person"
                         android:drawablePadding="15dp"
-                        android:hint="Name"
+                        android:hint="@string/enter_name"
+                        android:inputType="textCapWords"
+                        android:maxLines="1"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
                 </android.support.design.widget.TextInputLayout>
@@ -82,11 +81,11 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
-                        android:maxLines="1"
-                        android:inputType="textCapWords"
                         android:drawableLeft="@drawable/ic_person"
                         android:drawablePadding="15dp"
-                        android:hint="Village"
+                        android:hint="@string/enter_village"
+                        android:inputType="textCapWords"
+                        android:maxLines="1"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
                 </android.support.design.widget.TextInputLayout>
@@ -104,11 +103,11 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
-                        android:maxLines="1"
-                        android:inputType="textCapSentences"
                         android:drawableLeft="@drawable/ic_address"
                         android:drawablePadding="15dp"
                         android:hint="@string/enter_address"
+                        android:inputType="textCapSentences"
+                        android:maxLines="1"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
                 </android.support.design.widget.TextInputLayout>
@@ -126,11 +125,11 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
-                        android:maxLines="1"
-                        android:inputType="textCapWords"
                         android:drawableLeft="@drawable/ic_city"
                         android:drawablePadding="15dp"
                         android:hint="@string/enter_city"
+                        android:inputType="textCapWords"
+                        android:maxLines="1"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
                 </android.support.design.widget.TextInputLayout>
@@ -148,11 +147,11 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
-                        android:maxLines="1"
-                        android:inputType="textCapWords"
                         android:drawableLeft="@drawable/ic_state"
                         android:drawablePadding="15dp"
                         android:hint="@string/enter_state"
+                        android:inputType="textCapWords"
+                        android:maxLines="1"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
                 </android.support.design.widget.TextInputLayout>
@@ -170,11 +169,11 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
-                        android:maxLines="1"
-                        android:inputType="textCapWords"
                         android:drawableLeft="@drawable/ic_post"
                         android:drawablePadding="15dp"
                         android:hint="@string/enter_postal_code"
+                        android:inputType="textCapWords"
+                        android:maxLines="1"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
                 </android.support.design.widget.TextInputLayout>
@@ -191,9 +190,9 @@
                     android:text="@string/register_user"
                     android:textColor="#ffffff" />
 
-</LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
 
 </ScrollView>

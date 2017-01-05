@@ -72,7 +72,7 @@
                         android:layout_marginTop="10dp"
                         android:drawableLeft="@drawable/ic_person"
                         android:drawablePadding="15dp"
-                        android:hint="@string/enter_first_name"
+                        android:hint="@string/enter_name"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
 
@@ -87,7 +87,7 @@
                         android:layout_marginTop="10dp"
                         android:drawableLeft="@drawable/ic_person"
                         android:drawablePadding="15dp"
-                        android:hint="@string/enter_last_name"
+                        android:hint="@string/enter_village"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
 

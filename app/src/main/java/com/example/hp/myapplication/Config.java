@@ -79,6 +79,9 @@ public class Config extends Application {
     public static final  String KEY_OPEN_ITEM = "Open_Item";
     public static final  String KEY_OPEN_ITEM = "Open_Item";*/
 
+    public static final int WEB_TIMEOUT = 1000 * 20;
+    public static final int WEB_RETRY_COUNT = 0;
+
 
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;

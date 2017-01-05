@@ -12,8 +12,8 @@
     <string name="enter_mobile_no">Mobile No</string>
     <string name="change_language">भाषा बदला</string>
     <string name="register_user">Sign Up</string>
-    <string name="enter_first_name">First Name</string>
-    <string name="enter_last_name">Last Name</string>
+    <string name="enter_name">Name</string>
+    <string name="enter_village">Village</string>
     <string name="enter_address">Address</string>
     <string name="enter_city">City</string>
     <string name="enter_state">State</string>
@@ -50,8 +50,8 @@
     <string name="error_no_item_in_cart">There are No Item in cart. Please buy something.</string>
 
     <string name="error_mobile_no">Please check the mobile no</string>
-    <string name="error_fname">Please check the first name</string>
-    <string name="error_lname">Please check the last name</string>
+    <string name="error_name">Please check the name</string>
+    <string name="error_village">Please check the village.</string>
     <string name="error_address">Please check the address.</string>
     <string name="error_city">Please check the city.</string>
     <string name="error_state">Please check the state.</string>
@@ -62,4 +62,7 @@
     <string name="error_empty_otp">Please enter OTP</string>
     <string name="error_wrong_otp">Please enter right OTP</string>
     <string name="error_no_quantity">Please enter quantity.</string>
+    <string name="error_no_internet_conenction">Please check your Internet connection!</string>
+    <string name="error_mobile_is_not_registered">Mobile no is not registered!</string>
+    <string name="error_general_error">Eeror occured!</string>
 </resources>
