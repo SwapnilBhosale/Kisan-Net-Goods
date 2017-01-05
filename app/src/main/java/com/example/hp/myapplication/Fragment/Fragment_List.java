@@ -89,6 +89,7 @@ public class Fragment_List extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pd = getProgressBar();
+        setActionBarTitle(getString(R.string.app_name));
     }
 
     private ProgressDialog getProgressBar(){
@@ -103,6 +104,18 @@ public class Fragment_List extends Fragment {
         pd.setCancelable(false);
         // Finally, show the progress dialog
         return pd;
+    }
+
+    public void setActionBarTitle(String title) {
+        getActivity().setTitle(title);
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        // Set title bar
+        setActionBarTitle(getString(R.string.app_name));
+
     }
 
     @Nullable
@@ -194,13 +207,18 @@ public class Fragment_List extends Fragment {
 
                                 FragmentManager fm = getActivity().getSupportFragmentManager();
                                 FragmentTransaction ft = fm.beginTransaction();
-                                ft.replace(R.id.main_activity_fl, new Fragment_Grid()).addToBackStack(Config.KEY_FRAGMENT_LIST);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("category_name", String.valueOf(categoris.getCategory_name()));
+                                Fragment_Grid fg=  new Fragment_Grid();
+                                fg.setArguments(bundle);
+                                ft.replace(R.id.main_activity_fl, fg).addToBackStack(Config.KEY_FRAGMENT_LIST);
                                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                                 ft.commit();
                             }
                             else{
                                 Bundle bundle = new Bundle();
                                 bundle.putString("category_id", String.valueOf(categoris.getCategory_id()));
+                                bundle.putString("category_name", String.valueOf(categoris.getCategory_name()));
                                 Fragment_Home_List_Detail_Grid fd=  new Fragment_Home_List_Detail_Grid();
                                 fd.setArguments(bundle);
                                 FragmentManager fm = getActivity().getSupportFragmentManager();

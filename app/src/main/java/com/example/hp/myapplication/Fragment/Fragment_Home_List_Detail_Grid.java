@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -57,6 +58,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
     public boolean initialized = false;
     GridView home_grid;
     static String category_id;
+    private String category_name;
     String search_item;
     ProgressDialog pd;
     private String fruitId;
@@ -69,18 +71,27 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
         pd = getProgressBar();
         if (getArguments() != null) {
             category_id = getArguments().getString("category_id");
+            category_name = getArguments().getString("category_name");
             isFruit = getArguments().getBoolean("isFruit");
             if (isFruit) {
                 fruitId = getArguments().getString("fruit_id");
             }
 
         }
+        setActionBarTitle(category_name);
+
     }
 
-    public static Fragment_Home_List_Detail_Grid getInstance() {
+    public void setActionBarTitle(String title) {
+        getActivity().setTitle(title);
+    }
 
-        Fragment_Home_List_Detail_Grid grid = new Fragment_Home_List_Detail_Grid();
-        return grid;
+    public void onResume(){
+        super.onResume();
+
+        // Set title bar
+        setActionBarTitle(category_name);
+
     }
 
     @Nullable
@@ -105,6 +116,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                     home_grid.setVisibility(View.VISIBLE);
                 home_grid.setAdapter(adapter);
 
+
                 home_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
@@ -114,6 +126,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                         Bundle bundle = new Bundle();
                         Products prod = myList.get(position);
                         bundle.putString("product_id", prod.getProductId());
+                        bundle.putString("product_name",prod.getProductName());
                         //bundle.putString("quantity",view.findViewById());
                         Open_Item fd = new Open_Item();
                         fd.setArguments(bundle);

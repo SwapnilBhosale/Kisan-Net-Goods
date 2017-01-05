@@ -76,8 +76,7 @@ public class Open_Item extends Fragment {
     ProductData f = new ProductData();
     ProgressDialog pd ;
     private String TAG = Open_Item.class.getSimpleName();
-    private String updateQuantity;
-    private String basket_id;
+    private String productName;
     public boolean initialized = false;
 
     @Override
@@ -87,8 +86,10 @@ public class Open_Item extends Fragment {
         CartItem item = new CartItem();
         if (getArguments() != null) {
             product_id = getArguments().getString("product_id");
+            productName = getArguments().getString("product_name");
             Log.d("oncreate", "onCreate: "+product_id);
         }
+        setActionBarTitle(productName);
     }
 
     public CartItem isProductInCart(String product_id){
@@ -116,6 +117,20 @@ public class Open_Item extends Fragment {
         // Finally, show the progress dialog
         return pd;
     }
+
+    public void setActionBarTitle(String title) {
+        getActivity().setTitle(title);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        // Set title bar
+        setActionBarTitle(productName);
+
+    }
+
 
     @Nullable
     @Override
@@ -400,6 +415,7 @@ public class Open_Item extends Fragment {
 
 
     }
+
 
 
     public static class CustomEventAdapter extends ArrayAdapter {

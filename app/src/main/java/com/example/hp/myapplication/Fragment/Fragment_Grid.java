@@ -50,6 +50,7 @@ public class Fragment_Grid extends Fragment {
 
     GridView grid;
     List<Fruits> myList = new ArrayList<Fruits>();
+    static String category_name;
     ImageLoader imageLoader = Config.getInstance().getImageLoader();
     ProgressDialog pd;
     private String TAG = Fragment_Grid.class.getSimpleName();
@@ -60,6 +61,22 @@ public class Fragment_Grid extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pd = getProgressBar();
+        if (getArguments() != null) {
+            category_name = getArguments().getString("category_name");
+        }
+        setActionBarTitle(category_name);
+    }
+
+    public void setActionBarTitle(String title) {
+        getActivity().setTitle(title);
+    }
+
+    public void onResume(){
+        super.onResume();
+
+        // Set title bar
+        setActionBarTitle(category_name);
+
     }
 
     @Nullable
@@ -92,6 +109,7 @@ public class Fragment_Grid extends Fragment {
                         Fruits fruits = myList.get(position);
                         bundle.putBoolean("isFruit",true);
                         bundle.putString("fruit_id", fruits.getFruitdId());
+                        bundle.putString("category_name",category_name);
                         Fragment_Home_List_Detail_Grid fd=  new Fragment_Home_List_Detail_Grid();
                         fd.setArguments(bundle);
                         //bundle.putString("quantity",view.findViewById());
@@ -112,6 +130,9 @@ public class Fragment_Grid extends Fragment {
         }
         return view;
     }
+
+
+
 
     private ProgressDialog getProgressBar(){
         ProgressDialog pd = new ProgressDialog(getActivity());
@@ -247,5 +268,4 @@ public class Fragment_Grid extends Fragment {
             return convertView;
         }
     }
-
 }
