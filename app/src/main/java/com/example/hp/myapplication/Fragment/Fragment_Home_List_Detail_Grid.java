@@ -213,6 +213,8 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
         }
     }
 
+
+
     private void initiolizeId(View view) {
 
         home_grid = (GridView) view.findViewById(R.id.home_grid);
@@ -270,7 +272,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                 Products prod = prod_list.get(position);
 
                 name.setText(prod.getProductName());
-                price.setText("" + prod.getProductPrice());
+                price.setText(Config.formatCurrency(prod.getProductPrice()));
                 weight.setText(prod.getProductWeight());
                 image.setImageUrl(Config.BASE_URL + "" + prod.getProductImage(), imageLoader);
             }

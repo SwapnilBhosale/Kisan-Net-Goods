@@ -185,7 +185,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
                                     total = BigDecimal.valueOf(obj.getDouble("total"));
                                     Log.d(TAG, "onResponse: total price in Cart : "+total);
-                                    total_price.setText(""+total);
+                                    total_price.setText(Config.formatCurrency(total));
 
                                     adapter.notifyDataSetChanged();
                                 }else{
@@ -380,10 +380,10 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
             cart_image.setImageUrl(Config.BASE_URL + "" + cart.getImage(), imageLoader);
             product_name.setText(cart.getName());
-            product_price.setText("" + cart.getPrice());
+            product_price.setText(Config.formatCurrency(cart.getPrice()));
             product_quntity.setText(cart.getQuantity());
             product_weight.setText(cart.getWeight());
-            final_price.setText("" + cart.getTotal());
+            final_price.setText(Config.formatCurrency(cart.getTotal()));
         }
 
         private void initializeIds(View view) {

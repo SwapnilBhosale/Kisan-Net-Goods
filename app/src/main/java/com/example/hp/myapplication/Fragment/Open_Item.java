@@ -252,11 +252,8 @@ public class Open_Item extends Fragment {
                                         f.setProduct_weight(jsonObject.getString("product_weight"));
                                         f.setManufacturer_name(jsonObject.getString("manufacturer_name"));
                                         prod_image.setImageUrl(Config.BASE_URL+""+f.getProductImage(),imageLoader);
-                                        prod_price.setText(""+f.getProduct_Price());
+                                        prod_price.setText(Config.formatCurrency(f.getProduct_Price()));
                                         prod_weight.setText(f.getProduct_weight());
-
-
-
                                     }
 
                                     JSONArray array = obj.getJSONArray("product_details");

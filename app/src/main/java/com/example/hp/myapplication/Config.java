@@ -23,6 +23,9 @@ import com.example.hp.myapplication.helper.PrefManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -197,6 +200,14 @@ public class Config extends Application {
         Locale.setDefault(myLocale);
         config.locale = myLocale;
         getApplicationContext().getResources().updateConfiguration(config,getApplicationContext().getResources().getDisplayMetrics());
+    }
+
+    public static String formatCurrency(BigDecimal num){
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+        String pattern = ((DecimalFormat) nf).toPattern();
+        String newPattern = pattern.replace("\u00A4", "").trim();
+        NumberFormat newFormat = new DecimalFormat(newPattern);
+        return newFormat.format(num);
     }
 
 }
