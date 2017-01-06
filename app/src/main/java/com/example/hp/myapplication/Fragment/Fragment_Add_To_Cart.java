@@ -66,7 +66,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     private String TAG = Fragment_Add_To_Cart.class.getSimpleName();
     Button checkout_btn;
     public Boolean initialized = false;
-
+    View view;
 
 
     //TextView close_tab;
@@ -75,14 +75,13 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment__add__to__cart, container, false); // see it full way
+
         try {
-            if (view != null) {
+       view = inflater.inflate(R.layout.fragment__add__to__cart, container, false); // see it full way
+
+            if (cartList.size()== 0) {
                 LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = li.inflate(R.layout.fragment__add__to__cart, container, false);
-
-
-                if(cartList.size()== 0){
 
                     LayoutInflater l = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     view = li.inflate(R.layout.empty_cart_layout, container, false);
@@ -102,7 +101,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                     });
                 }
 
-
+            else{
                 initiolizeId(view);
                 cartList = new ArrayList<CartItem>();
                 getList();
@@ -139,6 +138,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
             }
         } catch (Exception e) {
         }
+
         return view;
     }
 
@@ -215,7 +215,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
                                         Snackbar.make(getView(),R.string.error_no_item_in_cart,Snackbar.LENGTH_LONG).setAction("Action",null).show();
                                         checkout_btn.setEnabled(false);
-
+                                        reloadFragment();
                                     }
                                 }
                                 MainActivity.tv.setText(String.valueOf(getCartSize()));

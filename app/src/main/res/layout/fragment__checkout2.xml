@@ -59,8 +59,30 @@
                     android:id="@+id/c2_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:orientation="vertical">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp">
+
+                        <EditText
+                            android:id="@+id/c2_mobile_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:maxLines="1"
+                            android:drawableLeft="@drawable/ic_call"
+                            android:drawablePadding="15dp"
+                            android:hint="@string/enter_mobile_no"
+                            android:inputType="phone"
+                            android:padding="5dp"
+                            android:textColorHint="#ff9900" />
+                    </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -77,13 +99,33 @@
                             android:layout_marginTop="10dp"
                             android:maxLines="1"
                             android:inputType="textCapWords"
-                            android:drawableLeft="@drawable/ic_address"
+                            android:drawableLeft="@drawable/ic_person"
                             android:drawablePadding="15dp"
                             android:hint="@string/enter_name"
                             android:padding="5dp"
                             android:textColorHint="#ff9900" />
                     </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp">
 
+                        <EditText
+                            android:id="@+id/c2_village"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginTop="10dp"
+                            android:drawableLeft="@drawable/ic_person"
+                            android:drawablePadding="15dp"
+                            android:hint="@string/enter_village"
+                            android:inputType="textCapWords"
+                            android:maxLines="1"
+                            android:padding="5dp"
+                            android:textColorHint="#ff9900" />
+                    </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -176,27 +218,7 @@
                         android:textColorHint="#ff9900" />
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/input_layout_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp">
 
-                    <EditText
-                        android:id="@+id/c2_mobile_no"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:maxLines="1"
-                        android:drawableLeft="@drawable/ic_call"
-                        android:drawablePadding="15dp"
-                        android:hint="@string/enter_mobile_no"
-                        android:inputType="phone"
-                        android:padding="5dp"
-                        android:textColorHint="#ff9900" />
-                </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
 </LinearLayout>

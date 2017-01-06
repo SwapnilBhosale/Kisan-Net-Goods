@@ -5,15 +5,19 @@
     android:orientation="vertical"
     android:id="@+id/container"
     tools:context=".Fragment.Fragment_Add_To_Cart">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical">
     <ListView
         android:id="@+id/cart_list"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:divider="#fbfbfb"
         android:dividerHeight="7dp"
         android:layout_marginBottom="5dp"></ListView>
+</LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
