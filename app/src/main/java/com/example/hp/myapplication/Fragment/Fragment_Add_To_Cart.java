@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,7 +67,9 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     ProgressDialog pd;
     private String TAG = Fragment_Add_To_Cart.class.getSimpleName();
     Button checkout_btn;
+    LinearLayout final_checkout_button;
     public Boolean initialized = false;
+    CustomEventAdapter adapter;
     View view;
 
 
@@ -77,18 +81,19 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         try {
-       view = inflater.inflate(R.layout.fragment__add__to__cart, container, false); // see it full way
 
+            /*
             if (cartList.size()== 0) {
-                LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = li.inflate(R.layout.fragment__add__to__cart, container, false);
 
-                    LayoutInflater l = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    view = li.inflate(R.layout.empty_cart_layout, container, false);
+                view = inflater.inflate(R.layout.empty_cart_layout, container, false);
 
                     Button gotoShopping = (Button) view.findViewById(R.id.go_to_shopping);
-                    TextView emptyCartMessage = (TextView) view.findViewById(R.id.empty_cart_messaage);
-                    emptyCartMessage.setText("Your cart is empty");
+                    ImageView empty_image = (ImageView) view.findViewById(R.id.empty_image);
+                    TextView emptyCartMessage = (TextView) view.findViewById(R.id.empt_text1);
+                    TextView emptyCartMessage2 = (TextView) view.findViewById(R.id.empt_text2);
+                    emptyCartMessage.setText("No items pesent in your cart");
+                     emptyCartMessage2.setText("Please go to shopping");
+                    empty_image.setImageResource(R.drawable.empty_cart);
 
                     gotoShopping.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -100,11 +105,14 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                         }
                     });
                 }
+*/
+           // else{
+                view = inflater.inflate(R.layout.fragment__add__to__cart, container, false);
+            //Empty view is set here
 
-            else{
                 initiolizeId(view);
                 cartList = new ArrayList<CartItem>();
-                getList();
+                getList(view);
                 /*list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -135,16 +143,16 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                 });
 
 
-            }
+           //    }
         } catch (Exception e) {
         }
 
         return view;
     }
 
-    private void getList() {
-        final CustomEventAdapter adapter = new CustomEventAdapter(getActivity(), cartList);
-        loadData(adapter);
+    private void getList(View view) {
+        adapter = new CustomEventAdapter(getActivity(), cartList);
+        loadData();
         list.setAdapter(adapter);
 
         //setListViewHeightBasedOnChildren(List);
@@ -172,7 +180,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     }
 
 
-    private void loadData(final CustomEventAdapter adapter) {
+    private void loadData() {
         PrefManager pref = new PrefManager(Config.getContext());
         String url = Config.CART_URL+"lang="+pref.getAppLangId()+"&customer_id="+pref.getCustomerId();
         Log.d(TAG, "loadCartData URL: "+url);
@@ -208,14 +216,17 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                                     total = BigDecimal.valueOf(obj.getDouble("total"));
                                     Log.d(TAG, "onResponse: total price in Cart : "+total);
                                     total_price.setText(Config.formatCurrency(total));
-
+                                    final_checkout_button.setVisibility(View.VISIBLE);
                                     adapter.notifyDataSetChanged();
                                 }else{
                                     if(response.getJSONObject("error").getInt("errorCode") == 10){
 
                                         Snackbar.make(getView(),R.string.error_no_item_in_cart,Snackbar.LENGTH_LONG).setAction("Action",null).show();
                                         checkout_btn.setEnabled(false);
-                                        reloadFragment();
+                                        //reloadFragment();
+                                        list.setEmptyView(view.findViewById(R.id.emptyView));
+                                        final_checkout_button.setVisibility(View.GONE);
+                                        adapter.notifyDataSetChanged();
                                     }
                                 }
                                 MainActivity.tv.setText(String.valueOf(getCartSize()));
@@ -238,6 +249,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                 }
             });
             category_request.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            cartList.removeAll(cartList);
             Volley.newRequestQueue(getActivity()).add(category_request);
             pd.show();
         } catch (Exception e) {
@@ -251,7 +263,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
         checkout_btn = (Button) view.findViewById(R.id.checkout_btn);
         total_price = (TextView) view.findViewById(R.id.total_price);
         //close_tab = (TextView) list.findViewById(R.id.close_tab);
-
+        final_checkout_button = (LinearLayout) view.findViewById(R.id.final_checkout_button);
 
     }
 
@@ -440,7 +452,8 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
                                         //cartList.remove(pos);
                                         //thisInstance.notifyDataSetChanged();
-                                        reloadFragment();
+                                        //reloadFragment();
+                                        loadData();
                                         //initialized = false;
                                         Toast.makeText(getActivity(),"REMOVED SUCCESSFULLY",Toast.LENGTH_LONG).show();
 

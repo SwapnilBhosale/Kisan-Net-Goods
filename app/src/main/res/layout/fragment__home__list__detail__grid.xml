@@ -18,4 +18,60 @@
         android:verticalSpacing="4dp"
         android:visibility="visible"/>
 
+    <LinearLayout
+        android:id="@+id/emptyView1"
+        android:orientation="vertical"
+        android:background="#f0f0f0"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:text=""/>
+
+        <ImageView
+            android:id="@+id/empty_image"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="230dp"
+            android:scaleType="fitXY"
+            />
+
+        <TextView
+            android:id="@+id/empt_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ff0000"
+            android:text=""/>
+        <TextView
+            android:id="@+id/empt_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ff0000"
+            android:text="No Items Available"/>
+        <Button
+            android:id="@+id/go_to_shopping"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="#ff0000"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Go to shopping"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
 </LinearLayout>

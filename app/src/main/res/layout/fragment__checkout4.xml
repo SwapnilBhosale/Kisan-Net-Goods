@@ -204,13 +204,14 @@
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/c4_address"
+                            android:id="@+id/c4_mobile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
+                            android:inputType="phone"
                             android:padding="5dp"
-                            android:text="@string/enter_address"
+                            android:text="@string/enter_mobile_no"
                             android:textSize="19sp" />
 
 
@@ -225,7 +226,6 @@
                             android:text="@string/enter_name"
                             android:textSize="19sp" />
 
-
                         <TextView
                             android:id="@+id/c4_last_name"
                             android:layout_width="wrap_content"
@@ -236,6 +236,17 @@
                             android:padding="5dp"
                             android:text="@string/enter_village"
                             android:textSize="19sp" />
+
+                        <TextView
+                            android:id="@+id/c4_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:padding="5dp"
+                            android:text="@string/enter_address"
+                            android:textSize="19sp" />
+
 
                         <TextView
                             android:id="@+id/c4_country"
@@ -286,16 +297,6 @@
                             android:text="@string/enter_postal_code"
                             android:textSize="19sp" />
 
-                        <TextView
-                            android:id="@+id/c4_mobile"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:inputType="phone"
-                            android:padding="5dp"
-                            android:text="@string/enter_mobile_no"
-                            android:textSize="19sp" />
 
                     </LinearLayout>
 

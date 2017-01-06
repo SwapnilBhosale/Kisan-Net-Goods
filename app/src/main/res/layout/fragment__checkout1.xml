@@ -45,6 +45,51 @@
                     android:background="#FFCCCCCC"/>
                </LinearLayout>
 
+                <TextView
+                    android:id="@+id/c1_mobile_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="19sp"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/ic_call"
+                    android:drawablePadding="15dp"
+                    android:hint="@string/enter_mobile_no"
+                    android:inputType="phone"
+                    android:padding="5dp"
+                    android:textColorHint="#ff9900" />
+
+                <TextView
+                    android:id="@+id/c1_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="19sp"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/ic_person"
+                    android:drawablePadding="15dp"
+                    android:hint="@string/enter_name"
+                    android:padding="5dp"
+                    android:textColorHint="#ff9900" />
+
+                <TextView
+                    android:id="@+id/c1_village"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="19sp"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/ic_person"
+                    android:drawablePadding="15dp"
+                    android:hint="@string/enter_village"
+                    android:padding="5dp"
+                    android:textColorHint="#ff9900" />
+
                     <TextView
                         android:id="@+id/c1_address"
                         android:layout_width="match_parent"
@@ -60,36 +105,6 @@
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
 
-
-                    <TextView
-                        android:id="@+id/c1_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:textSize="19sp"
-                        android:gravity="center_vertical"
-                        android:layout_marginTop="10dp"
-                        android:drawableLeft="@drawable/ic_person"
-                        android:drawablePadding="15dp"
-                        android:hint="@string/enter_name"
-                        android:padding="5dp"
-                        android:textColorHint="#ff9900" />
-
-                    <TextView
-                        android:id="@+id/c1_village"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="20dp"
-                        android:textSize="19sp"
-                        android:gravity="center_vertical"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="10dp"
-                        android:drawableLeft="@drawable/ic_person"
-                        android:drawablePadding="15dp"
-                        android:hint="@string/enter_village"
-                        android:padding="5dp"
-                        android:textColorHint="#ff9900" />
 
                     <!--<Spinner
                         android:id="@+id/spinner"
@@ -165,20 +180,7 @@
                         android:textColorHint="#ff9900" />
 
 
-                    <TextView
-                        android:id="@+id/c1_mobile_no"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:textSize="19sp"
-                        android:gravity="center_vertical"
-                        android:drawableLeft="@drawable/ic_call"
-                        android:drawablePadding="15dp"
-                        android:hint="@string/enter_mobile_no"
-                        android:inputType="phone"
-                        android:padding="5dp"
-                        android:textColorHint="#ff9900" />
+
 
             </LinearLayout>
 

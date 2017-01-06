@@ -15,30 +15,31 @@
         android:text=""/>
 
     <ImageView
+        android:id="@+id/empty_image"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="230dp"
         android:scaleType="fitXY"
-        android:src="@drawable/empty_cart"
-        android:id="@+id/imageView3" />
+         />
 
     <TextView
+        android:id="@+id/empt_text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="19sp"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:textColor="#ff0000"
-        android:text=""/>
+        android:text="No items pesent in your cart"/>
     <TextView
-        android:id="@+id/empty_cart_messaage"
+        android:id="@+id/empt_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17sp"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:textColor="#ff0000"
-        android:text=""/>
+        android:text="Please go to shopping"/>
     <Button
         android:id="@+id/go_to_shopping"
         android:layout_width="wrap_content"

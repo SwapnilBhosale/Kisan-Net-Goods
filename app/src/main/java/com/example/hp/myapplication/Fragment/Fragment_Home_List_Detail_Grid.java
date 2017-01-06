@@ -2,8 +2,10 @@ package com.example.hp.myapplication.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +38,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.example.hp.myapplication.Activitis.Login_Activity;
+import com.example.hp.myapplication.Activitis.MainActivity;
 import com.example.hp.myapplication.Config;
 import com.example.hp.myapplication.Fruits;
 import com.example.hp.myapplication.HelperProgressDialogue;
@@ -61,9 +65,11 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
     private String category_name;
     String search_item;
     ProgressDialog pd;
+    CustomGrid adapter;
     private String fruitId;
     private boolean isFruit;
     private String TAG = Fragment_Home_List_Detail_Grid.class.getSimpleName();
+    View view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +92,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
         getActivity().setTitle(title);
     }
 
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
         // Set title bar
@@ -97,51 +103,45 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment__home__list__detail__grid, container, false); // see it full way
         try {
-            if (view != null) {
-                LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = li.inflate(R.layout.fragment__home__list__detail__grid, container, false);
+            view = inflater.inflate(R.layout.fragment__home__list__detail__grid, container, false); // see it full way
+            initiolizeId(view);
+
+            search_item = getArguments().getString("search_item");
+            Log.d(TAG, "Search item: " + search_item);
+
+            adapter = new CustomGrid(getActivity(), myList);
+            if (initialized == false)
+                loadData(adapter);
+            else
+                home_grid.setVisibility(View.VISIBLE);
+            home_grid.setAdapter(adapter);
 
 
-                initiolizeId(view);
+            home_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                search_item = getArguments().getString("search_item");
-                Log.d(TAG, "Search item: " + search_item);
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    //  Products prod = new Products();
+                    Bundle bundle = new Bundle();
+                    Products prod = myList.get(position);
+                    bundle.putString("product_id", prod.getProductId());
+                    bundle.putString("product_name", prod.getProductName());
+                    //bundle.putString("quantity",view.findViewById());
+                    Open_Item fd = new Open_Item();
+                    fd.setArguments(bundle);
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.main_activity_fl, fd).addToBackStack(Config.KEY_FRAGMENT_HOME_LIST_DETAIL_GRID);
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    ft.commit();
 
-                CustomGrid adapter = new CustomGrid(getActivity(), myList);
-                if (initialized == false)
-                    loadData(adapter);
-                else
-                    home_grid.setVisibility(View.VISIBLE);
-                home_grid.setAdapter(adapter);
+                }
+            });
 
-
-                home_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view,
-                                            int position, long id) {
-                        //  Products prod = new Products();
-                        Bundle bundle = new Bundle();
-                        Products prod = myList.get(position);
-                        bundle.putString("product_id", prod.getProductId());
-                        bundle.putString("product_name",prod.getProductName());
-                        //bundle.putString("quantity",view.findViewById());
-                        Open_Item fd = new Open_Item();
-                        fd.setArguments(bundle);
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.main_activity_fl, fd).addToBackStack(Config.KEY_FRAGMENT_HOME_LIST_DETAIL_GRID);
-                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        ft.commit();
-
-                    }
-                });
-
-
-            }
         } catch (Exception e) {
+            Log.e(TAG, "onCreateView: ", e);
         }
         return view;
     }
@@ -198,11 +198,15 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                                     //myList = list;
                                     Log.d("getProduct", "onResponse: " + myList.toString());
                                     adapter.notifyDataSetChanged();
-                                }else{
-                                    Toast.makeText(getActivity(),"No Product available in this category",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (response.getJSONObject("error").getInt("errorCode") == 10) {
+                                        home_grid.setEmptyView(view.findViewById(R.id.emptyView1));
+                                        adapter.notifyDataSetChanged();
+                                        Toast.makeText(getActivity(), "No Product available in this category", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             } catch (Exception e) {
-
+                                Log.e(TAG, "onResponse: ",e );
                             }
 
                         }
@@ -228,7 +232,6 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
             e.getMessage();
         }
     }
-
 
 
     private void initiolizeId(View view) {
