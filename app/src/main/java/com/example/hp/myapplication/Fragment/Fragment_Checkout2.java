@@ -17,16 +17,19 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.example.hp.myapplication.Customer;
 import com.example.hp.myapplication.R;
 
 
 public class Fragment_Checkout2 extends Fragment {
 
-    static CheckBox c2_checkbox;
+    CheckBox c2_checkbox;
     LinearLayout c2_linear_layout;
     Button c2_back, c2_next;
-    EditText c2_name,c2_address,c2_mobile_no,c2_city,c2_state,c2_postal_code;
+    static Customer customer;
+    EditText c2_name,c2_address,c2_mobile_no,c2_city,c2_state,c2_postal_code,c2_village;
     private String TAG = Fragment_Checkout2.class.getSimpleName();
+    View focusView = null;;
 
 
     @Nullable
@@ -92,6 +95,7 @@ public class Fragment_Checkout2 extends Fragment {
                         if (isChecked) {
                             if (c2_linear_layout.getVisibility() == View.GONE)
                                 c2_linear_layout.setVisibility(View.VISIBLE);
+
                         } else {
                             c2_linear_layout.setVisibility(View.GONE);
                         }
@@ -142,52 +146,75 @@ public class Fragment_Checkout2 extends Fragment {
         c2_state = (EditText) view.findViewById(R.id.c2_state);
         c2_mobile_no = (EditText) view.findViewById(R.id.c2_mobile_no);
         c2_postal_code = (EditText) view.findViewById(R.id.c2_postal_code);
+        c2_village = (EditText) view.findViewById(R.id.c2_village);
     }
 
 
     public boolean validateData(){
-        String mobile = c2_mobile_no.getText().toString();
-        String fname = c2_name.getText().toString();
-        String add = c2_address.getText().toString();
-        String clientCity = c2_state.getText().toString();
-        String clientState = c2_state.getText().toString();
-        String pinCode = c2_mobile_no.getText().toString();
+        customer = new Customer();
+        customer.setMobileNo(c2_mobile_no.getText().toString().trim());
+        customer.setName(c2_name.getText().toString().trim());
+        customer.setAddress(c2_address.getText().toString().trim());
+        customer.setCity(c2_city.getText().toString().trim());
+        customer.setState(c2_state.getText().toString().trim());
+        customer.setPincode(c2_postal_code.getText().toString().trim());
+        customer.setVillage(c2_village.getText().toString().trim());
 
-        if(isMobileValid(mobile) && isfNameValid(fname) && isAddressValid(add) && isCityValid(clientCity)
-                && isStateValid(clientState) && isPinCodeValid(pinCode))
+        if(isMobileValid(customer.getMobileNo()) && isfNameValid(customer.getName()) && isAddressValid(customer.getAddress()) && isCityValid(customer.getCity())
+                && isStateValid(customer.getState()) && isPinCodeValid(customer.getPincode()) && isVillageValid(customer.getVillage()))
             return true;
+        focusView.requestFocus();
+        customer = null;
+        return false;
+    }
+
+    public boolean isVillageValid(String village){
+        if(!TextUtils.isEmpty(village))
+            return true;
+        else{
+            focusView = c2_village;
+            c2_village.setError(getString(R.string.error_village));
+        }
         return false;
     }
 
     private boolean isPinCodeValid(String pinCode) {
-        if(!TextUtils.isEmpty(pinCode) && pinCode.length() != 6)
+        if(!TextUtils.isEmpty(pinCode) && pinCode.length() == 6)
             return true;
-        else
+        else {
+            focusView = c2_postal_code;
             c2_postal_code.setError(getString(R.string.error_pin_code));
+        }
         return false;
     }
 
     private boolean isStateValid(String clientState) {
         if(!TextUtils.isEmpty(clientState))
             return true;
-        else
+        else {
+            focusView = c2_state;
             c2_state.setError(getString(R.string.error_state));
+        }
         return false;
     }
 
     private boolean isCityValid(String clientCity) {
         if(!TextUtils.isEmpty(clientCity))
             return true;
-        else
+        else {
+            focusView = c2_city;
             c2_city.setError(getString(R.string.error_city));
+        }
         return false;
     }
 
     private boolean isAddressValid(String add) {
         if(!TextUtils.isEmpty(add))
             return true;
-        else
+        else {
+            focusView = c2_address;
             c2_address.setError(getString(R.string.error_address));
+        }
         return false;
     }
 
@@ -202,16 +229,20 @@ public class Fragment_Checkout2 extends Fragment {
     private boolean isfNameValid(String fname) {
         if(!TextUtils.isEmpty(fname))
             return true;
-        else
+        else {
+            focusView = c2_name;
             c2_name.setError(getString(R.string.error_name));
+        }
         return false;
     }
     private boolean isMobileValid(String mobile) {
         //TODO: Replace this with your own logic
         if(mobile.length() == 10)
             return true;
-        else
+        else {
+            focusView = c2_mobile_no;
             c2_mobile_no.setError(getString(R.string.error_mobile_no));
+        }
         return false;
     }
 }

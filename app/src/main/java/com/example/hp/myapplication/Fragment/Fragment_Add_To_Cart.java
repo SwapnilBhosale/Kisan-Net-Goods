@@ -64,6 +64,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     public static List<CartItem> cartList = new ArrayList<CartItem>();
     TextView total_price;
     public static BigDecimal total;
+
     ProgressDialog pd;
     private String TAG = Fragment_Add_To_Cart.class.getSimpleName();
     Button checkout_btn;
@@ -494,6 +495,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
         ft.detach(this).attach(this);
         ft.commit();
     }
+
 
 
     public static int getCartSize(){

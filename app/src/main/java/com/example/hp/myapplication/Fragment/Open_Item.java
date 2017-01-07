@@ -183,7 +183,7 @@ public class Open_Item extends Fragment {
                             url = Config.ADD_TO_CART_URL+"customer_id="+new PrefManager(Config.getContext()).getCustomerId()+"&price="+f.getProduct_Price()+"&quantity="+quantity+"&product_id="+product_id;
                         }
 
-                        Log.d("addtopcart", "URL : "+url);
+                        Log.d(TAG, "URL : "+url);
                         try{
                             JsonObjectRequest category_request = new JsonObjectRequest(Request.Method.GET,url,null,
                                     new Response.Listener<JSONObject>() {
@@ -216,8 +216,6 @@ public class Open_Item extends Fragment {
                                     Toast.makeText(getActivity(),R.string.error_general_error,Toast.LENGTH_SHORT).show();
                                 }
                             });
-
-
                             category_request.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                             Volley.newRequestQueue(getActivity()).add(category_request);
                             pd.show();
@@ -228,8 +226,8 @@ public class Open_Item extends Fragment {
 
                     }
                 });
-               // if(initialized == false)
-                    loadData();
+                //if(initialized == false)
+                loadData();
 
 
                 //list view implementation
@@ -285,12 +283,12 @@ public class Open_Item extends Fragment {
                                     f.setProductInfo(prodList);
                                     CustomEventAdapter event_list = new CustomEventAdapter(getActivity(),prodList);
                                     feture_list.setAdapter(event_list);
-                                     setListViewHeightBasedOnChildren(feture_list);
+                                    setListViewHeightBasedOnChildren(feture_list);
                                 }
 
                             }catch (Exception e){
                                 e.getMessage();
-                                Log.e("hgj", "onResponse: ",e );
+                                Log.e(TAG, "onResponse: ",e );
                             }
 
                         }
@@ -309,7 +307,7 @@ public class Open_Item extends Fragment {
                         }
                     });
 
-
+            prodList.removeAll(prodList);
             jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             Volley.newRequestQueue(getActivity()).add(jsonObjectRequest);
             pd.show();
@@ -389,7 +387,7 @@ public class Open_Item extends Fragment {
                     Toast.makeText(getActivity(),R.string.error_general_error,Toast.LENGTH_SHORT).show();
                 }
             });
-
+            prodList.removeAll(prodList);
             category_request.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT,Config.WEB_RETRY_COUNT,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             Volley.newRequestQueue(getActivity()).add(category_request);
             //   pd.show();

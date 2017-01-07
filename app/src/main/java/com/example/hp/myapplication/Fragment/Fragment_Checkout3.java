@@ -36,6 +36,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.example.hp.myapplication.Bill;
 import com.example.hp.myapplication.Categoris;
 import com.example.hp.myapplication.Config;
 import com.example.hp.myapplication.PaymentType;
@@ -55,13 +56,14 @@ public class Fragment_Checkout3 extends Fragment {
     Button c3_next, c3_back, coupon_submit_btn;
     EditText coupoun_code_text;
     private String TAG = Fragment_Checkout3.class.getSimpleName();
+    private static Bill bill= null;
     private String user_coupon_code;
-    public BigDecimal discount = BigDecimal.ZERO, discountedBill = BigDecimal.ZERO;
     public String couponDiscPercentage = "";
     ProgressDialog pd;
     private List<PaymentType> paymentTypeList = new ArrayList<PaymentType>();
     private ListView payment_list;
     private RadioButton listRadioButton = null;
+    private static boolean isCouponAdded = false;
     int listIndex = -1;
 
     @Override
@@ -149,10 +151,12 @@ public class Fragment_Checkout3 extends Fragment {
                         final boolean isSuccess = response.getBoolean("status");
 
                         if (isSuccess) {
+
                             JSONArray obj = response.getJSONArray("data");
                             if (obj.length() > 0) {
                                 PaymentType paymentType;
                                 JSONObject jsonObject;
+
                                 for (int i = 0; i < obj.length(); i++) {
                                     paymentType = new PaymentType();
                                     jsonObject = obj.getJSONObject(i);
@@ -240,23 +244,6 @@ public class Fragment_Checkout3 extends Fragment {
                 validateCoupon(user_coupon_code);
             }
         });
-
-        /*listRadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                View vMain = ((View) view.getParent());
-                if (listRadioButton != null) listRadioButton.setChecked(false);
-                // assign to the variable the new one
-                listRadioButton = (RadioButton) view;
-                // find if the new one is checked or not, and set "listIndex"
-                if (listRadioButton.isChecked()) {
-                    listIndex = ((ViewGroup) vMain.getParent()).indexOfChild(vMain);
-                } else {
-                    listRadioButton = null;
-                    listIndex = -1;
-                }
-            }
-        });*/
     }
 
     private void validateCoupon(String couponCode) {
@@ -270,17 +257,20 @@ public class Fragment_Checkout3 extends Fragment {
                 public void onResponse(JSONObject response) {
                     pd.dismiss();
                     try {
+                        isCouponAdded = true;
                         final boolean isSuccess = response.getBoolean("status");
                         Log.d(TAG, "onResponse isSuccess: " + response.toString());
                         if (isSuccess) {
+                            bill = new Bill(BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
                             JSONObject jsonObject = response.getJSONObject("data");
-                            setDiscount(BigDecimal.valueOf(jsonObject.getDouble("totalDiscount")));
-                            setDiscountedBill(BigDecimal.valueOf(jsonObject.getDouble("newTotalBill")));
-                            couponDiscPercentage = jsonObject.getString("percentDiscount");
-                            Log.d(TAG, "Original Bill: " + total);
-                            Log.d(TAG, "Discount : " + discount);
-                            Log.d(TAG, "DiscountPercentage " + couponDiscPercentage);
-                            Log.d(TAG, "DiscountedBill: " + discountedBill);
+                            bill.setDiscount(BigDecimal.valueOf(jsonObject.getDouble("totalDiscount")));
+                            bill.setDiscountedBill(BigDecimal.valueOf(jsonObject.getDouble("newTotalBill")));
+                            bill.setDiscountPer(jsonObject.getString("percentDiscount")+"%");
+                            bill.setTotal(Fragment_Add_To_Cart.total);
+                            Log.d(TAG, "Original Bill: " + Fragment_Add_To_Cart.total);
+                            Log.d(TAG, "Discount : " + bill.getDiscount());
+                            Log.d(TAG, "DiscountPercentage " + bill.getDiscountPer());
+                            Log.d(TAG, "DiscountedBill: " + bill.getDiscountedBill());
                             Toast.makeText(getActivity(), "Coupon Code applied Successfully .", Toast.LENGTH_SHORT).show();
                         } else {
                             if (response.getJSONObject("error").getInt("errorCode") == 10) {
@@ -318,26 +308,10 @@ public class Fragment_Checkout3 extends Fragment {
         coupoun_code_text = (EditText) view.findViewById(R.id.coupoun_code_text);
         coupon_submit_btn = (Button) view.findViewById(R.id.coupon_submit_btn);
         payment_list = (ListView) view.findViewById(R.id.payment_list);
-
         listRadioButton = (RadioButton) view.findViewById(R.id.listRadioButton);
 
     }
 
-    public BigDecimal getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(BigDecimal discount) {
-        this.discount = discount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-    }
-
-    public BigDecimal getDiscountedBill() {
-        return discountedBill;
-    }
-
-    public void setDiscountedBill(BigDecimal discountedBill) {
-        this.discountedBill = discountedBill.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-    }
 
     private class PaymentListAdapter extends ArrayAdapter {
         List<PaymentType> adapterpaymentTypeList = new ArrayList<PaymentType>();
@@ -377,6 +351,23 @@ public class Fragment_Checkout3 extends Fragment {
                 initializeIds(view);
 
                 setItems(paymentTypeList.get(position));
+                listRadioButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "onClick: radio button clicked");
+                        View vMain = ((View) view.getParent());
+                        if (listRadioButton != null) listRadioButton.setChecked(false);
+                        // assign to the variable the new one
+                        listRadioButton = (RadioButton) view;
+                        // find if the new one is checked or not, and set "listIndex"
+                        if (listRadioButton.isChecked()) {
+                            listIndex = ((ViewGroup) vMain.getParent()).indexOfChild(vMain);
+                        } else {
+                            listRadioButton = null;
+                            listIndex = -1;
+                        }
+                    }
+                });
 
             } catch (Exception e) {
                 Log.e(TAG, "getView: ", e);
@@ -400,5 +391,13 @@ public class Fragment_Checkout3 extends Fragment {
 
         }
 
+    }
+
+    public static Bill getBill(){
+        if(bill == null){
+            bill = new Bill(Fragment_Add_To_Cart.total,Fragment_Add_To_Cart.total,BigDecimal.ZERO,BigDecimal.ZERO);
+            return bill;
+        }
+        return bill;
     }
 }

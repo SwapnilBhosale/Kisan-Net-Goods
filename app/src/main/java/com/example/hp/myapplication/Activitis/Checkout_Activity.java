@@ -34,6 +34,7 @@ public class Checkout_Activity extends ActionBarActivity {
     public static TextView tv;
     public RelativeLayout rl;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
