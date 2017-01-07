@@ -15,6 +15,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:scrollbars="none"
             android:fillViewport="true">
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -59,7 +60,7 @@
                     android:id="@+id/c2_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <android.support.design.widget.TextInputLayout
@@ -236,7 +237,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="#ff9900"
+            android:background="@color/colorPrimary"
             android:padding="5dp"
             android:text="@string/go_back"
             android:textSize="17sp" />
@@ -250,7 +251,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="#ff9900"
+            android:background="@color/colorPrimary"
             android:padding="5dp"
             android:text="@string/go_ahead"
             android:textSize="17sp" />

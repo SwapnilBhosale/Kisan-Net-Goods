@@ -22,14 +22,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Order Id: "
-                android:textColor="#218B00"
+                android:textColor="@color/colorAccent"
                 android:textSize="16sp"/>
             <TextView
                 android:id="@+id/order_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="#218B00"
+                android:textColor="@color/colorAccent"
                 android:textSize="16sp"/>
         </LinearLayout>
 
@@ -94,7 +94,7 @@
                 android:layout_marginTop="15dp"
                 android:drawablePadding="-5dp"
                 android:drawableLeft="@drawable/rupi1"
-                android:textColor="#218B00"
+                android:textColor="@color/colorAccent"
                 android:textSize="18sp"/>
         </LinearLayout>
     </LinearLayout>

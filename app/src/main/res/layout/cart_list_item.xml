@@ -100,7 +100,7 @@
                         android:drawableLeft="@drawable/rupi1"
                         android:gravity="right"
                         android:text="2563"
-                        android:textColor="#218B00"
+                        android:textColor="@color/colorAccent"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -174,7 +174,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_gravity="right"
                     android:layout_height="2dp"
-                    android:background="#CCCCCC"/>
+                    android:background="@color/colorPrimary"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
                         android:drawableLeft="@drawable/rupi1"
                         android:gravity="right"
                         android:text="2563"
-                        android:textColor="#218B00"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>

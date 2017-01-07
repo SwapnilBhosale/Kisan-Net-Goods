@@ -15,7 +15,7 @@
         android:layout_height="40dp"
         android:layout_gravity="bottom"
         android:layout_marginTop="5dp"
-        android:background="#ff9900"
+        android:background="@color/colorPrimary"
         android:text="@string/select_lang"
         android:textColor="#ffffff" />
 </LinearLayout>

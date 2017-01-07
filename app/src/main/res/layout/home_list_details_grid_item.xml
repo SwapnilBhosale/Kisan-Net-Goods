@@ -48,7 +48,7 @@
                 android:layout_weight="5"
                 android:drawablePadding="-5dp"
                 android:text="Text"
-                android:textColor="#218B00"
+                android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
 
             <TextView

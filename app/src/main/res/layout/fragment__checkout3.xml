@@ -35,7 +35,7 @@
                         android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_weight="5"
+                        android:layout_weight="1"
                         android:drawablePadding="15dp"
                         android:gravity="center_vertical"
                         android:padding="5dp"
@@ -137,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="#ff9900"
+            android:background="@color/colorPrimary"
             android:padding="5dp"
             android:text="Back"
             android:textSize="17sp" />
@@ -151,7 +151,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="#ff9900"
+            android:background="@color/colorPrimary"
             android:padding="5dp"
             android:text="Next"
             android:textSize="17sp" />

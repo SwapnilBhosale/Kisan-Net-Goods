@@ -40,6 +40,7 @@
                 android:id="@+id/empty_image"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
+                android:src="@drawable/empty_cart"
                 android:layout_marginTop="10dp"
                 android:scaleType="fitXY" />
 
@@ -50,7 +51,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:text="No items pesent in your cart"
-                android:textColor="#ff0000"
+                android:textColor="@color/colorAccent"
                 android:textSize="19sp" />
 
             <TextView
@@ -60,7 +61,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:text="Please go to shopping"
-                android:textColor="#ff0000"
+                android:textColor="@color/colorAccent"
                 android:textSize="17sp" />
 
             <Button
@@ -69,7 +70,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:background="#ff0000"
+                android:background="@drawable/button_background"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="Go to shopping"
@@ -126,9 +127,9 @@
             <Button
                 android:id="@+id/checkout_btn"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_gravity="right"
-                android:background="@drawable/button_background"
+                android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"

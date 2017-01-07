@@ -3,7 +3,6 @@ package com.example.hp.myapplication.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,9 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hp.myapplication.Bill;
 import com.example.hp.myapplication.Config;
-import com.example.hp.myapplication.Customer;
 import com.example.hp.myapplication.R;
 import com.example.hp.myapplication.helper.PrefManager;
 
@@ -30,8 +27,7 @@ import static android.R.id.list;
 
 public class Fragment_Checkout4 extends Fragment {
 
-    TextView c4_address,c4_name,c4_village,c4_city,c4_state,c4_pincode,c4_mobile,c4_ship_address,c4_ship_name,c4_ship_village,c4_ship_city,c4_ship_state,c4_ship_pincode,c4_ship_mobile;
-    TextView cart_total,cart_discount,cart_shipping_charge,cart_discounted_total;
+    TextView c4_address,c4_first_name,c4_last_name,c4_country,c4_city,c4_state,c4_pincode,c4_mobile;
     Button c4_checkout,c4_back;
     CheckBox c4_checkbox;
 
@@ -47,39 +43,16 @@ public class Fragment_Checkout4 extends Fragment {
 
                 intioliseId(view);
 
-                Bill bill = Fragment_Checkout3.getBill();
-                cart_discounted_total.setText(String.valueOf(bill.getDiscountedBill()));
-                cart_discount.setText(String.valueOf(bill.getDiscount()));
-                cart_total.setText(String.valueOf(bill.getTotal()));
-                cart_shipping_charge.setText(String.valueOf(bill.getShippingCharge()));
-
                 PrefManager pref = new PrefManager(Config.getContext());
 
                 c4_address.setText(pref.getAddress());
-                c4_name.setText(pref.getName());
-                c4_village.setText(pref.getVillage());
+                c4_first_name.setText(pref.getName());
+                c4_last_name.setText(pref.getVillage());
+                //c4_country.setText(pref.get());
                 c4_city.setText(pref.getCity());
                 c4_state.setText(pref.getState());
                 c4_mobile.setText(pref.getMobile());
                 c4_pincode.setText(pref.getPincode());
-                if(Fragment_Checkout2.customer != null){
-                    Customer cust = Fragment_Checkout2.customer;
-                    c4_ship_address.setText(cust.getAddress());
-                    c4_ship_name.setText(cust.getName());
-                    c4_ship_village.setText(cust.getVillage());
-                    c4_ship_city.setText(cust.getCity());
-                    c4_ship_state.setText(cust.getState());
-                    c4_ship_mobile.setText(cust.getMobileNo());
-                    c4_ship_pincode.setText(cust.getPincode());
-                }else{
-                    c4_ship_address.setText(pref.getAddress());
-                    c4_ship_name.setText(pref.getName());
-                    c4_ship_village.setText(pref.getVillage());
-                    c4_ship_city.setText(pref.getCity());
-                    c4_ship_state.setText(pref.getState());
-                    c4_ship_mobile.setText(pref.getMobile());
-                    c4_ship_pincode.setText(pref.getPincode());
-                }
 
                 setListners();
 
@@ -146,27 +119,12 @@ public class Fragment_Checkout4 extends Fragment {
     private void intioliseId(View view) {
 
         c4_address = (TextView) view.findViewById(R.id.c4_address);
-        c4_village = (TextView) view.findViewById(R.id.c4_village);
-        c4_name = (TextView) view.findViewById(R.id.c4_name);
+        c4_last_name = (TextView) view.findViewById(R.id.c4_last_name);
+        c4_first_name = (TextView) view.findViewById(R.id.c4_first_name);
         c4_city = (TextView) view.findViewById(R.id.c4_city);
         c4_state = (TextView) view.findViewById(R.id.c4_state);
         c4_pincode = (TextView) view.findViewById(R.id.c4_pincode);
         c4_mobile = (TextView) view.findViewById(R.id.c4_mobile);
-
-        c4_ship_address = (TextView) view.findViewById(R.id.c4_ship_address);
-        c4_ship_village = (TextView) view.findViewById(R.id.c4_ship_village);
-        c4_ship_name = (TextView) view.findViewById(R.id.c4_ship_name);
-        c4_ship_city = (TextView) view.findViewById(R.id.c4_ship_city);
-        c4_ship_state = (TextView) view.findViewById(R.id.c4_ship_state);
-        c4_ship_pincode = (TextView) view.findViewById(R.id.c4_ship_pincode);
-        c4_ship_mobile = (TextView) view.findViewById(R.id.c4_ship_mobile);
-
-        cart_discount = (TextView) view.findViewById(R.id.cart_discount);
-        cart_discounted_total = (TextView) view.findViewById(R.id.cart_discounted_total);
-        cart_shipping_charge = (TextView) view.findViewById(R.id.cart_shipping_charge);
-        cart_total = (TextView) view.findViewById(R.id.cart_total);
-
-
         c4_checkout = (Button) view.findViewById(R.id.c4_checkout);
         c4_back = (Button) view.findViewById(R.id.c4_back);
         c4_checkbox = (CheckBox) view.findViewById(R.id.c4_checkbox);
