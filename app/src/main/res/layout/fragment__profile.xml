@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.example.hp.myapplication.Fragment.Fragment_Profile">
+        tools:context="com.kng.app.kngapp.Fragment.Fragment_Profile">
 
         <LinearLayout
             android:layout_width="match_parent"

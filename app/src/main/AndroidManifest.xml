@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.hp.myapplication">
+    package="com.kng.app.kngapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
-        android:name=".Config"
+        android:name="com.kng.app.kngapp.Config"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,7 +16,7 @@
 
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".Activitis.Splash_Activity"
+            android:name="com.kng.app.kngapp.Activitis.Splash_Activity"
             android:label="@string/app_name"
             android:configChanges="orientation|screenSize|keyboardHidden|locale"
             android:theme="@style/AppTheme.NoActionBar">
@@ -34,20 +34,20 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Activitis.Login_Activity"
+        <activity android:name="com.kng.app.kngapp.Activitis.Login_Activity"
             android:configChanges="orientation|screenSize|keyboardHidden|locale"
             />
-        <activity android:name=".Activitis.Register_Activity"
+        <activity android:name="com.kng.app.kngapp.Activitis.Register_Activity"
             android:configChanges="orientation|screenSize|keyboardHidden|locale"
             />
-        <activity android:name=".Activitis.MainActivity"
+        <activity android:name="com.kng.app.kngapp.Activitis.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|locale"
-            /> <activity android:name=".Activitis.Checkout_Activity"
+            /> <activity android:name="com.kng.app.kngapp.Activitis.Checkout_Activity"
             android:configChanges="orientation|screenSize|keyboardHidden|locale"
             />
 
         <receiver
-            android:name=".receiver.SmsReceiver"
+            android:name="com.kng.app.kngapp.receiver.SmsReceiver"
             android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
