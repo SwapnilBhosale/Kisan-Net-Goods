@@ -79,5 +79,6 @@
     <string name="product_weight">प्रोडक्टचे वजन : </string>
     <string name="feedback_button">प्रतिक्रिया द्या </string>
     <string name="rate_us_on_play_store">आम्हाला प्ले स्टोअर वर रेटिंग द्या </string>
-
+    <string name="shopping_cart_hint">खरेदी यादी</string>
+    <string name="remove_cart_success">खरेदी यादीमधून प्रॉडक्ट काढून टाकले </string>
 </resources>

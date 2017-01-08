@@ -76,4 +76,6 @@
     <string name="product_weight">Product weight :</string>
     <string name="feedback_button">Submit</string>
     <string name="rate_us_on_play_store">Rate us on Play Store.</string>
+    <string name="shopping_cart_hint">Shopping cart</string>
+    <string name="remove_cart_success">Removed from cart successfully.</string>
 </resources>

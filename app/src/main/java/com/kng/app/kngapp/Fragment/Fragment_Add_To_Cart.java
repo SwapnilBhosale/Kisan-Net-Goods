@@ -52,10 +52,6 @@ import java.util.List;
 
 public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
-
-    //String[] name = {"Puma", "John Deere", "Park Avenue"};
-    //String[] dishes = {"Shirt", "T shirt", "Shirt"};
-    //int[] images = {R.drawable.shirt_order, R.drawable.shirt_order, R.drawable.shirt_order};
     private ListView list;
     public static List<CartItem> cartList = new ArrayList<CartItem>();
     TextView total_price;
@@ -156,10 +152,15 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
     }
 
+    public void setActionBarTitle(String title) {
+        getActivity().setTitle(title);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pd = getProgressBar();
+        setActionBarTitle(getString(R.string.shopping_cart_hint));
     }
 
     private ProgressDialog getProgressBar(){
@@ -453,7 +454,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                                         //reloadFragment();
                                         loadData();
                                         //initialized = false;
-                                        Toast.makeText(getActivity(),"REMOVED SUCCESSFULLY",Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getActivity(),R.string.remove_cart_success,Toast.LENGTH_SHORT).show();
 
                                     }
                                 } catch (Exception e) {
