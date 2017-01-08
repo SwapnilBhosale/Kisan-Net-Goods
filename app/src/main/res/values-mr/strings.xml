@@ -34,8 +34,8 @@
     <string name="add_to_cart_success">खरेदी यादीत समाविष्ट केले .</string>
     <string name="loading">लोड होत आहे ...</string>
     <string name="update_cart_success">खरेदी यादीत बदल यशस्वी .</string>
-    <string name="add_to_cart">खरेदी यादीत टाका .</string>
-    <string name="update_cart">खरेदी यादीत बदल .</string>
+    <string name="add_to_cart">खरेदी यादीत टाका</string>
+    <string name="update_cart">खरेदी यादीत बदल</string>
     <string name="err_mobile_already_exist">मोबाइल फोन आधीच नोंदणीकृत आहे</string>
     <string name="amount_payable">देय रक्कम : </string>
     <string name="check_out">पुढे जा</string>

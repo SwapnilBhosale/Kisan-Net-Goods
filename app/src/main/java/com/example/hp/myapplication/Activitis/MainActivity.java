@@ -716,4 +716,13 @@ public class CustomEventAdapter extends ArrayAdapter {
         finish();  //Kill the activity from which you will go to next activity
         startActivity(i);
     }
+
+
+    public void openFragmentList(View v){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.main_activity_fl, new Fragment_List());
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+    }
 }

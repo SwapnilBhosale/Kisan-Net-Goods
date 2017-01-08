@@ -300,4 +300,5 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
         }
     }
 
+
 }

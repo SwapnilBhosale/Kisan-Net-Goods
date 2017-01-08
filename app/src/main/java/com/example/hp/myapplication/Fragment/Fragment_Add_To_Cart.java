@@ -381,7 +381,8 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                                     if(isSuccess){
                                         //Toast.makeText(getContext(),R.string.update_cart_success,Toast.LENGTH_LONG).show();
                                         Toast.makeText(getContext(), R.string.update_cart_success, Toast.LENGTH_SHORT).show();
-                                        reloadFragment();
+                                        //reloadFragment();
+                                        loadData();
                                     }
 
                                 }catch (Exception e){
@@ -484,7 +485,6 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
         }
 
     }
-
 
 
     public void reloadFragment() {
