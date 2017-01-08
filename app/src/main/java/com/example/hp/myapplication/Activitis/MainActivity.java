@@ -722,7 +722,7 @@ public class CustomEventAdapter extends ArrayAdapter {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.main_activity_fl, new Fragment_List());
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(Config.KEY_FRAGMENT_LIST);
         ft.commit();
     }
 }
