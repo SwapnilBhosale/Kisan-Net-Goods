@@ -98,7 +98,7 @@ public class Fragment_Checkout3 extends Fragment {
             loadPaymentTypeData(adapter);
 
         payment_list.setAdapter(adapter);
-        //setListViewHeightBasedOnChildren(payment_list);
+       // setListViewHeightBasedOnChildren(payment_list);
     }
 
     public static void setListViewHeightBasedOnChildren(ListView home_list) {

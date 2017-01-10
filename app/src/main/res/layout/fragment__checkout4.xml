@@ -53,6 +53,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:background="#ffffff"
                         android:orientation="vertical"
                         android:paddingBottom="10dp"
                         android:paddingTop="10dp">
@@ -218,168 +219,15 @@
                                 android:orientation="horizontal">
 
                                 <TextView
+                                    android:id="@+id/adress_billing_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
                                     android:layout_marginRight="20dp"
                                     android:padding="2dp"
-                                    android:text="@string/enter_mobile_no"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:id="@+id/c4_mobile"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="20dp"
-                                    android:inputType="phone"
-                                    android:padding="2dp"
-                                    android:text="@string/enter_mobile_no"
                                     android:textSize="13sp" />
 
                             </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="20dp"
-                                    android:padding="2dp"
-                                    android:text="Name"
-                                    android:textSize="13sp" />
-
-                            <TextView
-                                android:id="@+id/c4_first_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="@string/enter_name"
-                                android:textSize="13sp" />
-</LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="20dp"
-                                    android:padding="2dp"
-                                    android:text="Village"
-                                    android:textSize="13sp" />
-                            <TextView
-                                android:id="@+id/c4_last_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="@string/enter_village"
-                                android:textSize="13sp" />
-</LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="20dp"
-                                    android:padding="2dp"
-                                    android:text="Address"
-                                    android:textSize="13sp" />
-                            <TextView
-                                android:id="@+id/c4_address"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="@string/enter_address"
-                                android:textSize="13sp" />
-</LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="20dp"
-                                    android:padding="2dp"
-                                    android:text="City"
-                                    android:textSize="13sp" />
-                            <TextView
-                                android:id="@+id/c4_city"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="@string/enter_city"
-                                android:textSize="13sp" />
-</LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="20dp"
-                                    android:padding="2dp"
-                                    android:text="City"
-                                    android:textSize="13sp" />
-                            <TextView
-                                android:id="@+id/c4_state"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="@string/enter_state"
-                                android:textSize="13sp" />
-</LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="20dp"
-                                    android:padding="2dp"
-                                    android:text="Pincode"
-                                    android:textSize="13sp" />
-                            <TextView
-                                android:id="@+id/c4_pincode"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="@string/enter_postal_code"
-                                android:textSize="13sp" />
-
-                      </LinearLayout>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -417,6 +265,7 @@
                                 android:background="#ffcccccc" />
 
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -430,17 +279,19 @@
                                 android:padding="2dp"
                                 android:text="Mobile"
                                 android:textSize="13sp" />
-                        <TextView
-                            android:id="@+id/c4_ship_mobile"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:inputType="phone"
-                            android:padding="2dp"
-                            android:text="@string/enter_mobile_no"
-                            android:textSize="13sp" />
-</LinearLayout>
+
+                            <TextView
+                                android:id="@+id/c4_ship_mobile"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:inputType="phone"
+                                android:padding="2dp"
+                                android:text="@string/enter_mobile_no"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -465,6 +316,7 @@
                                 android:text="@string/enter_name"
                                 android:textSize="13sp" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -478,17 +330,18 @@
                                 android:padding="2dp"
                                 android:text="Address"
                                 android:textSize="13sp" />
-                        <TextView
-                            android:id="@+id/c4_ship_address"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:padding="2dp"
-                            android:text="@string/enter_address"
-                            android:textSize="13sp"/>
 
-</LinearLayout>
+                            <TextView
+                                android:id="@+id/c4_ship_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:padding="2dp"
+                                android:text="@string/enter_address"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -504,16 +357,17 @@
                                 android:text="City"
                                 android:textSize="13sp" />
 
-                        <TextView
-                            android:id="@+id/c4_ship_city"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:padding="2dp"
-                            android:text="@string/enter_city"
-                            android:textSize="13sp" />
-</LinearLayout>
+                            <TextView
+                                android:id="@+id/c4_ship_city"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:padding="2dp"
+                                android:text="@string/enter_city"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -527,17 +381,19 @@
                                 android:padding="2dp"
                                 android:text="State"
                                 android:textSize="13sp" />
-                        <TextView
-                            android:id="@+id/c4_ship_state"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:padding="2dp"
-                            android:text="@string/enter_state"
-                            android:textSize="13sp" />
 
-</LinearLayout>
+                            <TextView
+                                android:id="@+id/c4_ship_state"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:padding="2dp"
+                                android:text="@string/enter_state"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -551,16 +407,17 @@
                                 android:padding="2dp"
                                 android:text="Pincode"
                                 android:textSize="13sp" />
-                        <TextView
-                            android:id="@+id/c4_ship_pincode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:padding="2dp"
-                            android:text="@string/enter_postal_code"
-                            android:textSize="13sp" />
-</LinearLayout>
+
+                            <TextView
+                                android:id="@+id/c4_ship_pincode"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:padding="2dp"
+                                android:text="@string/enter_postal_code"
+                                android:textSize="13sp" />
+                        </LinearLayout>
 
 
                     </LinearLayout>
@@ -574,6 +431,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
+                            android:background="#ffffff"
                             android:orientation="horizontal">
 
                             <CheckBox
@@ -609,23 +467,6 @@
 
 
                         </LinearLayout>
-
-                        <android.support.design.widget.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:layout_marginTop="50dp">
-
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginTop="10dp"
-                                android:hint="Order Notes"
-                                android:padding="5dp" />
-                        </android.support.design.widget.TextInputLayout>
 
                     </LinearLayout>
 

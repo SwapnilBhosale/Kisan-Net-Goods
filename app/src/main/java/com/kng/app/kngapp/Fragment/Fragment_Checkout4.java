@@ -22,7 +22,7 @@ import com.kng.app.kngapp.helper.PrefManager;
 
 public class Fragment_Checkout4 extends Fragment {
 
-    TextView c4_address,c4_name,c4_village,c4_city,c4_state,c4_pincode,c4_mobile,c4_ship_address,c4_ship_name,c4_ship_village,c4_ship_city,c4_ship_state,c4_ship_pincode,c4_ship_mobile;
+    TextView adress_billing_text,c4_ship_address,c4_ship_name,c4_ship_village,c4_ship_city,c4_ship_state,c4_ship_pincode,c4_ship_mobile;
     TextView cart_total,cart_discount,cart_shipping_charge,cart_discounted_total;
     Button c4_checkout,c4_back;
     CheckBox c4_checkbox;
@@ -47,13 +47,8 @@ public class Fragment_Checkout4 extends Fragment {
 
                 PrefManager pref = new PrefManager(Config.getContext());
 
-                c4_address.setText(pref.getAddress());
-                c4_name.setText(pref.getName());
-                c4_village.setText(pref.getVillage());
-                c4_city.setText(pref.getCity());
-                c4_state.setText(pref.getState());
-                c4_mobile.setText(pref.getMobile());
-                c4_pincode.setText(pref.getPincode());
+                adress_billing_text.setText(pref.getAddress());
+
                 if(Fragment_Checkout2.customer != null){
                     Customer cust = Fragment_Checkout2.customer;
                     c4_ship_address.setText(cust.getAddress());
@@ -118,13 +113,8 @@ public class Fragment_Checkout4 extends Fragment {
 
     private void intioliseId(View view) {
 
-        c4_address = (TextView) view.findViewById(R.id.c4_address);
-        c4_village = (TextView) view.findViewById(R.id.c4_city);
-        c4_name = (TextView) view.findViewById(R.id.c4_city);
-        c4_city = (TextView) view.findViewById(R.id.c4_city);
-        c4_state = (TextView) view.findViewById(R.id.c4_state);
-        c4_pincode = (TextView) view.findViewById(R.id.c4_pincode);
-        c4_mobile = (TextView) view.findViewById(R.id.c4_mobile);
+        adress_billing_text = (TextView) view.findViewById(R.id.adress_billing_text);
+
 
         c4_ship_address = (TextView) view.findViewById(R.id.c4_ship_address);
         c4_ship_village = (TextView) view.findViewById(R.id.c4_ship_address);
