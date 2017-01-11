@@ -50,6 +50,8 @@ public class Fragment_Oredr_History extends Fragment {
         return view;
     }
 
+
+
     private void getList() {
         CustomEventAdapter order_list_adapter = new CustomEventAdapter(getActivity(),order_id, total_item,date,price);
         order_list.setAdapter(order_list_adapter);

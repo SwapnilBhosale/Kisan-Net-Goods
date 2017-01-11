@@ -161,6 +161,8 @@ public class Fragment_Profile extends Fragment {
         return false;
     }
 
+
+
     private boolean isPinCodeValid(String pinCode) {
         if(!TextUtils.isEmpty(pinCode) && pinCode.trim().length() == 6)
             return true;

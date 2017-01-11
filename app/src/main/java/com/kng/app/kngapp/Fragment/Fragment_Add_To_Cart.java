@@ -256,6 +256,14 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!getActivity().isFinishing() && pd != null) {
+            pd.dismiss();
+        }
+    }
+
     private void initiolizeId(View view) {
         list = (ListView) view.findViewById(R.id.cart_list);
         checkout_btn = (Button) view.findViewById(R.id.checkout_btn);
@@ -359,6 +367,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
             }
             return view;
         }
+
 
 
 
@@ -498,6 +507,8 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     public static int getCartSize(){
         return cartList.size();
     }
+
+
 
 
 }

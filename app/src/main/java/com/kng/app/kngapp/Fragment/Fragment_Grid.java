@@ -210,6 +210,14 @@ public class Fragment_Grid extends Fragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!getActivity().isFinishing() && pd != null) {
+            pd.dismiss();
+        }
+    }
+
     private void setListners() {
 
     }

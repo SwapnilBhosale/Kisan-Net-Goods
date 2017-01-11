@@ -107,6 +107,7 @@ public class Fragment_Feedback extends Fragment {
                         boolean isSuccess = response.getBoolean("status");
                         if(isSuccess){
                             Toast.makeText(getActivity(),R.string.thanks_for_feedback,Toast.LENGTH_LONG).show();
+                            Config.callWebUrl(getContext(),Config.PLAY_STORE_FEED_URL+""+getContext().getPackageName());
                         }else{
                             Toast.makeText(getActivity(),R.string.error_general_error,Toast.LENGTH_SHORT).show();
                         }
@@ -147,4 +148,12 @@ public class Fragment_Feedback extends Fragment {
         et_cmp_feedback = (EditText) view.findViewById(R.id.et_cmp_feedback);
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!getActivity().isFinishing() && pd != null) {
+            pd.dismiss();
+        }
+    }
 }

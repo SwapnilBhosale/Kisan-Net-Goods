@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.kng.app.kngapp.Config;
 import com.kng.app.kngapp.R;
 
 public class Fragment_tearms_and_condn extends Fragment {
@@ -35,6 +36,10 @@ public class Fragment_tearms_and_condn extends Fragment {
                     webView.getSettings().setUseWideViewPort(true);
                     webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
                     webView.setScrollbarFadingEnabled(false);
+                String url = Config.TERMS_AND_CONDITION_URL;
+                //WebView webView = (WebView) view.findViewById(R.id.wv);
+                //webView.getSettings().setJavaScriptEnabled(true);
+                webView.loadUrl(url);
 
                 }
 

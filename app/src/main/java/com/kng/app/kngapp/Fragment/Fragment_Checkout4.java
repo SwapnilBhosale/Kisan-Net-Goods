@@ -5,10 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -42,8 +45,8 @@ import org.json.JSONObject;
 
 public class Fragment_Checkout4 extends Fragment {
 
-    TextView adress_billing_text;
-    TextView cart_total,cart_discount,cart_shipping_charge,cart_discounted_total;
+    TextView adress_billing_text, shipping_Address_text;
+    TextView cart_total,cart_discount,cart_shipping_charge,cart_discounted_total,tearms_condn;
     Button c4_checkout,c4_back;
     private int paymentListIndex;
     private String TAG = Fragment_Checkout4.class.getSimpleName();
@@ -103,7 +106,9 @@ public class Fragment_Checkout4 extends Fragment {
 
                 if(Fragment_Checkout2.customer != null){
                     Customer cust = Fragment_Checkout2.customer;
-                   /* c4_ship_address.setText(cust.getAddress());
+
+                    shipping_Address_text.setText(cust.getMobileNo()+"\n"+cust.getName()+"\n"+cust.getAddress()+"\n"+cust.getVillage()+"\n"+cust.getCity()+"\n"+cust.getState()+"\n"+cust.getPincode());
+                 /*   c4_ship_address.setText(cust.getAddress());
                     c4_ship_name.setText(cust.getName());
                     c4_ship_village.setText(cust.getVillage());
                     c4_ship_city.setText(cust.getCity());
@@ -111,6 +116,8 @@ public class Fragment_Checkout4 extends Fragment {
                     c4_ship_mobile.setText(cust.getMobileNo());
                     c4_ship_pincode.setText(cust.getPincode());*/
                 }else{
+                        shipping_Address_text.setText(pref.getMobile()+"\n"+pref.getName()+"\n"+pref.getAddress()+"\n"+pref.getVillage()+"\n"+pref.getCity()+"\n"+pref.getState()+"\n"+pref.getPincode());
+
                     /*c4_ship_address.setText(pref.getAddress());
                     c4_ship_name.setText(pref.getName());
                     c4_ship_village.setText(pref.getVillage());
@@ -177,8 +184,29 @@ public class Fragment_Checkout4 extends Fragment {
             }
         });
 
+        tearms_condn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /* String url = Config.TERMS_AND_CONDITION_URL;
+                WebView webView = (WebView) view.findViewById(R.id.wv);
+                webView.getSettings().setJavaScriptEnabled(true);
+                webView.loadUrl(url);*/
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.checkout_frame,new Fragment_tearms_and_condn()).addToBackStack(TAG).commit();
+            }
+        });
 
 
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!getActivity().isFinishing() && pd != null) {
+            pd.dismiss();
+        }
     }
 
     private ProgressDialog getProgressBar() {
@@ -198,6 +226,9 @@ public class Fragment_Checkout4 extends Fragment {
     private void intioliseId(View view) {
 
         adress_billing_text = (TextView) view.findViewById(R.id.adress_billing_text);
+        shipping_Address_text = (TextView) view.findViewById(R.id.shipping_Address_text);
+
+        tearms_condn = (TextView) view.findViewById(R.id.tearms_condn);
 
 
         /*c4_ship_address = (TextView) view.findViewById(R.id.c4_ship_address);

@@ -118,9 +118,9 @@ public class Checkout_Activity extends ActionBarActivity {
         if(count == 0){
             //super.onBackPressed();
             super.onBackPressed();
-        }/*else{
+        }else{
             getSupportFragmentManager().popBackStack();
-        }*/
+        }
         //}
     }
 

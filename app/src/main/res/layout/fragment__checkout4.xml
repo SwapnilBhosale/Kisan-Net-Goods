@@ -213,11 +213,6 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
                                 <TextView
                                     android:id="@+id/adress_billing_text"
                                     android:layout_width="wrap_content"
@@ -228,7 +223,6 @@
                                     android:textSize="13sp" />
 
                             </LinearLayout>
-                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -271,152 +265,17 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="Mobile"
-                                android:textSize="13sp" />
+                                <TextView
+                                    android:id="@+id/shipping_Address_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="20dp"
+                                    android:padding="2dp"
+                                    android:textSize="13sp" />
 
-                            <TextView
-                                android:id="@+id/c4_ship_mobile"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:inputType="phone"
-                                android:padding="2dp"
-                                android:text="@string/enter_mobile_no"
-                                android:textSize="13sp" />
-                        </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="Name"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:id="@+id/c4_ship_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="@string/enter_name"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="Address"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:id="@+id/c4_ship_address"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="@string/enter_address"
-                                android:textSize="13sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="City"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:id="@+id/c4_ship_city"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="@string/enter_city"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="State"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:id="@+id/c4_ship_state"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="@string/enter_state"
-                                android:textSize="13sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="Pincode"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:id="@+id/c4_ship_pincode"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:padding="2dp"
-                                android:text="@string/enter_postal_code"
-                                android:textSize="13sp" />
                         </LinearLayout>
 
 
@@ -464,6 +323,7 @@
                                 android:text="Terms and Conditions"
                                 android:textColor="#0000FF"
                                 android:textSize="19sp" />
+
 
 
                         </LinearLayout>

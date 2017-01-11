@@ -455,6 +455,14 @@ public class Fragment_List extends Fragment {
     }
 
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!getActivity().isFinishing() && pd != null) {
+            pd.dismiss();
+        }
+    }
+
 
     public static void setListViewHeightBasedOnChildren(ListView home_list) {
         ListAdapter listAdapter = home_list.getAdapter();

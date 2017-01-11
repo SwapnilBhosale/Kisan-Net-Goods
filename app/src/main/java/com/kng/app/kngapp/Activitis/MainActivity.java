@@ -84,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     PopupWindow mpopup;
     static TextView hindi_image;
+
+
+
     static TextView marathi_image;
     ImageLoader imageLoader = Config.getInstance().getImageLoader();
     private String TAG = MainActivity.class.getSimpleName();

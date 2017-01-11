@@ -106,12 +106,15 @@ public class Fragment_Checkout3 extends Fragment {
         if (listAdapter == null)
             return;
         int desiredWidth = View.MeasureSpec.makeMeasureSpec(home_list.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int desiredHeight = View.MeasureSpec.makeMeasureSpec(home_list.getHeight(), View.MeasureSpec.UNSPECIFIED);
         int totalHeight = 0;
         View view = null;
         for (int i = 0; i < listAdapter.getCount(); i++) {
             view = listAdapter.getView(i, view, home_list);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
+            //if (i == 0)
+
+                View.MeasureSpec.makeMeasureSpec(home_list.getWidth(), desiredHeight);
+                //view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
 
             view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
             totalHeight += view.getMeasuredHeight();
@@ -134,6 +137,14 @@ public class Fragment_Checkout3 extends Fragment {
         pd.setCancelable(false);
         // Finally, show the progress dialog
         return pd;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!getActivity().isFinishing() && pd != null) {
+            pd.dismiss();
+        }
     }
 
     public void loadPaymentTypeData(final PaymentListAdapter adapter) {

@@ -2,7 +2,9 @@ package com.kng.app.kngapp;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -61,6 +63,8 @@ public class Config extends Application {
     public static final String APPLY_COUPON_URL = Config.BASE_URL+"/users/applyCoupon?coupon_code=";
     public static final String FEEDBACK_URL = Config.BASE_URL+"/users/feedback";
     public static final String ORDER_URL = Config.BASE_URL+"/order";
+    public static final String PLAY_STORE_FEED_URL = "https://play.google.com/store/apps/details?id=";
+    public static final String TERMS_AND_CONDITION_URL = BASE_URL+"/"+"terms_condition";
 
     public static final String TAG = Config.class.getSimpleName();
     public static String OTP_SCREEN="";
@@ -213,6 +217,11 @@ public class Config extends Application {
 
     public static Context getAppBaseContext(){
         return baseContext;
+    }
+
+    public static void callWebUrl(Context context, String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        context.startActivity(intent);
     }
 
 }

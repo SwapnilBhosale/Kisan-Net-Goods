@@ -151,6 +151,14 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
         return pd;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!getActivity().isFinishing() && pd != null) {
+            pd.dismiss();
+        }
+    }
+
     private void loadData(final CustomGrid adapter) {
         //final List<Fruits> list = new ArrayList<>();
         String url = "";
