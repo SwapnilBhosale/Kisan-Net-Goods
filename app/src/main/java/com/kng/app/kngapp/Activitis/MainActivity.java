@@ -220,10 +220,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     R.string.option_yes,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-                            homeIntent.addCategory(Intent.CATEGORY_HOME);
-                            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(homeIntent);
+                            if(Integer.valueOf(android.os.Build.VERSION.SDK) >= 21)
+                                finishAndRemoveTask();
+                            //add else 
                         }
                     });
             builder1.setNegativeButton(
