@@ -1,9 +1,11 @@
 package com.kng.app.kngapp.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +15,29 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.kng.app.kngapp.Bill;
 import com.kng.app.kngapp.Config;
 import com.kng.app.kngapp.Customer;
+import com.kng.app.kngapp.Fruits;
+import com.kng.app.kngapp.PaymentType;
 import com.kng.app.kngapp.R;
 import com.kng.app.kngapp.helper.PrefManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class Fragment_Checkout4 extends Fragment {
@@ -25,8 +45,40 @@ public class Fragment_Checkout4 extends Fragment {
     TextView adress_billing_text,c4_ship_address,c4_ship_name,c4_ship_village,c4_ship_city,c4_ship_state,c4_ship_pincode,c4_ship_mobile;
     TextView cart_total,cart_discount,cart_shipping_charge,cart_discounted_total;
     Button c4_checkout,c4_back;
+    private int paymentListIndex;
+    private String TAG = Fragment_Checkout4.class.getSimpleName();
+    ProgressDialog pd;
+    Bill bill;
     CheckBox c4_checkbox;
 
+
+    public JSONObject getOrderJsonBody(String payment_type_id,Bill bill) throws JSONException {
+        JSONObject jsonObject;
+        jsonObject = new JSONObject("{\"customer_id\" : " + new PrefManager(Config.getContext()).getCustomerId() + ",\"payment_type_id\" : \"" + payment_type_id + "\",\"bill\" : \"" + bill.getTotal() + "\",\"discount\" : \"" + bill.getDiscount() + "\",\"total_bill\" : \"" + bill.getDiscountedBill() + "\"}");
+        if(Fragment_Checkout2.customer  == null) {
+            jsonObject.put("is_same_delivery_address","Y");
+        }else{
+            jsonObject.put("delivery_address",getDeliveryAddress(Fragment_Checkout2.customer));
+        }
+
+        return jsonObject;
+    }
+
+    public String getDeliveryAddress(Customer customer){
+        return "{delivery_name : "+customer.getName()+",delivery_village : "+customer.getVillage()+",delivery_mobile_no : "
+                +customer.getMobileNo()+",delivery_address : "+customer.getAddress()+", delivery_city : "+customer.getCity()+", delivery_state : "+customer.getState()+" , delivery_postal_code : "+customer.getPincode()+"}";
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        pd = getProgressBar();
+        if (getArguments() != null) {
+            paymentListIndex = getArguments().getInt("payment_type_id");
+
+        }
+
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,7 +91,7 @@ public class Fragment_Checkout4 extends Fragment {
 
                 intioliseId(view);
 
-                Bill bill = Fragment_Checkout3.getBill();
+                bill = Fragment_Checkout3.getBill();
                 cart_discounted_total.setText(String.valueOf(bill.getDiscountedBill()));
                 cart_discount.setText(String.valueOf(bill.getDiscount()));
                 cart_total.setText(String.valueOf(bill.getTotal()));
@@ -103,12 +155,43 @@ public class Fragment_Checkout4 extends Fragment {
         c4_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"WILL OPEN PAYMENT SCREEN",Toast.LENGTH_LONG).show();
+
+                PaymentType paymentType = Fragment_Checkout3.paymentTypeList.get(paymentListIndex);
+                if(paymentType.getPayment_type_name().equalsIgnoreCase("online pay")){
+                    Log.d(TAG, "onClick: open cashless screen");
+                    Toast.makeText(getActivity(),"WILL OPEN PAYMENT SCREEN",Toast.LENGTH_SHORT).show();
+                }else{
+                    Log.d(TAG, "onClick: Confirm order on server");
+                    Log.d(TAG, "onClick: payment type : "+Fragment_Checkout3.paymentTypeList.get(paymentListIndex).toString());
+                    Log.d(TAG, "onClick: Bill "+bill.toString());
+
+                    try {
+                        JSONObject obj = getOrderJsonBody(paymentType.getPaymentTypeId(), bill);
+                        doOrder(obj);
+                        Log.d(TAG, "onClick: "+obj.toString());
+                    }catch(Exception e){
+                        Log.e(TAG, "onClick: ", e);
+                    }
+                }
             }
         });
 
 
 
+    }
+
+    private ProgressDialog getProgressBar() {
+        ProgressDialog pd = new ProgressDialog(getActivity());
+        // Set progress dialog style spinner
+        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Set the progress dialog title and message
+        pd.setMessage(Config.getContext().getResources().getString(R.string.loading));
+        // Set the progress dialog background color
+        //pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFD4D9D0")));
+        pd.setIndeterminate(false);
+        pd.setCancelable(false);
+        // Finally, show the progress dialog
+        return pd;
     }
 
     private void intioliseId(View view) {
@@ -132,5 +215,10 @@ public class Fragment_Checkout4 extends Fragment {
         c4_back = (Button) view.findViewById(R.id.c4_back);
         c4_checkbox = (CheckBox) view.findViewById(R.id.c4_checkbox);
 
+    }
+
+
+    private void doOrder(JSONObject jsonObject) {
+       
     }
 }

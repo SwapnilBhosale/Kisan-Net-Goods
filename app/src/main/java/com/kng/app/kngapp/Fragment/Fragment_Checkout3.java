@@ -57,8 +57,9 @@ public class Fragment_Checkout3 extends Fragment {
     private String user_coupon_code;
     public String couponDiscPercentage = "";
     ProgressDialog pd;
-    private List<PaymentType> paymentTypeList = new ArrayList<PaymentType>();
+    public static List<PaymentType> paymentTypeList = new ArrayList<PaymentType>();
     private ListView payment_list;
+    private int paymentTypeSelectd;
     private RadioButton listRadioButton = null;
     private static boolean isCouponAdded = false;
     int listIndex = -1;
@@ -98,7 +99,6 @@ public class Fragment_Checkout3 extends Fragment {
             loadPaymentTypeData(adapter);
 
         payment_list.setAdapter(adapter);
-       // setListViewHeightBasedOnChildren(payment_list);
     }
 
     public static void setListViewHeightBasedOnChildren(ListView home_list) {
@@ -163,6 +163,7 @@ public class Fragment_Checkout3 extends Fragment {
                                     paymentTypeList.add(paymentType);
                                 }
                                 Log.d(TAG, "onResponse: " + paymentTypeList.toString());
+                                setListViewHeightBasedOnChildren(payment_list);
                                 adapter.notifyDataSetChanged();
                             } else {
                                 Toast.makeText(getActivity(), "No Payment Types available", Toast.LENGTH_SHORT).show();
@@ -188,6 +189,7 @@ public class Fragment_Checkout3 extends Fragment {
             });
 
             getPaymentTypeRequest.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT, Config.WEB_RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            paymentTypeList.removeAll(paymentTypeList);
             Volley.newRequestQueue(getActivity()).add(getPaymentTypeRequest);
             pd.show();
         } catch (Exception e) {
@@ -217,7 +219,11 @@ public class Fragment_Checkout3 extends Fragment {
 
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.add(R.id.checkout_frame, new Fragment_Checkout4()).addToBackStack(TAG);
+                Bundle bundle = new Bundle();
+                bundle.putInt("payment_type_id",paymentTypeSelectd);
+                Fragment_Checkout4 fc4 = new Fragment_Checkout4();
+                fc4.setArguments(bundle);
+                ft.add(R.id.checkout_frame, fc4).addToBackStack(TAG);
                 ft.hide(Fragment_Checkout3.this);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();
@@ -352,6 +358,8 @@ public class Fragment_Checkout3 extends Fragment {
                     @Override
                     public void onClick(View view) {
                         Log.d(TAG, "onClick: radio button clicked");
+                        paymentTypeSelectd = position;
+                        Log.d(TAG, "onClick: "+paymentTypeList.get(position).toString());
                         View vMain = ((View) view.getParent());
                         if (listRadioButton != null) listRadioButton.setChecked(false);
                         // assign to the variable the new one
@@ -363,6 +371,7 @@ public class Fragment_Checkout3 extends Fragment {
                             listRadioButton = null;
                             listIndex = -1;
                         }
+
                     }
                 });
 
