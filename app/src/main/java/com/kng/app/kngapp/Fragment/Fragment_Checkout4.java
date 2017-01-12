@@ -42,6 +42,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 
 public class Fragment_Checkout4 extends Fragment {
 
@@ -57,19 +59,29 @@ public class Fragment_Checkout4 extends Fragment {
 
     public JSONObject getOrderJsonBody(String payment_type_id,Bill bill) throws JSONException {
         JSONObject jsonObject;
-        jsonObject = new JSONObject("{\"customer_id\" : " + new PrefManager(Config.getContext()).getCustomerId() + ",\"payment_type_id\" : \"" + payment_type_id + "\",\"bill\" : \"" + bill.getTotal() + "\",\"discount\" : \"" + bill.getDiscount() + "\",\"total_bill\" : \"" + bill.getDiscountedBill() + "\"}");
+        HashMap<String,String> map = new HashMap<>();
+        PrefManager pref = new PrefManager(Config.getContext());
+        map.put("customer_id",pref.getCustomerId());
+        map.put("payment_type_id",payment_type_id);
+        map.put("bill", String.valueOf(bill.getTotal()));
+        map.put("discount", String.valueOf(bill.getDiscount()));
+        map.put("total_bill", String.valueOf(bill.getDiscountedBill()));
         if(Fragment_Checkout2.customer  == null) {
-            jsonObject.put("is_same_delivery_address","Y");
+            map.put("is_same_delivery_address","Y");
         }else{
-            jsonObject.put("delivery_address",getDeliveryAddress(Fragment_Checkout2.customer));
+            Customer cust = Fragment_Checkout2.customer;
+            map.put("delivery_name",cust.getName());
+            map.put("delivery_village",cust.getVillage());
+            map.put("delivery_mobile_no",cust.getMobileNo());
+            map.put("delivery_address",cust.getAddress());
+            map.put("delivery_city",cust.getCity());
+            map.put("delivery_state",cust.getState());
+            map.put("delivery_postal_code",cust.getPincode());
         }
 
+        jsonObject = new JSONObject(map);
+        Log.d(TAG, "getOrderJsonBody: "+jsonObject.toString());
         return jsonObject;
-    }
-
-    public String getDeliveryAddress(Customer customer){
-        return "{delivery_name : "+customer.getName()+",delivery_village : "+customer.getVillage()+",delivery_mobile_no : "
-                +customer.getMobileNo()+",delivery_address : "+customer.getAddress()+", delivery_city : "+customer.getCity()+", delivery_state : "+customer.getState()+" , delivery_postal_code : "+customer.getPincode()+"}";
     }
 
     @Override
@@ -102,12 +114,12 @@ public class Fragment_Checkout4 extends Fragment {
 
                 PrefManager pref = new PrefManager(Config.getContext());
 
-                adress_billing_text.setText(pref.getMobile()+",\n"+pref.getName()+",\n"+pref.getAddress()+", "+pref.getVillage()+", "+pref.getCity()+",\n"+pref.getState()+","+pref.getPincode());
+                adress_billing_text.setText(pref.getMobile()+",\n"+pref.getName()+",\n"+pref.getAddress()+", "+pref.getVillage()+", "+pref.getCity()+",\n"+pref.getState()+", "+pref.getPincode());
 
                 if(Fragment_Checkout2.customer != null){
                     Customer cust = Fragment_Checkout2.customer;
 
-                    shipping_Address_text.setText(cust.getMobileNo()+"\n"+cust.getName()+"\n"+cust.getAddress()+"\n"+cust.getVillage()+"\n"+cust.getCity()+"\n"+cust.getState()+"\n"+cust.getPincode());
+                    shipping_Address_text.setText(cust.getMobileNo()+",\n"+cust.getName()+",\n"+cust.getAddress()+", "+cust.getVillage()+", "+cust.getCity()+",\n"+cust.getState()+", "+cust.getPincode());
                  /*   c4_ship_address.setText(cust.getAddress());
                     c4_ship_name.setText(cust.getName());
                     c4_ship_village.setText(cust.getVillage());
@@ -116,7 +128,7 @@ public class Fragment_Checkout4 extends Fragment {
                     c4_ship_mobile.setText(cust.getMobileNo());
                     c4_ship_pincode.setText(cust.getPincode());*/
                 }else{
-                        shipping_Address_text.setText(pref.getMobile()+"\n"+pref.getName()+"\n"+pref.getAddress()+"\n"+pref.getVillage()+"\n"+pref.getCity()+"\n"+pref.getState()+"\n"+pref.getPincode());
+                        shipping_Address_text.setText(pref.getMobile()+",\n"+pref.getName()+",\n"+pref.getAddress()+", "+pref.getVillage()+", "+pref.getCity()+",\n"+pref.getState()+", "+pref.getPincode());
 
                     /*c4_ship_address.setText(pref.getAddress());
                     c4_ship_name.setText(pref.getName());
@@ -230,15 +242,6 @@ public class Fragment_Checkout4 extends Fragment {
 
         tearms_condn = (TextView) view.findViewById(R.id.tearms_condn);
 
-
-        /*c4_ship_address = (TextView) view.findViewById(R.id.c4_ship_address);
-        c4_ship_village = (TextView) view.findViewById(R.id.c4_ship_address);
-        c4_ship_name = (TextView) view.findViewById(R.id.c4_ship_name);
-        c4_ship_city = (TextView) view.findViewById(R.id.c4_ship_city);
-        c4_ship_state = (TextView) view.findViewById(R.id.c4_ship_state);
-        c4_ship_pincode = (TextView) view.findViewById(R.id.c4_ship_pincode);
-        c4_ship_mobile = (TextView) view.findViewById(R.id.c4_ship_mobile);*/
-
         cart_discount = (TextView) view.findViewById(R.id.cart_discount);
         cart_discounted_total = (TextView) view.findViewById(R.id.cart_discounted_total);
         cart_shipping_charge = (TextView) view.findViewById(R.id.cart_shipping_charge);
@@ -251,6 +254,48 @@ public class Fragment_Checkout4 extends Fragment {
 
 
     private void doOrder(JSONObject jsonObject) {
-       
+        JsonObjectRequest doOrderRequest = new JsonObjectRequest(Request.Method.POST, Config.CHECKOUT_URL, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                paraseJson(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d(TAG, "Error: " + volleyError.getMessage());
+
+                // hide the progress dialog
+                pd.dismiss();
+
+                if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
+                    Toast.makeText(getActivity(), R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.error_general_error, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        doOrderRequest.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT, Config.WEB_RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        Volley.newRequestQueue(getContext()).add(doOrderRequest);
+        pd.show();
+    }
+
+    private void paraseJson(JSONObject response) {
+        pd.dismiss();
+        try{
+
+            boolean isSuccess = response.getBoolean("status");
+            Log.d("duvvrddd", "isSuccess: " + isSuccess);
+            if (isSuccess) {
+                Toast.makeText(getContext(),getString(R.string.order_placed_successful),Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+                return;
+            }
+            Toast.makeText(getContext(),getString(R.string.error_general_error),Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
+                Log.e(TAG, "paraseJson: ",e );
+        }finally{
+            pd.dismiss();
+        }
+
+
     }
 }

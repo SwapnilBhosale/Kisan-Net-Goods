@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         public void onClick(DialogInterface dialog, int id) {
                             if(Integer.valueOf(android.os.Build.VERSION.SDK) >= 21)
                                 finishAndRemoveTask();
-                            //add else 
+                            //add else
                         }
                     });
             builder1.setNegativeButton(

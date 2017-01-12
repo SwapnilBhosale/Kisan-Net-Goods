@@ -81,4 +81,5 @@
     <string name="rate_us_on_play_store">आम्हाला प्ले स्टोअर वर रेटिंग द्या </string>
     <string name="shopping_cart_hint">खरेदी यादी</string>
     <string name="remove_cart_success">खरेदी यादीमधून प्रॉडक्ट काढून टाकले </string>
+    <string name="order_placed_successful">ऑर्डर यशस्वीरित्या दिली गेली आहे</string>
 </resources>

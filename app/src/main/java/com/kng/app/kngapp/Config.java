@@ -63,6 +63,7 @@ public class Config extends Application {
     public static final String APPLY_COUPON_URL = Config.BASE_URL+"/users/applyCoupon?coupon_code=";
     public static final String FEEDBACK_URL = Config.BASE_URL+"/users/feedback";
     public static final String ORDER_URL = Config.BASE_URL+"/order";
+    public static final String CHECKOUT_URL = Config.BASE_URL+"/order/checkout";
     public static final String PLAY_STORE_FEED_URL = "https://play.google.com/store/apps/details?id=";
     public static final String TERMS_AND_CONDITION_URL = BASE_URL+"/"+"terms_condition";
 

@@ -78,4 +78,5 @@
     <string name="rate_us_on_play_store">Rate us on Play Store.</string>
     <string name="shopping_cart_hint">Shopping cart</string>
     <string name="remove_cart_success">Removed from cart successfully.</string>
+    <string name="order_placed_successful">Order placed successfully.</string>
 </resources>

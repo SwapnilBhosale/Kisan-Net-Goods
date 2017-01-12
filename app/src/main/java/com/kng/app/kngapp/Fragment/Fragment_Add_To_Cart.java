@@ -69,6 +69,12 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     //TextView close_tab;
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //loadData();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
