@@ -3,10 +3,11 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:padding="10dp"
+    android:background="#ffffff"
     android:layout_height="wrap_content">
 
     <RadioButton
-        android:id="@+id/listRadioButton "
+        android:id="@+id/listRadioButton"
         android:layout_width="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"

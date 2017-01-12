@@ -8,6 +8,7 @@
         android:id="@+id/order_list"
         android:layout_width="match_parent"
         android:dividerHeight="7dp"
+        android:divider="#e5e5e5"
         android:layout_height="wrap_content"/>
 
 </FrameLayout>

@@ -7,6 +7,8 @@
     android:id="@+id/language_list"
     android:layout_weight="1"
     android:layout_width="match_parent"
+    android:dividerHeight="7dp"
+    android:divider="#e5e5e5"
     android:layout_height="wrap_content"></ListView>
 
     <Button

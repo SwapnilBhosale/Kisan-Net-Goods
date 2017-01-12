@@ -2,36 +2,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ffffff"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="in.metrogarageadmin.getfresh.Fragment.Fragment_Contact_Us">
+
+    tools:context="com.kng.app.kngapp.Fragment.Fragment_Contact_us">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:orientation="vertical">
 
-            <com.android.volley.toolbox.NetworkImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="150dp"
                 android:layout_height="120dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/login_image2"
+                android:src="@drawable/kisan"
                 android:layout_gravity="center_horizontal"
-                android:id="@+id/imageView2" />
+                android:id="@+id/imageView2"
+                app:civ_border_color="@android:color/transparent"
+                app:civ_border_width="2dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="30dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

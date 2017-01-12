@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#e5e5e5"
     tools:context=".Fragment.Open_Item">
 <LinearLayout
     android:layout_width="match_parent"
@@ -123,13 +124,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:background="#ffffff"
                     android:orientation="vertical">
 
                     <ListView
                         android:id="@+id/feture_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:divider="#fbfbfb"
+                        android:divider="#e5e5e5"
                         android:dividerHeight="7dp" />
                 </LinearLayout>
             </LinearLayout>
