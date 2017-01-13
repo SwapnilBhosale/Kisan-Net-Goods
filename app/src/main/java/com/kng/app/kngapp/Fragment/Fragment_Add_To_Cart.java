@@ -72,7 +72,9 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //loadData();
+        Log.d(TAG, "onResume:  called fron on resume");
+        //if(!initialized)
+            loadData();
     }
 
     @Nullable
@@ -151,7 +153,8 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
 
     private void getList(View view) {
         adapter = new CustomEventAdapter(getActivity(), cartList);
-        loadData();
+        if (!initialized)
+            loadData();
         list.setAdapter(adapter);
 
         //setListViewHeightBasedOnChildren(List);
@@ -187,6 +190,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     private void loadData() {
         PrefManager pref = new PrefManager(Config.getContext());
         String url = Config.CART_URL+"lang="+pref.getAppLangId()+"&customer_id="+pref.getCustomerId();
+        initialized = true;
         Log.d(TAG, "loadCartData URL: "+url);
         try {
             final JsonObjectRequest category_request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -225,7 +229,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                                 }else{
                                     if(response.getJSONObject("error").getInt("errorCode") == 10){
 
-                                        Snackbar.make(getView(),R.string.error_no_item_in_cart,Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                                        Snackbar.make(view,R.string.error_no_item_in_cart,Snackbar.LENGTH_LONG).setAction("Action",null).show();
                                         checkout_btn.setEnabled(false);
                                         //reloadFragment();
                                         list.setEmptyView(view.findViewById(R.id.emptyView));

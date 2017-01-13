@@ -30,6 +30,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.kng.app.kngapp.Activitis.MainActivity;
 import com.kng.app.kngapp.Bill;
 import com.kng.app.kngapp.Config;
 import com.kng.app.kngapp.Customer;
@@ -280,12 +281,13 @@ public class Fragment_Checkout4 extends Fragment {
 
     private void paraseJson(JSONObject response) {
         pd.dismiss();
+        Log.d(TAG, "paraseJson: "+response.toString());
         try{
-
             boolean isSuccess = response.getBoolean("status");
-            Log.d("duvvrddd", "isSuccess: " + isSuccess);
+            Log.d(TAG, "isSuccess: " + isSuccess);
             if (isSuccess) {
                 Toast.makeText(getContext(),getString(R.string.order_placed_successful),Toast.LENGTH_SHORT).show();
+                Fragment_Add_To_Cart.cartList.removeAll(Fragment_Add_To_Cart.cartList);
                 getActivity().finish();
                 return;
             }
