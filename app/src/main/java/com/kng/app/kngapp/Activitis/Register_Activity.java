@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +52,8 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
     private EditText state;
     private EditText postalCode;
     private Context mContext;
-    LinearLayout main_layout, pop_up_layout;
+    LinearLayout  pop_up_layout;
+    RelativeLayout main_layout;
 
     private static String TAG = Register_Activity.class.getSimpleName();
     private PopupWindow mPopupWindow = null;
@@ -116,7 +118,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
         city = (EditText) findViewById(R.id.city);
         state = (EditText) findViewById(R.id.state);
         postalCode = (EditText) findViewById(R.id.postal_code);
-        main_layout = (LinearLayout) findViewById(R.id.activity_register_);
+        main_layout = (RelativeLayout) findViewById(R.id.activity_register_);
     }
 
     public boolean validateData(){
