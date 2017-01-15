@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -208,6 +209,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                                 Log.d(TAG, "opening OTP from register activiy");
                                 PrefManager pref = new PrefManager(getApplicationContext());
 
+                                pref.setIsWaitingForSMS(true);
                                 //JSONArray jsonArray = response.getJSON("data");
                                 JSONObject data = response.getJSONObject("data");
                                 pref.setCustomerId(data.getString("customer_id"));
@@ -235,6 +237,8 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                                 cancel_button = (ImageView) dialogView.findViewById(R.id.cancel_button);
                                 popup_button = (Button) dialogView.findViewById(R.id.otp_btn);
                                 otp_text_box = (EditText) dialogView.findViewById(R.id.otp_text_box);
+                                TextView text = (TextView) dialogView.findViewById(R.id.otp_text_with_mobile);
+                                text.setText(getString(R.string.verify_mobile_hint)+" "+mobileNo);
 
 
 
@@ -324,6 +328,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                             //put in shared preference here
                             PrefManager pref = new PrefManager(Config.getContext());
 
+                            pref.setIsWaitingForSMS(false);
                             pref.setIsLoggedIn(true);
                             //Stop spinner and open home activitys
                             statMainActivity();

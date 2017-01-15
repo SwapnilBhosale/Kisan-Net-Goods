@@ -44,7 +44,7 @@
     <string name="select_quantity_hint">खरेदी संख्या निवडा</string>
     <string name="manufacturer_company_hint">उत्पादन निर्माता कंपनी : </string>
     <string name="select_lang">निवडा</string>
-    <string name="verify_mobile_hint">कृपया थांबा, आम्हाला आपल्या मोबाइल नंबर सत्यापित आहेत! \n मोबाईल क्रमांक:</string>
+    <string name="verify_mobile_hint">कृपया थांबा, आम्हाला आपल्या मोबाइल नंबर तपासीत आहोत ! \n मोबाईल क्रमांक :</string>
     <string name="enter_otp_hint"> स्वत: OTP टाका</string>
     <string name="enter_otp"> OTP टाका</string>
     <string name="go_ahead">पुढे जा</string>

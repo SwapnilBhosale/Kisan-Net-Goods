@@ -42,7 +42,7 @@
     <string name="select_quantity_hint">SELECT QUANTITY</string>
     <string name="manufacturer_company_hint">Manufacturer : </string>
     <string name="select_lang">Select</string>
-    <string name="verify_mobile_hint">Please wait, We are verifying your mobile number ! \n Mobile number : </string>
+    <string name="verify_mobile_hint">Please wait, We are verifying your mobile number ! \n Mobile number :</string>
     <string name="enter_otp_hint">Enter OTP </string>
     <string name="enter_otp"> Enter OTP</string>
     <string name="go_ahead">Continue</string>

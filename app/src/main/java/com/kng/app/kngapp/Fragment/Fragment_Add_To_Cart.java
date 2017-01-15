@@ -73,7 +73,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume:  called fron on resume");
-        //if(!initialized)
+        if(!initialized)
             loadData();
     }
 
@@ -138,6 +138,8 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                     @Override
                     public void onClick(View view) {
 
+
+                        initialized = false;
                         Intent i = new Intent(getActivity(), Checkout_Activity.class);
                         startActivity(i);
                     }

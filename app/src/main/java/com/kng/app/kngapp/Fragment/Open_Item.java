@@ -478,24 +478,25 @@ public class Open_Item extends Fragment {
 
     }
 
-    public static void setListViewHeightBasedOnChildren(ListView home_list) {
-        ListAdapter listAdapter = home_list.getAdapter();
-        if (listAdapter == null)
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
             return;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(home_list.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, home_list);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
         }
-        ViewGroup.LayoutParams params = home_list.getLayoutParams();
-        params.height = totalHeight;// + (home_list.getDividerHeight() * (listAdapter.getCount() - 1));
-        home_list.setLayoutParams(params);
+
+        int listWidth = listView.getMeasuredWidth();
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(View.MeasureSpec.makeMeasureSpec(listWidth, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()-1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 
 }

@@ -41,6 +41,7 @@ public class PrefManager {
     private static final String KEY_CUSTOMER_ID = "customerId";
     private static final String KEY_SESSION_KEY = "sessionKey";
     private static final String KEY_APP_LANG = "appLang";
+    private static final String KEY_SMS_WAITING = "isWaitingForSMS";
 
     private static final String KEY_APP_LANG_ID = "appLangId";
 
@@ -74,6 +75,15 @@ public class PrefManager {
 
     public void setSessionKey(String sessionKey) {
         editor.putString(KEY_SESSION_KEY, sessionKey);
+        editor.commit();
+    }
+
+    public boolean getIsWaitingForSMS() {
+        return pref.getBoolean(KEY_SMS_WAITING, false);
+    }
+
+    public void setIsWaitingForSMS(boolean val) {
+        editor.putBoolean(KEY_SMS_WAITING, val);
         editor.commit();
     }
 

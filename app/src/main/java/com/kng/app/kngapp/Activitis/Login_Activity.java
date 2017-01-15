@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +66,8 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
     private PopupWindow mPopupWindow;
     private Button login_btn;
     private TextView tv_no_register;
-    LinearLayout main_layout, pop_up_layout;
+    LinearLayout pop_up_layout;
+    RelativeLayout main_layout;
     LayoutInflater inflater;
     private EditText mobileNoView;
     private String TAG = "LoginActivity";
@@ -323,6 +325,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
 
                                 Config.OTP_SCREEN = "login";
                                 PrefManager pref = new PrefManager(getApplicationContext());
+                                pref.setIsWaitingForSMS(true);
 
                                 JSONArray jsonArray = response.getJSONArray("data");
                                 JSONObject data = jsonArray.getJSONObject(0);
@@ -387,6 +390,8 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                                     cancel_button = (ImageView) dialogView.findViewById(R.id.cancel_button);
                                     popup_button = (Button) dialogView.findViewById(R.id.otp_btn);
                                     otp_text_box = (EditText) dialogView.findViewById(R.id.otp_text_box);
+                                    TextView text = (TextView) dialogView.findViewById(R.id.otp_text_with_mobile);
+                                    text.setText(getString(R.string.verify_mobile_hint)+""+mobileNo);
 
 
 
@@ -499,6 +504,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                             //put in shared preference here
                             PrefManager pref = new PrefManager(Config.getContext());
 
+                            pref.setIsWaitingForSMS(false);
                             pref.setIsLoggedIn(true);
                             //Stop spinner and open home activitys
                             statMainActivity();
@@ -543,7 +549,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
 
         login_btn = (Button) findViewById(R.id.login_btn);
         tv_no_register = (TextView) findViewById(R.id.tv_no_register);
-        main_layout = (LinearLayout) findViewById(R.id.activity_main);
+        main_layout = (RelativeLayout) findViewById(R.id.activity_main);
         mobileNoView = (EditText) findViewById(R.id.editText);
         //pop_up_layout = (LinearLayout) findViewById(R.id.pop_up_layout);
     }

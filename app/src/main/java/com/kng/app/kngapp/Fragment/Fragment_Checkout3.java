@@ -63,7 +63,7 @@ public class Fragment_Checkout3 extends Fragment {
     private RadioButton listRadioButton = null;
     private static boolean isCouponAdded = false;
     int listIndex = -1;
-
+    public PaymentListAdapter adapter;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,14 +94,11 @@ public class Fragment_Checkout3 extends Fragment {
 
     private void getLst() {
 
-        PaymentListAdapter adapter = new PaymentListAdapter(getActivity(), paymentTypeList);
-       // if (paymentTypeList.size() == 0)
-            loadPaymentTypeData(adapter);
+            loadPaymentTypeData();
 
-        payment_list.setAdapter(adapter);
     }
 
-    public static void setListViewHeightBasedOnChildren(ListView home_list) {
+    /*public static void setListViewHeightBasedOnChildren(ListView home_list) {
         ListAdapter listAdapter = home_list.getAdapter();
         if (listAdapter == null)
             return;
@@ -113,16 +110,38 @@ public class Fragment_Checkout3 extends Fragment {
             view = listAdapter.getView(i, view, home_list);
             //if (i == 0)
 
-                View.MeasureSpec.makeMeasureSpec(home_list.getWidth(), desiredHeight);
-                //view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
+                //View.MeasureSpec.makeMeasureSpec(home_list.getWidth(), desiredHeight);
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
 
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            view.measure(desiredWidth, desiredHeight);
             totalHeight += view.getMeasuredHeight();
 
         }
         ViewGroup.LayoutParams params = home_list.getLayoutParams();
         params.height = totalHeight + (home_list.getDividerHeight() * (listAdapter.getCount() - 1));
         home_list.setLayoutParams(params);
+    }*/
+
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int listWidth = listView.getMeasuredWidth();
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(View.MeasureSpec.makeMeasureSpec(listWidth, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()-1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 
     private ProgressDialog getProgressBar() {
@@ -147,7 +166,7 @@ public class Fragment_Checkout3 extends Fragment {
         }
     }
 
-    public void loadPaymentTypeData(final PaymentListAdapter adapter) {
+    public void loadPaymentTypeData() {
         try {
             String url = Config.PAYMENT_TYPE_URL + "" + new PrefManager(Config.getContext()).getAppLangId();
             Log.d(TAG, "loadPaymentTypeData URL : " + url);
@@ -174,8 +193,10 @@ public class Fragment_Checkout3 extends Fragment {
                                     paymentTypeList.add(paymentType);
                                 }
                                 Log.d(TAG, "onResponse: " + paymentTypeList.toString());
+                                adapter = new PaymentListAdapter(getActivity(), paymentTypeList);
+                                payment_list.setAdapter(adapter);
                                 setListViewHeightBasedOnChildren(payment_list);
-                                adapter.notifyDataSetChanged();
+
                             } else {
                                 Toast.makeText(getActivity(), "No Payment Types available", Toast.LENGTH_SHORT).show();
                             }

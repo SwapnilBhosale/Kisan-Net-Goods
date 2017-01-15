@@ -52,7 +52,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     Log.d(TAG, "Received SMS: " + message + ", Sender: " + senderAddress);
 
                     // if the SMS is not from our gateway, ignore the message
-                    if (!senderAddress.toLowerCase().contains(Config.SMS_ORIGIN.toLowerCase())) {
+                    if (!senderAddress.toLowerCase().contains(Config.SMS_ORIGIN.toLowerCase()) && !(new PrefManager(Config.getContext()).getIsWaitingForSMS())) {
                         Log.d(TAG, "onReceive: ");
                         return;
                     }
@@ -86,9 +86,10 @@ public class SmsReceiver extends BroadcastReceiver {
                     final boolean isSuccess = response.getBoolean("status");
                     if(isSuccess){
                         //put in shared preference here
-                        //PrefManager pref = new PrefManager(context);
+                        PrefManager pref = new PrefManager(context);
 
-                        new PrefManager(Config.getContext()).setIsLoggedIn(true);
+                        pref.setIsLoggedIn(true);
+                        pref.setIsWaitingForSMS(false);
                         //Stop spinner and open home activitys
                         statMainActivity();
                     }
