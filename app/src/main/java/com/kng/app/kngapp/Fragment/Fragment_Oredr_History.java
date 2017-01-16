@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ServiceCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.kng.app.kngapp.Config;
 import com.kng.app.kngapp.R;
 
 
@@ -28,6 +33,8 @@ public class Fragment_Oredr_History extends Fragment {
     String[] date={"22-05-2016","17/12/2016","22/12/2016"};
     String[] price={"1025","2035","5010"};
     private ListView order_list;
+    String TAG="";
+
 
     @Nullable
     @Override
@@ -53,64 +60,39 @@ public class Fragment_Oredr_History extends Fragment {
 
 
     private void getList() {
-        CustomEventAdapter order_list_adapter = new CustomEventAdapter(getActivity(),order_id, total_item,date,price);
+        CustomEventAdapter order_list_adapter = new CustomEventAdapter(getActivity(), order_id, total_item, date, price);
         order_list.setAdapter(order_list_adapter);
         try {
-        order_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                String ord_id = ((TextView) view.findViewById(R.id.order_id)).getText().toString();
-                String ord_item = ((TextView) view.findViewById(R.id.total_item)).getText().toString();
-                String date = ((TextView) view.findViewById(R.id.date)).getText().toString();
-                String price = ((TextView) view.findViewById(R.id.price)).getText().toString();
+                order_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
 
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                        String ord_id = ((TextView) view.findViewById(R.id.order_id)).getText().toString();
+                        String date = ((TextView) view.findViewById(R.id.date)).getText().toString();
 
-                // ...Irrelevant code for customizing the buttons and title
-                dialogBuilder.setTitle("Order History");
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.order_list_pop_up, null);
-                dialogBuilder.setView(dialogView);
+                        Log.d(TAG, "onItemClick: "+ord_id);
+                        Log.d(TAG, "onItemClick: "+date);
 
-                TextView order_id_pop = (TextView) dialogView.findViewById(R.id.order_id_pop);
-                TextView ord_date_pop = (TextView) dialogView.findViewById(R.id.ord_date_pop);
-                TextView ord_price_pop = (TextView) dialogView.findViewById(R.id.ord_price_pop);
-                TextView ord_item_pop = (TextView) dialogView.findViewById(R.id.ord_item_pop);
-                Button popup_button = (Button) dialogView.findViewById(R.id.popup_button);
-                try {
-                    order_id_pop.setText(ord_id);
-                    ord_date_pop.setText(date);
-                    ord_price_pop.setText(price);
-                    ord_item_pop.setText(ord_item);
-                } catch (Exception e) {
-                    e.getMessage();
-                }
-                final AlertDialog alertDialog = dialogBuilder.create();
-                alertDialog.setCanceledOnTouchOutside(false);
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(alertDialog.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                alertDialog.show();
-                try {
-                    popup_button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alertDialog.dismiss();
-                        }
-                    });
 
-                }catch (Exception e){
-                    e.getMessage();
-                }
-            }
-        }); }catch (Exception e){
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("ord_id", String.valueOf(ord_id));
+                        bundle.putString("ord_date", String.valueOf(date));
+                        Order_History_Detail fg=  new Order_History_Detail();
+                        fg.setArguments(bundle);
+                        ft.replace(R.id.main_activity_fl, fg).addToBackStack(Config.KEY_FRAGMENT_LIST);
+                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        ft.commit();
+                    }
+                });
+
+        } catch (Exception e) {
             e.getMessage();
+
         }
     }
-
     private void setListners() {
 
 
