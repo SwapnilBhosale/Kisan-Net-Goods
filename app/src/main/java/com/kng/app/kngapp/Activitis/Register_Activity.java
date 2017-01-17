@@ -240,7 +240,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                                 popup_button = (Button) dialogView.findViewById(R.id.otp_btn);
                                 otp_text_box = (EditText) dialogView.findViewById(R.id.otp_text_box);
                                 TextView text = (TextView) dialogView.findViewById(R.id.otp_text_with_mobile);
-                                text.setText(getString(R.string.verify_mobile_hint)+" "+mobileNo);
+                                text.setText(getString(R.string.verify_mobile_hint)+" "+mobileNo.getText().toString());
 
 
 
