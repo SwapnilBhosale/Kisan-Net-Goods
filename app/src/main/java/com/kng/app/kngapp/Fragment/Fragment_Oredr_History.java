@@ -110,21 +110,21 @@ public class Fragment_Oredr_History extends Fragment {
                                     for (int i = 0; i < arr.length(); i++) {
                                         JSONObject jsonObject = arr.getJSONObject(i);
                                         Order order = new Order();
-                                        order.setDiscount(BigDecimal.valueOf(jsonObject.getLong("discount")));
-                                        order.setBill(BigDecimal.valueOf(jsonObject.getLong("bill")));
-                                        order.setTotal_bill(BigDecimal.valueOf(jsonObject.getLong("total_bill")));
-                                        order.setVat_total(BigDecimal.valueOf(jsonObject.getLong("vat_total")));
+                                        order.setDiscount(BigDecimal.valueOf(jsonObject.getDouble("discount")));
+                                        order.setBill(BigDecimal.valueOf(jsonObject.getDouble("bill")));
+                                        order.setTotal_bill(BigDecimal.valueOf(jsonObject.getDouble("total_bill")));
+                                        order.setVat_total(BigDecimal.valueOf(jsonObject.getDouble("vat_total")));
 
                                         order.setPayment_type_name(jsonObject.getString("payment_type_name"));
                                         order.setStatus(jsonObject.getString("status"));
 
                                         String orderId = jsonObject.getString("orders_id");
-                                        orderId = orderId.length() < 4 ? String.format("%10s", orderId).replace(' ', '0') : orderId;
+                                        orderId = orderId.length() < 4 ? String.format("%6s", orderId).replace(' ', '0') : orderId;
                                         order.setOrders_id("KNG"+orderId);
 
                                         Calendar cal = Calendar.getInstance();
                                         cal.setTimeInMillis(jsonObject.getLong("date_purchased"));
-                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
+                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                                         String strDate = sdf.format(cal.getTime());
                                         Log.d(TAG, " Date : "+strDate);
 
@@ -136,7 +136,7 @@ public class Fragment_Oredr_History extends Fragment {
                                         for(int j=0;j<orderItemArr.length();j++){
                                             OrderItem item = new OrderItem();
                                             JSONObject obj = orderItemArr.getJSONObject(j);
-                                            item.setFinal_price(BigDecimal.valueOf(obj.getLong("final_price")));
+                                            item.setFinal_price(BigDecimal.valueOf(obj.getDouble("final_price")));
                                             item.setProductName(obj.getString("options_value"));
                                             item.setQuantity(obj.getString("product_quantity"));
                                             orderItemList.add(item);

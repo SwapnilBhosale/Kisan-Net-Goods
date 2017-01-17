@@ -161,6 +161,7 @@ public class Fragment_Checkout4 extends Fragment {
                 ft.replace(R.id.checkout_frame, new Fragment_Checkout3());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();*/
+                Fragment_Checkout3.setZeroDiscount();
                 getActivity().onBackPressed();
             }
         });
@@ -259,6 +260,7 @@ public class Fragment_Checkout4 extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 paraseJson(response);
+                Fragment_Checkout3.setBill(new Bill());
             }
         }, new Response.ErrorListener() {
             @Override

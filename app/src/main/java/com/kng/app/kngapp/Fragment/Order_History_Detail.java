@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kng.app.kngapp.Config;
 import com.kng.app.kngapp.Order;
@@ -26,9 +28,7 @@ public class Order_History_Detail extends Fragment {
     String TAG = "";
     ListView detail_order_list;
     TextView detail_order_id, detail_ord_date, detail_ord_total_item, detail_ord_price;
-    String[] name = {"ABC", "PQR", "XYZ"};
-    String[] quantity = {"12", "14", "52"};
-    String[] price = {"120", "500", "200"};
+    Button cancel_order,download_bill;
     private int orderId;
     private Order order;
 
@@ -74,6 +74,19 @@ public class Order_History_Detail extends Fragment {
 
     private void setListners() {
 
+        cancel_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"Will do cancel order ",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        download_bill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"Will download bill",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void intioliseId(View view) {
@@ -82,6 +95,8 @@ public class Order_History_Detail extends Fragment {
         detail_ord_date = (TextView) view.findViewById(R.id.detail_ord_date);
         detail_ord_price = (TextView) view.findViewById(R.id.detail_ord_price);
         detail_order_list = (ListView) view.findViewById(R.id.detail_order_list);
+        cancel_order = (Button) view.findViewById(R.id.cancel_order);
+        download_bill = (Button) view.findViewById(R.id.download_bill);
 
     }
 

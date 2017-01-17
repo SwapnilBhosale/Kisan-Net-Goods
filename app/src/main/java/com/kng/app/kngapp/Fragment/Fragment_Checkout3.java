@@ -166,6 +166,16 @@ public class Fragment_Checkout3 extends Fragment {
         }
     }
 
+    public static void setBill(Bill newBill){
+        bill = newBill;
+    }
+
+    public static void setZeroDiscount(){
+        bill.setTotal(bill.getTotal());
+        bill.setDiscountedBill(bill.getTotal());
+        bill.setDiscount(BigDecimal.ZERO);
+    }
+
     public void loadPaymentTypeData() {
         try {
             String url = Config.PAYMENT_TYPE_URL + "" + new PrefManager(Config.getContext()).getAppLangId();
@@ -241,6 +251,7 @@ public class Fragment_Checkout3 extends Fragment {
                 ft.replace(R.id.checkout_frame, new Fragment_Checkout2());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();*/
+
                 getActivity().onBackPressed();
             }
         });

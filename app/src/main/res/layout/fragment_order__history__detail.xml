@@ -177,7 +177,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/c4_back"
+                android:id="@+id/cancel_order"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -191,7 +191,7 @@
                 android:layout_height="50dp" />
 
             <Button
-                android:id="@+id/c4_checkout"
+                android:id="@+id/download_bill"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"

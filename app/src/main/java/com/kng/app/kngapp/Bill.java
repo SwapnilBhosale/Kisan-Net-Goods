@@ -13,6 +13,13 @@ public class Bill {
     private BigDecimal shippingCharge;
     private String discountPer;
 
+    public Bill() {
+        discountedBill = BigDecimal.ZERO;
+        total = BigDecimal.ZERO;
+        discount = BigDecimal.ZERO;
+        shippingCharge = BigDecimal.ZERO;
+
+    }
 
     public Bill(BigDecimal discountedBill, BigDecimal total, BigDecimal discount, BigDecimal shippingCharge) {
         this.discountedBill = discountedBill;
