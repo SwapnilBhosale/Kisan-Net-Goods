@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +47,7 @@ import java.util.Map;
 
 public class Order_History_Detail extends Fragment {
 
-    String TAG = "";
+    String TAG = Order_History_Detail.class.getSimpleName();
     ListView detail_order_list;
     TextView detail_order_id, detail_ord_date, detail_ord_total_item, detail_ord_price;
     Button cancel_order,download_bill;
@@ -127,21 +129,29 @@ public class Order_History_Detail extends Fragment {
 
     private void cancelOrder() {
         try {
+
             Map<String,String> map = new HashMap<>();
             map.put("customer_id",new PrefManager(Config.getContext()).getCustomerId());
+            map.put("orders_id",order.getOrders_id());
             String url = Config.CANCEL_ORDER_URL;
             Log.d(TAG, "loadPaymentTypeData URL : " + url);
+            Log.d(TAG, "cancelOrder: inside cancel order : "+url);
             JsonObjectRequest cancelOrderReq = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(map), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     pd.dismiss();
                     try {
+                        Log.d(TAG, "onResponse: "+response.toString());
                         final boolean isSuccess = response.getBoolean("status");
 
                         if (isSuccess) {
                             Toast.makeText(getActivity(),"Order canceled Successfully",Toast.LENGTH_SHORT).show();
-                            Fragment_Oredr_History.initialized = false;
-                            getActivity().onBackPressed();
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
+                            fm.popBackStack();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            ft.replace(R.id.main_activity_fl, new Fragment_Oredr_History()).addToBackStack(null);
+                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            ft.commit();
                         } else {
                             Toast.makeText(getActivity(), "Get Payment Type error", Toast.LENGTH_SHORT).show();
                         }

@@ -58,7 +58,7 @@ public class Fragment_Oredr_History extends Fragment {
 
 
     public static List<Order> orderList = new ArrayList<>();
-    public static boolean initialized = false;
+    public  boolean initialized = false;
 
     //String[] order_id={"8QW895EW45","QE8654QD54","QEW4579W65"};
     //String[] total_item={"3","8","2"};
@@ -184,12 +184,6 @@ public class Fragment_Oredr_History extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(!initialized)
-            loadData();
-    }
 
     @Nullable
     @Override
@@ -204,6 +198,7 @@ public class Fragment_Oredr_History extends Fragment {
                 intioliseId(view);
                 setListners();
                 setAdapter();
+                Log.d(TAG, "onCreateView: inititalized : "+initialized);
                 if(!initialized)
                     loadData();
                 else
