@@ -66,6 +66,7 @@ public class Config extends Application {
     public static final String CHECKOUT_URL = Config.BASE_URL+"/order/checkout";
     public static final String PLAY_STORE_FEED_URL = "https://play.google.com/store/apps/details?id=";
     public static final String TERMS_AND_CONDITION_URL = BASE_URL+"/"+"terms_condition";
+    public static final String CANCEL_ORDER_URL = BASE_URL+"/order/cancelOrder";
 
     public static final String TAG = Config.class.getSimpleName();
     public static String OTP_SCREEN="";

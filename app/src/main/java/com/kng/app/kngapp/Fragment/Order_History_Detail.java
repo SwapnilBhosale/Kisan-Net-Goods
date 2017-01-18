@@ -1,5 +1,6 @@
 package com.kng.app.kngapp.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Bundle;
@@ -17,11 +18,30 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.kng.app.kngapp.Config;
 import com.kng.app.kngapp.Order;
+import com.kng.app.kngapp.PaymentType;
 import com.kng.app.kngapp.R;
+import com.kng.app.kngapp.helper.PrefManager;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Order_History_Detail extends Fragment {
 
@@ -31,6 +51,7 @@ public class Order_History_Detail extends Fragment {
     Button cancel_order,download_bill;
     private int orderId;
     private Order order;
+    ProgressDialog pd;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +60,21 @@ public class Order_History_Detail extends Fragment {
             orderId = getArguments().getInt("orderNumber");
             order = Fragment_Oredr_History.orderList.get(orderId);
         }
+        pd = getProgressBar();
+    }
 
+    private ProgressDialog getProgressBar() {
+        ProgressDialog pd = new ProgressDialog(getActivity());
+        // Set progress dialog style spinner
+        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Set the progress dialog title and message
+        pd.setMessage(Config.getContext().getResources().getString(R.string.loading));
+        // Set the progress dialog background color
+        //pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFD4D9D0")));
+        pd.setIndeterminate(false);
+        pd.setCancelable(false);
+        // Finally, show the progress dialog
+        return pd;
     }
 
     @Nullable
@@ -78,6 +113,7 @@ public class Order_History_Detail extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(),"Will do cancel order ",Toast.LENGTH_SHORT).show();
+                cancelOrder();
             }
         });
 
@@ -87,6 +123,52 @@ public class Order_History_Detail extends Fragment {
                 Toast.makeText(getActivity(),"Will download bill",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void cancelOrder() {
+        try {
+            Map<String,String> map = new HashMap<>();
+            map.put("customer_id",new PrefManager(Config.getContext()).getCustomerId());
+            String url = Config.CANCEL_ORDER_URL;
+            Log.d(TAG, "loadPaymentTypeData URL : " + url);
+            JsonObjectRequest cancelOrderReq = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(map), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    pd.dismiss();
+                    try {
+                        final boolean isSuccess = response.getBoolean("status");
+
+                        if (isSuccess) {
+                            Toast.makeText(getActivity(),"Order canceled Successfully",Toast.LENGTH_SHORT).show();
+                            Fragment_Oredr_History.initialized = false;
+                            getActivity().onBackPressed();
+                        } else {
+                            Toast.makeText(getActivity(), "Get Payment Type error", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG, "loadPaymentTypeData onResponse: ", e);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Log.d(TAG, "Error: " + volleyError.getMessage());
+
+                    // hide the progress dialog
+                    pd.dismiss();
+                    if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
+                        Toast.makeText(getActivity(), R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.error_general_error, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            cancelOrderReq.setRetryPolicy(new DefaultRetryPolicy(Config.WEB_TIMEOUT, Config.WEB_RETRY_COUNT, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            Volley.newRequestQueue(getActivity()).add(cancelOrderReq);
+            pd.show();
+        } catch (Exception e) {
+            Log.e(TAG, "cancelOrderReq: ", e);
+        }
+
     }
 
     private void intioliseId(View view) {
