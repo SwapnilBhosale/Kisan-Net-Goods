@@ -60,6 +60,8 @@ public class Fragment_Oredr_History extends Fragment {
     public static List<Order> orderList = new ArrayList<>();
     public  boolean initialized = false;
 
+    public static boolean  isReload = false;
+
     //String[] order_id={"8QW895EW45","QE8654QD54","QEW4579W65"};
     //String[] total_item={"3","8","2"};
     //String[] date={"22-05-2016","17/12/2016","22/12/2016"};
@@ -82,6 +84,15 @@ public class Fragment_Oredr_History extends Fragment {
         pd.setCancelable(false);
         // Finally, show the progress dialog
         return pd;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(isReload) {
+            isReload = false;
+            loadData();
+        }
     }
 
     @Override
@@ -254,7 +265,7 @@ public class Fragment_Oredr_History extends Fragment {
     public  class CustomEventAdapter extends ArrayAdapter implements ListAdapter {
         private FragmentActivity activity;
         List<Order> list;
-        private  TextView order_id,total_item,date,price;
+        private  TextView order_id,total_item,date,price,order_status;
 
 
         public CustomEventAdapter(FragmentActivity activity, List<Order> list) {
@@ -318,6 +329,7 @@ public class Fragment_Oredr_History extends Fragment {
             total_item.setText(String.valueOf(order.getOrderItems().size()));
             date.setText(order.getDate_purchased());
             price.setText(Config.formatCurrency(order.getTotal_bill()));
+            order_status.setText(order.getStatus());
         }
 
         private void initializeIds(View view) {
@@ -326,7 +338,8 @@ public class Fragment_Oredr_History extends Fragment {
             total_item = (TextView) view.findViewById(R.id.total_item);
             date = (TextView) view.findViewById(R.id.date);
             price = (TextView) view.findViewById(R.id.price);
-
+            order_status = (TextView) view.findViewById(R.id.order_status);
         }
     }
+
 }

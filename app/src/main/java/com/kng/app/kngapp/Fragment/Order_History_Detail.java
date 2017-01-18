@@ -132,7 +132,9 @@ public class Order_History_Detail extends Fragment {
 
             Map<String,String> map = new HashMap<>();
             map.put("customer_id",new PrefManager(Config.getContext()).getCustomerId());
-            map.put("orders_id",order.getOrders_id());
+            String orderId = Integer.valueOf(order.getOrders_id().split("KNG")[1]).toString();
+            Log.d(TAG, "cancelOrder orderID : "+orderId);
+            map.put("orders_id",orderId);
             String url = Config.CANCEL_ORDER_URL;
             Log.d(TAG, "loadPaymentTypeData URL : " + url);
             Log.d(TAG, "cancelOrder: inside cancel order : "+url);
@@ -146,12 +148,8 @@ public class Order_History_Detail extends Fragment {
 
                         if (isSuccess) {
                             Toast.makeText(getActivity(),"Order canceled Successfully",Toast.LENGTH_SHORT).show();
-                            FragmentManager fm = getActivity().getSupportFragmentManager();
-                            fm.popBackStack();
-                            FragmentTransaction ft = fm.beginTransaction();
-                            ft.replace(R.id.main_activity_fl, new Fragment_Oredr_History()).addToBackStack(null);
-                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                            ft.commit();
+                            Fragment_Oredr_History.isReload = true;
+                            getActivity().onBackPressed();
                         } else {
                             Toast.makeText(getActivity(), "Get Payment Type error", Toast.LENGTH_SHORT).show();
                         }
