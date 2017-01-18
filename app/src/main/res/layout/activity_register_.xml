@@ -174,7 +174,7 @@
                         android:drawableLeft="@drawable/ic_post"
                         android:drawablePadding="15dp"
                         android:hint="@string/enter_postal_code"
-                        android:inputType="textCapWords"
+                        android:inputType="phone"
                         android:maxLines="1"
                         android:padding="5dp"
                         android:textColorHint="#ff9900" />
