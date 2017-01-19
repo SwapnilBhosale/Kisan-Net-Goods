@@ -61,7 +61,9 @@ public class SmsReceiver extends BroadcastReceiver {
                     String verificationCode = getVerificationCode(message);
 
                     Log.e(TAG, "OTP received: " + verificationCode);
-                    verifyOtp(verificationCode,context);
+                    PrefManager pref = new PrefManager(Config.getContext());
+                    if(pref.getIsWaitingForSMS())
+                        verifyOtp(verificationCode,context);
                 }
             }
         } catch (Exception e) {

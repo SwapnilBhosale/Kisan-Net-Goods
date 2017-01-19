@@ -130,8 +130,11 @@ public class Order_History_Detail extends Fragment {
     private void cancelOrder() {
         try {
 
+            PrefManager pref = new PrefManager(Config.getContext());
             Map<String,String> map = new HashMap<>();
-            map.put("customer_id",new PrefManager(Config.getContext()).getCustomerId());
+            map.put("customer_id",pref.getCustomerId());
+            map.put("name",pref.getName());
+            map.put("mobile_no",pref.getMobile());
             String orderId = Integer.valueOf(order.getOrders_id().split("KNG")[1]).toString();
             Log.d(TAG, "cancelOrder orderID : "+orderId);
             map.put("orders_id",orderId);

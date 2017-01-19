@@ -68,6 +68,9 @@ public class Fragment_Checkout4 extends Fragment {
         map.put("discount", String.valueOf(bill.getDiscount()));
         map.put("total_bill", String.valueOf(bill.getDiscountedBill()));
         map.put("mobile_no",pref.getMobile());
+        map.put("name",pref.getName());
+        map.put("lang",pref.getAppLanguage());
+
         if(Fragment_Checkout2.customer  == null) {
             map.put("is_same_delivery_address","Y");
         }else{
