@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -260,16 +261,27 @@ public class Fragment_Checkout3 extends Fragment {
             @Override
             public void onClick(View view) {
 
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                Bundle bundle = new Bundle();
-                bundle.putInt("payment_type_id",paymentTypeSelectd);
-                Fragment_Checkout4 fc4 = new Fragment_Checkout4();
-                fc4.setArguments(bundle);
-                ft.add(R.id.checkout_frame, fc4).addToBackStack(TAG);
-                ft.hide(Fragment_Checkout3.this);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
+                View convertView;
+                LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = li.inflate(R.layout.payment_list_item, null);
+                listRadioButton = (RadioButton) convertView.findViewById(R.id.listRadioButton);
+                if(listRadioButton.isChecked()){
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("payment_type_id", paymentTypeSelectd);
+                    Fragment_Checkout4 fc4 = new Fragment_Checkout4();
+                    fc4.setArguments(bundle);
+                    ft.add(R.id.checkout_frame, fc4).addToBackStack(TAG);
+                    ft.hide(Fragment_Checkout3.this);
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    ft.commit();
+
+                }
+                else {
+                    Snackbar.make(view,"Please select any of the payment method",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                    listRadioButton.requestFocus();
+                }
             }
         });
 
@@ -354,7 +366,7 @@ public class Fragment_Checkout3 extends Fragment {
         coupoun_code_text = (EditText) view.findViewById(R.id.coupoun_code_text);
         coupon_submit_btn = (Button) view.findViewById(R.id.coupon_submit_btn);
         payment_list = (ListView) view.findViewById(R.id.payment_list);
-        listRadioButton = (RadioButton) view.findViewById(R.id.listRadioButton);
+        //listRadioButton = (RadioButton) view.findViewById(R.id.listRadioButton);
 
     }
 
@@ -387,14 +399,14 @@ public class Fragment_Checkout3 extends Fragment {
         }
 
         @Override
-        public View getView(final int position, View view, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             try {
-                if (view == null) {
+                if (convertView == null) {
                     LayoutInflater li = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-                    view = li.inflate(R.layout.payment_list_item, null);
+                    convertView = li.inflate(R.layout.payment_list_item, null);
                 }
-                initializeIds(view);
+                initializeIds(convertView);
 
                 setItems(paymentTypeList.get(position));
                 listRadioButton.setOnClickListener(new View.OnClickListener() {
@@ -421,7 +433,7 @@ public class Fragment_Checkout3 extends Fragment {
             } catch (Exception e) {
                 Log.e(TAG, "getView: ", e);
             }
-            return view;
+            return convertView;
         }
 
         private void setItems(PaymentType paymenttype) {
@@ -432,10 +444,10 @@ public class Fragment_Checkout3 extends Fragment {
         }
 
 
-        private void initializeIds(View view) {
-            listRadioButton = (RadioButton) view.findViewById(R.id.listRadioButton);
-            pay_method_name = (TextView) view.findViewById(R.id.pay_method_name);
-            pay_method_detail = (TextView) view.findViewById(R.id.pay_method_detail);
+        private void initializeIds(View convertView) {
+            listRadioButton = (RadioButton) convertView.findViewById(R.id.listRadioButton);
+            pay_method_name = (TextView) convertView.findViewById(R.id.pay_method_name);
+            pay_method_detail = (TextView) convertView.findViewById(R.id.pay_method_detail);
 
 
         }

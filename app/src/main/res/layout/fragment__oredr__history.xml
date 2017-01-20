@@ -11,4 +11,63 @@
         android:divider="#e5e5e5"
         android:layout_height="wrap_content"/>
 
+    <LinearLayout
+        android:id="@+id/ord_history_emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f0f0f0"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text=""
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/empty_image"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:src="@drawable/empty_cart"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/empt_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="You dont have any order"
+            android:textColor="@color/colorAccent"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/empt_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="Please go to shopping"
+            android:textColor="@color/colorAccent"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/ord_history_go_to_shopping"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_background"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:onClick="openFragmentList"
+            android:text="Go to shopping"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
 </FrameLayout>

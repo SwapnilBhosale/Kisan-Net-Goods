@@ -67,9 +67,12 @@ public class Fragment_Oredr_History extends Fragment {
     //String[] date={"22-05-2016","17/12/2016","22/12/2016"};
     //String[] price={"1025","2035","5010"};
     private ListView order_list;
+    private Button ord_history_go_to_shopping;
     String TAG = Fragment_Oredr_History.class.getSimpleName();
     ProgressDialog pd;
     CustomEventAdapter adapter;
+    private TextView order_status;
+    View view;
 
 
     private ProgressDialog getProgressBar() {
@@ -164,6 +167,7 @@ public class Fragment_Oredr_History extends Fragment {
                                         /*home_grid.setEmptyView(view.findViewById(R.id.emptyView1));
                                         adapter.notifyDataSetChanged();*/
                                         Toast.makeText(getActivity(), "No Product available in this category", Toast.LENGTH_SHORT).show();
+                                        order_list.setEmptyView(view.findViewById(R.id.ord_history_emptyView));
                                     }
                                 }
                             } catch (Exception e) {
@@ -199,7 +203,7 @@ public class Fragment_Oredr_History extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment__oredr__history, container, false); // see it full way
+        view = inflater.inflate(R.layout.fragment__oredr__history, container, false); // see it full way
         try {
             if (view != null) {
                 LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -238,11 +242,14 @@ public class Fragment_Oredr_History extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                    order_status = (TextView) view.findViewById(R.id.order_status);
 
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
                     Bundle bundle = new Bundle();
                     bundle.putInt("orderNumber", i);
+                    Log.d(TAG, "orderStatus: "+order_status.getText().toString());
+                    bundle.putString("orderStatus",order_status.getText().toString());
                     Order_History_Detail fg=  new Order_History_Detail();
                     fg.setArguments(bundle);
                     ft.replace(R.id.main_activity_fl, fg).addToBackStack(Config.KEY_FRAGMENT_LIST);

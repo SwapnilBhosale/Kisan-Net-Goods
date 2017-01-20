@@ -52,6 +52,7 @@ public class Order_History_Detail extends Fragment {
     TextView detail_order_id, detail_ord_date, detail_ord_total_item, detail_ord_price;
     Button cancel_order,download_bill;
     private int orderId;
+    private String orderStatus;
     private Order order;
     ProgressDialog pd;
 
@@ -60,6 +61,7 @@ public class Order_History_Detail extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             orderId = getArguments().getInt("orderNumber");
+            orderStatus = getArguments().getString("orderStatus");
             order = Fragment_Oredr_History.orderList.get(orderId);
         }
         pd = getProgressBar();
@@ -95,6 +97,9 @@ public class Order_History_Detail extends Fragment {
                 detail_ord_total_item.setText(String.valueOf(order.getOrderItems().size()));
                 detail_ord_price.setText(Config.formatCurrency(order.getTotal_bill()));
                 getList();
+                if(orderStatus.equals("Order Canceled")){
+                    cancel_order.setEnabled(false);
+                }
             }
 
 
