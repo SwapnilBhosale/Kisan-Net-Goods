@@ -115,6 +115,31 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
         return isLogged;
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setMessage(getString(R.string.exit_confirmation));
+            builder1.setCancelable(true);
+            builder1.setPositiveButton(
+                    R.string.option_yes,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                            System.exit(0);
+                        }
+                    });
+            builder1.setNegativeButton(
+                    R.string.option_no,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+    }
+
     private void setListners() {
 
         tv_no_register.setOnClickListener(new View.OnClickListener() {
@@ -541,7 +566,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
     private void statMainActivity(){
         Log.d(TAG, "Started main activity");
         Intent i = new Intent(Config.getContext(), MainActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Config.getContext().startActivity(i);
     }
 

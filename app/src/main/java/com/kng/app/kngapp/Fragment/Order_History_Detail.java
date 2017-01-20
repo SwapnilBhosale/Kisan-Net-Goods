@@ -135,6 +135,7 @@ public class Order_History_Detail extends Fragment {
             map.put("customer_id",pref.getCustomerId());
             map.put("name",pref.getName());
             map.put("mobile_no",pref.getMobile());
+            map.put("lang",pref.getAppLanguage());
             String orderId = Integer.valueOf(order.getOrders_id().split("KNG")[1]).toString();
             Log.d(TAG, "cancelOrder orderID : "+orderId);
             map.put("orders_id",orderId);

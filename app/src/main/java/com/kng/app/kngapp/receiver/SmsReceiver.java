@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.IntentCompat;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
@@ -117,7 +118,7 @@ public class SmsReceiver extends BroadcastReceiver {
     private void statMainActivity(){
         Log.d(TAG, "Started main activity");
         Intent i = new Intent(Config.getContext(), MainActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Config.getContext().startActivity(i);
     }
     private String getVerificationCode(String message) {
