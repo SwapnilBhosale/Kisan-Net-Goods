@@ -55,8 +55,10 @@ public class Fragment_Checkout3 extends Fragment {
     EditText coupoun_code_text;
     private String TAG = Fragment_Checkout3.class.getSimpleName();
     private static Bill bill= null;
+    private View view;
     private String user_coupon_code;
     public String couponDiscPercentage = "";
+    private boolean isPaymentSelected = false;
     ProgressDialog pd;
     public static List<PaymentType> paymentTypeList = new ArrayList<PaymentType>();
     private ListView payment_list;
@@ -74,7 +76,7 @@ public class Fragment_Checkout3 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment__checkout3, container, false); // see it full way
+        view = inflater.inflate(R.layout.fragment__checkout3, container, false); // see it full way
         Log.d(TAG, "onCreateView: " + view.toString());
         try {
             if (view != null) {
@@ -261,11 +263,7 @@ public class Fragment_Checkout3 extends Fragment {
             @Override
             public void onClick(View view) {
 
-                View convertView;
-                LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = li.inflate(R.layout.payment_list_item, null);
-                listRadioButton = (RadioButton) convertView.findViewById(R.id.listRadioButton);
-                if(listRadioButton.isChecked()){
+                if(isPaymentSelected) {
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
                     Bundle bundle = new Bundle();
@@ -276,11 +274,8 @@ public class Fragment_Checkout3 extends Fragment {
                     ft.hide(Fragment_Checkout3.this);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     ft.commit();
-
-                }
-                else {
-                    Snackbar.make(view,"Please select any of the payment method",Snackbar.LENGTH_LONG).setAction("Action",null).show();
-                    listRadioButton.requestFocus();
+                }else{
+                    Snackbar.make(view,"Please Select Payment Ztype : ",Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -338,7 +333,6 @@ public class Fragment_Checkout3 extends Fragment {
                     } catch (Exception e) {
                         Log.e(TAG, "onResponse validateCoupon: ", e);
                     }
-
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -416,6 +410,7 @@ public class Fragment_Checkout3 extends Fragment {
                         paymentTypeSelectd = position;
                         Log.d(TAG, "onClick: "+paymentTypeList.get(position).toString());
                         View vMain = ((View) view.getParent());
+                        isPaymentSelected = true;
                         if (listRadioButton != null) listRadioButton.setChecked(false);
                         // assign to the variable the new one
                         listRadioButton = (RadioButton) view;
