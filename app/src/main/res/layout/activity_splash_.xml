@@ -17,8 +17,9 @@
         android:layout_height="200dp"
         android:id="@+id/imageView"
         android:padding="20dp"
+        android:scaleType="fitCenter"
         android:layout_centerVertical="true"
-        android:src="@drawable/login_image2"
+        android:src="@drawable/kisan"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

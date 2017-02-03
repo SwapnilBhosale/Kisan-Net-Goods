@@ -33,8 +33,8 @@
                             android:layout_width="137dp"
                             android:layout_height="110dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_cart"
-                            android:scaleType="fitXY"
+                            android:src="@drawable/kisan"
+                            android:scaleType="fitCenter"
                             android:id="@+id/imageView3" />
 
                     </LinearLayout>

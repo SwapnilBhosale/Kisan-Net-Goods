@@ -128,11 +128,6 @@ public class Fragment_List extends Fragment {
                 pager.setOffscreenPageLimit(1);
 
 
-
-
-
-
-
                 //lsit view here
                 CustomEventAdapter event_list = new CustomEventAdapter(getActivity(),list_categories);
                 ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(bannerList);

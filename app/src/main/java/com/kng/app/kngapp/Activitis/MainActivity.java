@@ -139,12 +139,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(background);
+/*
         Glide.with(this).load(Config.LOGO_URL)
                 .crossFade()
                 .thumbnail(0.5f)
+                .fitCenter()
                 .bitmapTransform(new CircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(nav_image);
+*/
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.

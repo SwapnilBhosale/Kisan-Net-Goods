@@ -19,11 +19,12 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-    <ImageView
+      <ImageView
         android:id="@+id/header_image"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/kisan"
+          android:scaleType="fitCenter"
         android:paddingTop="16dp"/>
 
     <!--Here COmpany Name and Website of company-->
