@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         View hView = navigationView.getHeaderView(0);
-        ImageView nav_image = (ImageView) hView.findViewById(R.id.header_image);
+        //ImageView nav_image = (ImageView) hView.findViewById(R.id.header_image);
         ImageView background = (ImageView) hView.findViewById(R.id.img_header_bg);
 
 
