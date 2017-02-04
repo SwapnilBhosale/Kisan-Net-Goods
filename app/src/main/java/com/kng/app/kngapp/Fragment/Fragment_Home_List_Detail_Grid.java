@@ -57,7 +57,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
     String search_item;
     ProgressDialog pd;
     CustomGrid adapter;
-    private String fruitId;
+    private String fruitId,categoty_id;
     private boolean isFruit;
     private String TAG = Fragment_Home_List_Detail_Grid.class.getSimpleName();
     View view;
@@ -163,7 +163,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
         //final List<Fruits> list = new ArrayList<>();
         String url = "";
         if (isFruit)
-            url = Config.FRUIT_PROD_MAP_URL + "lang=" + new PrefManager(Config.getContext()).getAppLangId() + "&fruit_id=" + fruitId;
+            url = Config.FRUIT_PROD_MAP_URL + "lang=" + new PrefManager(Config.getContext()).getAppLangId() + "&fruit_id=" + fruitId + "&category_id="+category_id;
         else if (search_item != null)
             url = Config.SEARCH_URL + "lang=" + new PrefManager(Config.getContext()).getAppLangId() + "&q=" + search_item;
         else

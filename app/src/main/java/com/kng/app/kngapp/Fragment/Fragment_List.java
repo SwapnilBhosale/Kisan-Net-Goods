@@ -198,6 +198,7 @@ public class Fragment_List extends Fragment {
                                 FragmentManager fm = getActivity().getSupportFragmentManager();
                                 FragmentTransaction ft = fm.beginTransaction();
                                 Bundle bundle = new Bundle();
+                                bundle.putString("category_id",String.valueOf(categoris.getCategory_id()));
                                 bundle.putString("category_name", String.valueOf(categoris.getCategory_name()));
                                 Fragment_Grid fg=  new Fragment_Grid();
                                 fg.setArguments(bundle);

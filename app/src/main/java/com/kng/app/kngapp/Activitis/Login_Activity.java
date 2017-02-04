@@ -435,9 +435,8 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                                                 /*Intent in = new Intent(Login_Activity.this, MainActivity.class);
                                                 startActivity(in);*/
                                                 String otp = otp_text_box.getText().toString();
-
+                                                alertDialog.dismiss();
                                                 verifyOtp();
-                                                //alertDialog.dismiss();
                                             }
                                         });
 
