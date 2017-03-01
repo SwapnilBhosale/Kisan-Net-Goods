@@ -278,6 +278,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.requestPermissions(Login_Activity.this, new String[]{Manifest.permission.READ_SMS}, MY_PERMISSIONS_REQUEST_SMS_READ);
+                            attemptLogin();
                         }
                     });
                     AlertDialog alert = alertBuilder.create();
