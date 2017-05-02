@@ -4,9 +4,11 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -76,14 +78,11 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
     private int pos;
     ImageView cancel_button;
     Button popup_button ;
-    public static EditText otp_text_box ;
+    public EditText otp_text_box ;
     AlertDialog alertDialog;
+    private SMSEventReceiver  smsEventReceiver;
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
 
 
     @Override
@@ -98,14 +97,11 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
         // Get the activity
         mActivity = Login_Activity.this;
 
+        smsEventReceiver = new SMSEventReceiver();
 
         initiolizeId();
         setListners();
 
-        //makeLanguageToast();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private boolean checkIfLoggedIn(){
@@ -349,7 +345,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                             final boolean isSuccess = response.getBoolean("status");
                             if(isSuccess){
 
-                                Config.OTP_SCREEN = "login";
+                                //Config.OTP_SCREEN = "login";
                                 PrefManager pref = new PrefManager(getApplicationContext());
                                 pref.setIsWaitingForSMS(true);
 
@@ -565,10 +561,13 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
 
     private void statMainActivity(){
         Log.d(TAG, "Started main activity");
-        Intent i = new Intent(Config.getContext(), MainActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        Config.getContext().startActivity(i);
+        startActivity(i);
     }
+
+
+
 
     private void initiolizeId() {
 
@@ -705,37 +704,70 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-   /* *//**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     *//*
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Login_ Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
-    }*/
+    public class SMSEventReceiver extends BroadcastReceiver{
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive: ");
+            if(intent.hasExtra("otp")){
+                String otp = intent.getExtras().getString("otp");
+                Log.d(TAG, "onReceive: otp received  : "+otp);
+                verifyOTP(otp);
+
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(smsEventReceiver,new IntentFilter(Config.SMS_RECIEVED_INTENT));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(smsEventReceiver);
+    }
+
+    public void verifyOTP(String otp){
+        otp_text_box.setText(otp);
+
+        final PrefManager pref = new PrefManager(Config.getContext());
+        String verify_otp_url_with_param = Config.VERIFY_OTP_URL+"?otp="+otp+"&session_key="+pref.getSessionKey()+"&customer_id="+pref.getCustomerId();
+        Log.d(TAG, "verifyOtp() called with: otp = [" + otp + "] url : "+verify_otp_url_with_param);
+
+        JsonObjectRequest verify_otp_req = new JsonObjectRequest(Request.Method.GET,verify_otp_url_with_param,null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, "onResponse: verify OTP "+response.toString());
+                try{
+                    final boolean isSuccess = response.getBoolean("status");
+                    if(isSuccess){
+                        //put in shared preference here
+                        if(alertDialog.isShowing())
+                            alertDialog.dismiss();
+                        pref.setIsLoggedIn(true);
+                        pref.setIsWaitingForSMS(false);
+                        //Stop spinner and open home activitys
+                        statMainActivity();
+                    }
+                }catch (Exception e){
+                    Log.e(TAG, "onResponse: "+response.toString(),e);
+                }
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e(TAG, "Error: " + volleyError);
+                if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
+                    Toast.makeText(Config.getContext(),R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                Toast.makeText(Config.getContext(),R.string.error_general_error,Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        Volley.newRequestQueue(Config.getContext()).add(verify_otp_req);
+    }
 
 }

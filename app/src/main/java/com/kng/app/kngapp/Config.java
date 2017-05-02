@@ -69,7 +69,7 @@ public class Config extends Application {
     public static final String CANCEL_ORDER_URL = BASE_URL+"/order/cancelOrder";
 
     public static final String TAG = Config.class.getSimpleName();
-    public static String OTP_SCREEN="";
+    //public static String OTP_SCREEN="";
 
     public String langauge_code;
 
@@ -88,6 +88,9 @@ public class Config extends Application {
 
     public static final int WEB_TIMEOUT = 1000 * 20;
     public static final int WEB_RETRY_COUNT = 0;
+
+    public static final String SMS_RECIEVED_INTENT = "SMS_RECIEVED_INTENT";
+    public static final String OTP_KEY = "otp";
 
 
     private RequestQueue mRequestQueue;

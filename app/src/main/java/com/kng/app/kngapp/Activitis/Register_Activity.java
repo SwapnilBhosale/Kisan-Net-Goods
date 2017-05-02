@@ -1,9 +1,11 @@
 package com.kng.app.kngapp.Activitis;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -58,6 +60,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
 
     private static String TAG = Register_Activity.class.getSimpleName();
     private PopupWindow mPopupWindow = null;
+    private  SMSEventReceiver smsEventReceiver;
 
     ProgressDialog pd;
 
@@ -72,6 +75,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_register_);
         mContext = getApplicationContext();
         pd = getProgressBar();
+        smsEventReceiver  = new SMSEventReceiver();
         initiolizeId();
         setListners();
         populateMobileNo();
@@ -233,7 +237,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                             if (isSuccess) {
                                 //open verifyOTP screen
 
-                                Config.OTP_SCREEN = "register";
+                                //Config.OTP_SCREEN = "register";
                                 Log.d(TAG, "opening OTP from register activiy");
                                 PrefManager pref = new PrefManager(getApplicationContext());
 
@@ -395,4 +399,72 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Config.getContext().startActivity(i);
     }
+
+
+    public class SMSEventReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive: ");
+            if(intent.hasExtra("otp")){
+                String otp = intent.getExtras().getString("otp");
+                Log.d(TAG, "onReceive: otp received  : "+otp);
+                verifyOTP(otp);
+
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(smsEventReceiver,new IntentFilter(Config.SMS_RECIEVED_INTENT));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(smsEventReceiver);
+    }
+
+    public void verifyOTP(String otp){
+        otp_text_box.setText(otp);
+
+        final PrefManager pref = new PrefManager(Config.getContext());
+        String verify_otp_url_with_param = Config.VERIFY_OTP_URL+"?otp="+otp+"&session_key="+pref.getSessionKey()+"&customer_id="+pref.getCustomerId();
+        Log.d(TAG, "verifyOtp() called with: otp = [" + otp + "] url : "+verify_otp_url_with_param);
+
+        JsonObjectRequest verify_otp_req = new JsonObjectRequest(Request.Method.GET,verify_otp_url_with_param,null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, "onResponse: verify OTP "+response.toString());
+                try{
+                    final boolean isSuccess = response.getBoolean("status");
+                    if(isSuccess){
+                        //put in shared preference here
+                        if(alertDialog.isShowing())
+                            alertDialog.dismiss();
+                        pref.setIsLoggedIn(true);
+                        pref.setIsWaitingForSMS(false);
+                        //Stop spinner and open home activitys
+                        statMainActivity();
+                    }
+                }catch (Exception e){
+                    Log.e(TAG, "onResponse: "+response.toString(),e);
+                }
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e(TAG, "Error: " + volleyError);
+                if (volleyError instanceof NetworkError || volleyError instanceof ServerError || volleyError instanceof AuthFailureError || volleyError instanceof ParseError || volleyError instanceof NoConnectionError || volleyError instanceof TimeoutError)
+                    Toast.makeText(Config.getContext(),R.string.error_no_internet_conenction, Toast.LENGTH_LONG).show();
+                Toast.makeText(Config.getContext(),R.string.error_general_error,Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        Volley.newRequestQueue(Config.getContext()).add(verify_otp_req);
+    }
+
 }
