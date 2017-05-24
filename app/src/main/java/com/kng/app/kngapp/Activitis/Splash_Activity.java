@@ -53,6 +53,7 @@ public class Splash_Activity extends AppCompatActivity {
                     i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     finish();
                     startActivity(i);
+                    return;
 
                 } else if(!pref.getAppLanguage().isEmpty() && !pref.getAppLanguage().equals(current.getLanguage())){
                     Log.d(TAG, "restoreAppLanguage: "+pref.getAppLanguage());
@@ -64,6 +65,7 @@ public class Splash_Activity extends AppCompatActivity {
                     i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     finish();
                     startActivity(i);
+                    return;
                 }else{
                     if(!current.getLanguage().equals(pref.getAppLanguage())){
                         pref.storeAppLanguage(pref.getAppLanguage());
@@ -75,6 +77,7 @@ public class Splash_Activity extends AppCompatActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         finish();
                         startActivity(i);
+                        return;
                     }
                 }
                 finish();
