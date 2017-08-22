@@ -94,6 +94,7 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
                     TextView emptyCartMessage2 = (TextView) view.findViewById(R.id.empt_text2);
                     emptyCartMessage.setText("No items pesent in your cart");
                      emptyCartMessage2.setText("Please go to shopping");
+
                     empty_image.setImageResource(R.drawable.empty_cart);
 
                     gotoShopping.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +158,8 @@ public class Fragment_Add_To_Cart extends android.support.v4.app.Fragment {
         adapter = new CustomEventAdapter(getActivity(), cartList);
         if (!initialized)
             loadData();
+        else
+            list.setVisibility(View.VISIBLE);
         list.setAdapter(adapter);
 
         //setListViewHeightBasedOnChildren(List);

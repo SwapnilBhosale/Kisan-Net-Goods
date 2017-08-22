@@ -276,7 +276,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
             //View grid;
 
 
-            if (convertView == null) {
+           // if (convertView == null) {
 
                 //grid = new View(activity);
                 LayoutInflater inflater = (LayoutInflater) activity
@@ -293,7 +293,7 @@ public class Fragment_Home_List_Detail_Grid extends Fragment {
                 price.setText(Config.formatCurrency(prod.getProductPrice()));
                 weight.setText(prod.getProductWeight());
                 image.setImageUrl(Config.BASE_URL + "" + prod.getProductImage(), imageLoader);
-            }
+           // }
 
             return convertView;
         }
